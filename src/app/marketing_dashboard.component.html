@@ -1,0 +1,58 @@
+<div class="page-layout blank p-24">
+    <form [formGroup]="filtersForm" novalidate >
+        <mat-form-field>
+            <mat-select placeholder="Retailers" formControlName="retailers" multiple>
+                <mat-option *ngFor="let retailer of retailers" [value]="retailer">
+                    {{ retailer }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-select placeholder="Category" formControlName="categories">
+                <mat-option *ngFor="let category of categories" [value]="category">
+                    {{ category }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </form>
+    <div class="mat-elevation-z8" fxLayout="column" fxLayoutAlign="start center" class="chart-wrapper">
+        <span style="width: 100%; margin-bottom: -20px;" *ngFor="let retailer of selectedRetailers">
+            <canvas *ngIf="hasStackedChart"
+                baseChart
+                [chartType]="'horizontalBar'"
+                [datasets]="chart[retailer].data"
+                [labels]="chart[retailer].labels"
+                [options]="chart[retailer].options"
+                [legend]="false"
+                [colors]="colors"
+                (chartClick)="onChartClick($event)">
+            </canvas>
+        </span>
+    </div>
+    <br>
+    <div class="mat-elevation-z8" fxLayout="column" fxLayoutAlign="start center" class="chart-wrapper" style="height: 320px;">
+        <span>{{selectedCategory}}</span>
+        <canvas *ngIf="hasNewArrivalsChart"
+            baseChart
+            [chartType]="'bar'"
+            [datasets]="newArrivalsChart.data"
+            [labels]="newArrivalsChart.labels"
+            [options]="newArrivalsChart.options"
+            [colors]="colors"
+            [legend]="true"
+            (chartClick)="onChartClick($event)">
+        </canvas>
+    </div>
+    <br>
+    <div class="mat-elevation-z8" fxLayout="column" fxLayoutAlign="start center" class="chart-wrapper" style="height: 320px; padding: 25px;">
+        <canvas *ngIf="hasBubbleChart"
+            baseChart
+            [chartType]="'bubble'"
+            [datasets]="bubbleChart.data"
+            [options]="bubbleChart.options"
+            [legend]="false"
+            [colors]="colors"
+            (chartClick)="onChartClick($event)">
+        </canvas>
+    </div>
+</div>
