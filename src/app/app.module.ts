@@ -1,32 +1,33 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-
-
-import { AppComponent } from './app.component';
-import { MarketingDashboardComponent } from './marketing_dashboard.component';
-
-import { RouterModule } from '@angular/router';
-import { CommonModule } from "@angular/common";
-
-
-import { MatFormFieldModule, MatOptionModule, MatSelectModule } from '@angular/material'
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ChartsModule } from 'ng2-charts';
+import {NgModule} from "@angular/core";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {MatOptionModule} from "@angular/material/core";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatSelectModule} from "@angular/material/select";
+import {BrowserModule} from "@angular/platform-browser";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {ChartsModule} from "ng2-charts";
+import {AppRoutingModule} from "./app-routing.module";
+import {AppComponent} from "./app.component";
+import {MarketingDashboardComponent} from "./marketing_dashboard.component";
 
 @NgModule({
-  imports:      [ 
-    BrowserModule, 
-    FormsModule, 
-    MatFormFieldModule,
+  declarations: [
+    AppComponent,
+    MarketingDashboardComponent
+  ],
+  imports: [
     BrowserModule,
-    CommonModule,
+    AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     ChartsModule,
+    MatFormFieldModule,
     MatOptionModule,
-    MatSelectModule],
-  declarations: [ AppComponent, MarketingDashboardComponent ],
-  bootstrap:    [ AppComponent ]
+    MatSelectModule,
+    BrowserAnimationsModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
-
+export class AppModule {
+}
