@@ -6,8 +6,8 @@
     flex-wrap: wrap;
     max-width: 1200px;
     margin: 20px auto;
+    padding: 40px 20px 0;
     box-shadow: 1px 1px 8px 0 #c5c6cb;
-    padding: 40px 20px;
   }
 
   &__row {
@@ -17,10 +17,11 @@
   }
 
   &__logo {
-    width: 140px;
+    width: 220px;
   }
 
   &__description {
+    margin-top: 5px;
     margin-bottom: 40px;
   }
 
@@ -29,20 +30,18 @@
   }
 
   &__toolbar {
-    margin-top: 30px;
     display: flex;
     justify-content: space-between;
 
     .mat-form-field {
       width: 31%;
-
     }
   }
 
   &__widget {
     background: #fff;
     padding: 15px;
-    margin-top: 20px;
+    margin-bottom: 20px;
 
     &-wrapper {
       display: flex;
@@ -54,11 +53,13 @@
     }
 
     &-sub-title {
-      color: #ccc;
+      margin-left: 10px;
+      font-family: $font-GothamLight;
+      color: #a3a3a3;
     }
 
     &-price {
-      height: 461px;
+      height: 475px;
       padding-bottom: 55px;
     }
   }
@@ -66,40 +67,46 @@
   &__statistic {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 20px;
 
     &-item {
+      width: 27%;
+      padding: 12px;
       border-top: 8px solid #00968A;
       background: #fff;
-      padding: 10px;
-      width: 22%;
 
       p {
-        margin-bottom: 5px;
-        margin-top: 0;
+        margin: 0;
       }
 
       &-value {
-        font-size: 30px;
-        font-weight: bold;
         display: flex;
         justify-content: space-between;
         align-items: flex-end;
+        font-family: $font-GothamMedium;
+        font-size: 30px;
 
         span {
-          font-size: 16px;
-          color: #ccc;
+          margin-left: 10px;
+          position: relative;
+          top: -5px;
+          font-family: $font-GothamLight;
+          font-size: 14px;
+          color: #a3a3a3;
         }
       }
     }
   }
 
   &__new-ins {
-    width: 78%;
+    width: 72%;
+    height: 310px;
+    padding-bottom: 80px;
     margin-right: 20px;
   }
 
   &__bestseller {
-    width: 22%;
+    width: 28%;
 
     img {
       max-width: 100%;
@@ -108,7 +115,7 @@
 
   .hidden-chart {
     position: relative;
-    background: url("../assets/img/hidden-chart.jpg") no-repeat center center;
+    background: url("../../img/hidden-chart.jpg") no-repeat center center;
     background-size: cover;
     height: 150px;
 
@@ -117,52 +124,76 @@
       right: 0;
       left: 0;
       margin: 0 auto;
-      top: 65px;
-      background: #00968A;
-      color: #fff;
+      top: 50px;
+      font-family: $font-GothamLight;
       text-align: center;
       border: none;
-      padding: 12px;
+      font-size: 16px;
+      padding: 8px 30px;
+      background: #00968A;
+      color: #fff;
       cursor: pointer;
+      transition: 0.3s ease;
+
+      &:hover {
+        background: #038076;
+        box-shadow: 1px 1px 8px 8px rgb(255, 255, 255, 0.48);
+      }
     }
   }
 
-  ::ng-deep {
-    .marketing-dashboard__toolbar {
-      .mat-select {
-        &-arrow {
-          border: none;
-          background: url('../assets/img/down-arrow.svg') no-repeat center center;
-          width: 15px;
-          height: 15px;
-          margin-right: 13px;
-          color: #fff;
-        }
+  .marketing-dashboard__toolbar {
+    .mat-select {
+      &-arrow {
+        width: 15px;
+        height: 15px;
+        background: url('../../img/down-arrow.svg') no-repeat center center;
+        border: none;
+        color: #fff;
+        top: 3px;
+        right: 13px;
+        position: relative;
+      }
+    }
+
+    .mat-form-field-appearance-fill {
+      .mat-form-field-flex {
+        background: #00968A;
+      }
+    }
+
+    .mat-form-field {
+      &-underline {
+        display: none;
       }
 
-      .mat-form-field {
-        &-underline {
-          display: none;
+      &-label {
+        color: #fff;
+      }
 
-        }
-
-        &-label {
-          color: #fff;
-        }
-
-        &-flex {
-          background: #00968A;
-        }
+      &-flex {
       }
     }
   }
 }
+
+.marketing-dashboard__toolbar-select {
+  .mat-pseudo-checkbox-checked {
+    background: #00968A;
+  }
+
+  &.mat-option.mat-selected:not(.mat-option-disabled) {
+    color: #00968A;
+  }
+}
+
 
 @media (max-width: 1200px) {
   .marketing-dashboard {
     &__container {
       margin-right: 20px;
       margin-left: 20px;
+      padding-top: 20px;
     }
 
     &__row {
@@ -174,7 +205,7 @@
     }
 
     &__description {
-      margin-bottom: 15px;
+      margin-bottom: 20px;
     }
 
     &__toolbar {
@@ -183,9 +214,8 @@
     }
 
     &__widget-price {
-      height: 300px;
+      height: 500px;
     }
-
 
     &__statistic {
       justify-content: flex-start;
@@ -193,7 +223,7 @@
       &-item {
         width: auto;
         min-width: 160px;
-        margin-right: 15px;
+        margin-right: 40px;
 
         &:last-child {
           margin-right: 0;
@@ -204,12 +234,11 @@
     &__new-ins {
       width: auto;
       margin-right: 0;
-      height: 300px;
-      padding-bottom: 75px;
+      height: 500px;
+      padding-bottom: 90px;
 
       &-wrapper {
         flex-direction: column;
-
       }
     }
 
@@ -224,30 +253,15 @@
   }
 }
 
-
-@media (max-width: 992px) {
-
-}
-
 @media (max-width: 768px) {
   .marketing-dashboard {
-
-
-    &__toolbar {
-      display: flex;
-      flex-direction: column;
-
-      .mat-form-field {
-        margin-right: 0;
-      }
-    }
-
     &__statistic {
       justify-content: space-between;
 
       &-item {
         min-width: auto;
-        width: calc(100% / 3);
+        width: 31%;
+        margin-right: 0;
       }
     }
   }
@@ -263,11 +277,40 @@
         width: 100%;
         margin-right: 0;
         margin-bottom: 20px;
+        text-align: center;
+
+        &-value {
+          justify-content: center;
+        }
 
         &:last-child {
           margin-bottom: 0;
         }
       }
+    }
+
+    &__toolbar {
+      flex-direction: column;
+
+      .mat-form-field {
+        width: 100%;
+      }
+    }
+
+    &__widget {
+      &-title {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+      }
+
+      &-price {
+        padding-bottom: 80px;
+      }
+    }
+
+    &__new-ins {
+      padding-bottom: 110px;
     }
   }
 }

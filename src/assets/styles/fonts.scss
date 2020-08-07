@@ -1,0 +1,6 @@
+@import "mixins";
+
+@include font-face("Gotham Book", "../fonts/Gotham-Book", 400);
+@include font-face("Gotham Medium", "../fonts/Gotham-Medium", 500);
+@include font-face("Gotham Light", "../fonts/Gotham-Light", 300);
+

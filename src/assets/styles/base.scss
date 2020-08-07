@@ -1,0 +1,15 @@
+@import "vars";
+@import "fonts";
+
+* {
+  box-sizing: border-box;
+  line-height: 1.5;
+}
+
+body {
+  margin: 0;
+  background: #EBEBEB;
+  font-family: $font-GothamBook;
+}
+
+@import "components/marketing_dashboard";

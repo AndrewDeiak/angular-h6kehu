@@ -3,10 +3,11 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 import {Subject} from "rxjs";
 import {takeUntil} from "rxjs/operators";
 
+/* tslint:disable */
+
 @Component({
   selector: "marketing_dashboard",
   templateUrl: "./marketing_dashboard.component.html",
-  styleUrls: ["./marketing_dashboard.component.scss"]
 })
 
 export class MarketingDashboardComponent {
@@ -47,9 +48,9 @@ export class MarketingDashboardComponent {
   public hasBubbleChart: boolean = false;
   public hasStackedChart: boolean = false;
   private _onDestroy = new Subject<void>();
+
   constructor(
-    private formBuilder: FormBuilder,
-  ) {
+    private formBuilder: FormBuilder) {
     for (let i in this.retailers) {
       this.retailer = {};
       this.retailer.name = this.retailers[i];
@@ -618,11 +619,11 @@ export class MarketingDashboardComponent {
     });
   }
 
-  onlyUnique(value, index, self) {
+  onlyUnique(value, index, self): any {
     return self.indexOf(value) === index;
   }
 
-  createBubbleChart() {
+  createBubbleChart(): any {
     this.hasBubbleChart = false;
     this.bubbleChart = {};
     this.bubbleChart.options = {
@@ -664,5 +665,8 @@ export class MarketingDashboardComponent {
       this.hasBubbleChart = true;
       console.log(this.bubbleChart);
     });
+  }
+
+  onChartClick(e) {
   }
 }

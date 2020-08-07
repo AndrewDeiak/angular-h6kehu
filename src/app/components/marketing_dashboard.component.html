@@ -1,8 +1,11 @@
 <div class="marketing-dashboard">
   <div class="marketing-dashboard__container">
     <div class="marketing-dashboard__row">
+      <img class="marketing-dashboard__logo" src="../../assets/img/logo.png" alt="Retviews">
+    </div>
+
+    <div class="marketing-dashboard__row">
       <div class="marketing-dashboard__column">
-        <img class="marketing-dashboard__logo" src="../assets/img/logo.png" alt="Retviews">
         <p class="marketing-dashboard__description">
           Interactive fashion retail dashboard. Choose brands, categories and time frame to see fashion competitor
           benchmark.</p>
@@ -13,7 +16,8 @@
           <mat-form-field appearance="fill">
             <mat-label>Retailers</mat-label>
             <mat-select formControlName="retailers" multiple>
-              <mat-option *ngFor="let retailer of retailers" [value]="retailer">
+              <mat-option *ngFor="let retailer of retailers" [value]="retailer"
+                          class="marketing-dashboard__toolbar-select">
                 {{retailer}}
               </mat-option>
             </mat-select>
@@ -122,7 +126,7 @@
             <div class="marketing-dashboard__widget-title">
               Bestseller
             </div>
-            <img src="../assets/img/bestseller.png" alt="Bestseller">
+            <img src="../../assets/img/bestseller.png" alt="Bestseller">
             <div class="marketing-dashboard__widget-sub-title">
               Zara poplin shirt
             </div>
