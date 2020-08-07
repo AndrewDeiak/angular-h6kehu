@@ -1,1 +1,1 @@
-
+Beautify dynamic data dashboard
