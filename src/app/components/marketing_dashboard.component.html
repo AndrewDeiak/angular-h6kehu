@@ -88,17 +88,19 @@
             <span class="marketing-dashboard__widget-sub-title">Categories split per brand</span>
           </div>
 
-          <div *ngFor="let retailer of selectedRetailers">
-            <canvas *ngIf="hasStackedChart"
-                    baseChart
-                    [chartType]="'horizontalBar'"
-                    [datasets]="chart[retailer].data"
-                    [labels]="chart[retailer].labels"
-                    [options]="chart[retailer].options"
-                    [legend]="false"
-                    [colors]="colors"
-                    (chartClick)="onChartClick($event)">
-            </canvas>
+          <div class="marketing-dashboard__widget-assortment">
+            <div *ngFor="let retailer of selectedRetailers">
+              <canvas *ngIf="hasStackedChart"
+                      baseChart
+                      [chartType]="'horizontalBar'"
+                      [datasets]="chart[retailer].data"
+                      [labels]="chart[retailer].labels"
+                      [options]="chart[retailer].options"
+                      [legend]="false"
+                      [colors]="colors"
+                      (chartClick)="onChartClick($event)">
+              </canvas>
+            </div>
           </div>
         </div>
 

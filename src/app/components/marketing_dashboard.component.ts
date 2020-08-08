@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Subject} from "rxjs";
 import {takeUntil} from "rxjs/operators";
@@ -10,13 +10,13 @@ import {takeUntil} from "rxjs/operators";
   templateUrl: "./marketing_dashboard.component.html",
 })
 
-export class MarketingDashboardComponent {
+export class MarketingDashboardComponent implements OnInit {
   public filtersForm: FormGroup;
   public dataset: any = {};
   public chart: any = {};
   public bubbleChart: any = {};
-  public retailers: any = ["Zara", "Uniqlo", "HM"];
-  public selectedRetailers: any = ["Zara", "Uniqlo", "HM"];
+  public retailers: any = ["Zara", "Uniqlo", "HM", "test"];
+  public selectedRetailers: any = ["Zara", "Uniqlo", "HM", "test"];
   public categories: any = ["All", "Dresses", "T-shirts"];
   public timeFrames: any = ["1", "2", "3"];
   public selectedCategory = "All";
@@ -24,16 +24,19 @@ export class MarketingDashboardComponent {
     "All": {
       Zara: [14, 3, 13.4, 1.1, 12.8, 5.4, 0.9, 8.5, 0, 5.3, 0.1, 6.5, 1.9, 4.8, 0, 1.9, 0.6, 12.1, 7.8, 0.1, 51.4],
       Uniqlo: [5.8, 0.7, 8.5, 0, 7.9, 2.8, 0.3, 7.2, 1.8, 8.1, 0.5, 1.4, 2.6, 3.4, 3.7, 1.2, 0.8, 22.4, 10.3, 10.7, 35.8],
+      test: [5.8, 0.7, 8.5, 0, 7.9, 2.8, 0.3, 7.2, 1.8, 8.1, 0.5, 1.4, 2.6, 3.4, 3.7, 1.2, 0.8, 22.4, 10.3, 10.7, 35.8],
       HM: [10.3, 1.1, 11.1, 0.8, 17.5, 3.1, 2.2, 6.9, 1.1, 4.5, 0, 4.3, 3.3, 4.7, 0.5, 1.7, 5.9, 8.1, 7.4, 5.6, 40.6]
     },
     "Dresses": {
       Zara: [13.5, 35.7, 50.8],
       Uniqlo: [0, 81.9, 18.1],
+      test: [0, 81.9, 18.1],
       HM: [10.3, 21.8, 67.8]
     },
     "T-shirts": {
       Zara: [8.4, 64.2, 27.4],
       Uniqlo: [25.6, 52.8, 21.7],
+      test: [25.6, 52.8, 21.7],
       HM: [25.6, 59.3, 15.2]
     }
   };
@@ -495,7 +498,6 @@ export class MarketingDashboardComponent {
           "399,0 - 399.99": 0.02
         },
       }
-
     };
   }
 

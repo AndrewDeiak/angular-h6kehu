@@ -59,8 +59,14 @@
     }
 
     &-price {
-      height: 475px;
+      height: 476px;
       padding-bottom: 55px;
+    }
+
+    &-assortment {
+      height: 198px;
+      overflow-x: hidden;
+      overflow-y: auto;
     }
   }
 
