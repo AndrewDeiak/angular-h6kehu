@@ -26,7 +26,7 @@
           <mat-form-field appearance="fill">
             <mat-label>Category</mat-label>
             <mat-select formControlName="categories">
-              <mat-option *ngFor="let category of categories" [value]="category">
+              <mat-option  class="marketing-dashboard__toolbar-select" *ngFor="let category of categories" [value]="category">
                 {{category}}
               </mat-option>
             </mat-select>
@@ -35,7 +35,7 @@
           <mat-form-field appearance="fill">
             <mat-label>Time frame</mat-label>
             <mat-select formControlName="timeFrame">
-              <mat-option *ngFor="let timeFrame  of timeFrames" [value]="timeFrame">
+              <mat-option  class="marketing-dashboard__toolbar-select" *ngFor="let timeFrame  of timeFrames" [value]="timeFrame">
                 {{timeFrame}}
               </mat-option>
             </mat-select>
