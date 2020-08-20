@@ -13,33 +13,42 @@
 
       <div class="marketing-dashboard__column">
         <form class="marketing-dashboard__toolbar" [formGroup]="filtersForm" novalidate>
-          <mat-form-field appearance="fill">
-            <mat-label>Retailers</mat-label>
-            <mat-select formControlName="retailers" multiple>
-              <mat-option *ngFor="let retailer of retailers" [value]="retailer"
-                          class="marketing-dashboard__toolbar-select">
-                {{retailer}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+          <div class="marketing-dashboard__toolbar-title">
+            <img src="../../assets/img/icon-filter.svg" alt="icon-filter">
+            Set filters:
+          </div>
 
-          <mat-form-field appearance="fill">
-            <mat-label>Category</mat-label>
-            <mat-select formControlName="categories">
-              <mat-option  class="marketing-dashboard__toolbar-select" *ngFor="let category of categories" [value]="category">
-                {{category}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+          <div class="marketing-dashboard__toolbar-controls">
+            <mat-form-field appearance="fill">
+              <mat-label>Retailers</mat-label>
+              <mat-select formControlName="retailers" multiple>
+                <mat-option *ngFor="let retailer of retailers" [value]="retailer"
+                            class="marketing-dashboard__toolbar-select">
+                  {{retailer}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
 
-          <mat-form-field appearance="fill">
-            <mat-label>Time frame</mat-label>
-            <mat-select formControlName="timeFrame">
-              <mat-option  class="marketing-dashboard__toolbar-select" *ngFor="let timeFrame  of timeFrames" [value]="timeFrame">
-                {{timeFrame}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Category</mat-label>
+              <mat-select formControlName="categories">
+                <mat-option class="marketing-dashboard__toolbar-select" *ngFor="let category of categories"
+                            [value]="category">
+                  {{category}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+              <mat-label>Time frame</mat-label>
+              <mat-select formControlName="timeFrame">
+                <mat-option class="marketing-dashboard__toolbar-select" *ngFor="let timeFrame  of timeFrames"
+                            [value]="timeFrame">
+                  {{timeFrame}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
         </form>
       </div>
     </div>
@@ -53,12 +62,12 @@
           </div>
 
           <div class="marketing-dashboard__statistic-item">
-            <p>Avg discount</p>
-            <div class="marketing-dashboard__statistic-item-value">60% <span>-42%</span></div>
+            <p>Highest avg discount</p>
+            <div class="marketing-dashboard__statistic-item-value">60% <span>Zara</span></div>
           </div>
 
           <div class="marketing-dashboard__statistic-item">
-            <p>Avg price</p>
+            <p>Highest mfp</p>
             <div class="marketing-dashboard__statistic-item-value">124,9€ <span></span></div>
           </div>
         </div>
@@ -66,7 +75,8 @@
         <div class="marketing-dashboard__widget marketing-dashboard__widget-price">
           <div class="marketing-dashboard__widget-title">
             Price structure
-            <span class="marketing-dashboard__widget-sub-title">Price points per brand</span>
+            <span
+              class="marketing-dashboard__widget-sub-title">{{selectedCategory === "All categories" ? "Price points per brand" : selectedCategory}}</span>
           </div>
 
           <canvas *ngIf="hasBubbleChart"
@@ -85,33 +95,32 @@
         <div class="marketing-dashboard__widget">
           <div class="marketing-dashboard__widget-title">
             Assortment Mix
-            <span class="marketing-dashboard__widget-sub-title">Categories split per brand</span>
+            <span
+              class="marketing-dashboard__widget-sub-title">{{selectedCategory === "All categories" ? "Categories split per brand" : selectedCategory}}</span>
           </div>
-
           <div class="marketing-dashboard__widget-assortment">
             <div *ngFor="let retailer of selectedRetailers">
               <canvas *ngIf="hasStackedChart"
                       baseChart
                       [chartType]="'horizontalBar'"
+                      [plugins]="pluginDataLabels"
                       [datasets]="chart[retailer].data"
                       [labels]="chart[retailer].labels"
                       [options]="chart[retailer].options"
-                      [legend]="false"
+                      [legend]="true"
                       [colors]="colors"
                       (chartClick)="onChartClick($event)">
               </canvas>
             </div>
           </div>
         </div>
-
         <div class="marketing-dashboard__widget-wrapper marketing-dashboard__new-ins-wrapper">
           <div class="marketing-dashboard__widget marketing-dashboard__new-ins">
             <div class="marketing-dashboard__widget-title">
               New ins
-              <span class="marketing-dashboard__widget-sub-title">New arrivals per brand</span>
+              <span
+                class="marketing-dashboard__widget-sub-title">{{selectedCategory === "All categories" ? "New arrivals per brand" : selectedCategory}}</span>
             </div>
-            <span>{{selectedCategory}}</span>
-
             <canvas *ngIf="hasNewArrivalsChart"
                     baseChart
                     [chartType]="'bar'"
@@ -122,16 +131,6 @@
                     [legend]="true"
                     (chartClick)="onChartClick($event)">
             </canvas>
-          </div>
-
-          <div class="marketing-dashboard__widget marketing-dashboard__bestseller">
-            <div class="marketing-dashboard__widget-title">
-              Bestseller
-            </div>
-            <img src="../../assets/img/bestseller.png" alt="Bestseller">
-            <div class="marketing-dashboard__widget-sub-title">
-              Zara poplin shirt
-            </div>
           </div>
         </div>
       </div>

@@ -1,7 +1,11 @@
 import {Component, OnInit} from "@angular/core";
 import {FormBuilder, FormGroup} from "@angular/forms";
+import * as Chart from "chart.js";
+import * as pluginDataLabels from "chartjs-plugin-datalabels";
 import {Subject} from "rxjs";
 import {takeUntil} from "rxjs/operators";
+
+Chart.defaults.global.plugins.datalabels.display = false;
 
 /* tslint:disable */
 
@@ -17,11 +21,11 @@ export class MarketingDashboardComponent implements OnInit {
   public bubbleChart: any = {};
   public retailers: any = ["Zara", "Uniqlo", "HM"];
   public selectedRetailers: any = ["Zara", "Uniqlo", "HM"];
-  public categories: any = ["All", "Dresses", "T-shirts"];
-  public timeFrames: any = ["1", "2", "3"];
-  public selectedCategory = "All";
+  public categories: any = ["All categories", "Dresses", "T-shirts"];
+  public timeFrames: any = ["Last week", "Last month", "Last year"];
+  public selectedCategory = "All categories";
   public dataPoints: any = {
-    "All": {
+    "All categories": {
       Zara: [30, 7, 3, 3, 11, 1, 19, 4, 22],
       Uniqlo: [49, 4, 3, 8, 9, 2, 4, 10, 11],
       HM: [37, 5, 2, 5, 10, 2, 12, 7, 20]
@@ -38,7 +42,7 @@ export class MarketingDashboardComponent implements OnInit {
     }
   };
   public labels: any = ["Accessories", "Blazers", "Shirts", "Bodysuits", "Dresses", "Jeans", "Jumpsuits", "Knitwear", "Nightwear", "Outerwear", "Polo Shirts", "Shoes", "Shorts", "Skirts", "Socks and Tights", "Sweatshirts", "Swimwear", "T-Shirts", "Trousers", "Underwear", "Others"];
-  public colors: any = ["#009689", "#225450", "#8A3A24", "#D67049", "#D8B75D", "#AC365C", "#5E152C", "#2F6936", "#61A74A", "#2995AB", "#009689", "#225450", "#8A3A24", "#D67049", "#D8B75D", "#AC365C", "#5E152C", "#2F6936", "#61A74A", "#2995AB", "#009689"];
+  public colors: any = ["#009689", "#225450", "#d8b75c", "#D67049", "#D8B75D", "#AC365C", "#5E152C", "#2F6936", "#61A74A", "#2995AB", "#009689", "#225450", "#8A3A24", "#D67049", "#D8B75D", "#AC365C", "#5E152C", "#2F6936", "#61A74A", "#2995AB", "#009689"];
   public data: any = [];
   public retailer: any = {};
   public newArrivals: any = {};
@@ -47,6 +51,7 @@ export class MarketingDashboardComponent implements OnInit {
   public hasNewArrivalsChart: boolean = false;
   public hasBubbleChart: boolean = false;
   public hasStackedChart: boolean = false;
+  public pluginDataLabels = [pluginDataLabels];
   private _onDestroy = new Subject<void>();
 
   constructor(
@@ -59,92 +64,92 @@ export class MarketingDashboardComponent implements OnInit {
       this.data.push(this.retailer);
     }
     this.newArrivals = {
-      "All": [
-        {company: "HM", count: 103, timestamp: "05-06-2020"},
-        {company: "HM", count: 60, timestamp: "09-06-2020"},
-        {company: "HM", count: 42, timestamp: "13-06-2020"},
-        {company: "HM", count: 55, timestamp: "17-06-2020"},
-        {company: "HM", count: 44, timestamp: "21-06-2020"},
-        {company: "HM", count: 0, timestamp: "25-06-2020"},
-        {company: "HM", count: 16, timestamp: "29-06-2020"},
-        {company: "HM", count: 14, timestamp: "03-07-2020"},
+      "All categories": [
+        {company: "HM", count: 103, timestamp: "05-06"},
+        {company: "HM", count: 60, timestamp: "09-06"},
+        {company: "HM", count: 42, timestamp: "13-06"},
+        {company: "HM", count: 55, timestamp: "17-06"},
+        {company: "HM", count: 44, timestamp: "21-06"},
+        {company: "HM", count: 0, timestamp: "25-06"},
+        {company: "HM", count: 16, timestamp: "29-06"},
+        {company: "HM", count: 14, timestamp: "03-07"},
 
-        {company: "Uniqlo", count: 99, timestamp: "05-06-2020"},
-        {company: "Uniqlo", count: 31, timestamp: "09-06-2020"},
-        {company: "Uniqlo", count: 0, timestamp: "13-06-2020"},
-        {company: "Uniqlo", count: 56, timestamp: "17-06-2020"},
-        {company: "Uniqlo", count: 0, timestamp: "21-06-2020"},
-        {company: "Uniqlo", count: 1, timestamp: "25-06-2020"},
-        {company: "Uniqlo", count: 5, timestamp: "29-06-2020"},
-        {company: "Uniqlo", count: 3, timestamp: "03-07-2020"},
+        {company: "Uniqlo", count: 99, timestamp: "05-06"},
+        {company: "Uniqlo", count: 31, timestamp: "09-06"},
+        {company: "Uniqlo", count: 0, timestamp: "13-06"},
+        {company: "Uniqlo", count: 56, timestamp: "17-06"},
+        {company: "Uniqlo", count: 0, timestamp: "21-06"},
+        {company: "Uniqlo", count: 1, timestamp: "25-06"},
+        {company: "Uniqlo", count: 5, timestamp: "29-06"},
+        {company: "Uniqlo", count: 3, timestamp: "03-07"},
 
-        {company: "Zara", count: 51, timestamp: "05-06-2020"},
-        {company: "Zara", count: 2, timestamp: "09-06-2020"},
-        {company: "Zara", count: 12, timestamp: "13-06-2020"},
-        {company: "Zara", count: 52, timestamp: "17-06-2020"},
-        {company: "Zara", count: 71, timestamp: "21-06-2020"},
-        {company: "Zara", count: 22, timestamp: "25-06-2020"},
-        {company: "Zara", count: 6, timestamp: "29-06-2020"},
-        {company: "Zara", count: 7, timestamp: "03-07-2020"},
+        {company: "Zara", count: 51, timestamp: "05-06"},
+        {company: "Zara", count: 2, timestamp: "09-06"},
+        {company: "Zara", count: 12, timestamp: "13-06"},
+        {company: "Zara", count: 52, timestamp: "17-06"},
+        {company: "Zara", count: 71, timestamp: "21-06"},
+        {company: "Zara", count: 22, timestamp: "25-06"},
+        {company: "Zara", count: 6, timestamp: "29-06"},
+        {company: "Zara", count: 7, timestamp: "03-07"},
       ],
       "Dresses": [
-        {company: "HM", count: 23, timestamp: "05-06-2020"},
-        {company: "HM", count: 19, timestamp: "09-06-2020"},
-        {company: "HM", count: 6, timestamp: "13-06-2020"},
-        {company: "HM", count: 8, timestamp: "17-06-2020"},
-        {company: "HM", count: 10, timestamp: "21-06-2020"},
-        {company: "HM", count: 0, timestamp: "25-06-2020"},
-        {company: "HM", count: 3, timestamp: "29-06-2020"},
-        {company: "HM", count: 3, timestamp: "03-07-2020"},
-        {company: "Uniqlo", count: 0, timestamp: "05-06-2020"},
-        {company: "Uniqlo", count: 4, timestamp: "09-06-2020"},
-        {company: "Uniqlo", count: 0, timestamp: "13-06-2020"},
-        {company: "Uniqlo", count: 12, timestamp: "17-06-2020"},
-        {company: "Uniqlo", count: 0, timestamp: "21-06-2020"},
-        {company: "Uniqlo", count: 0, timestamp: "25-06-2020"},
-        {company: "Uniqlo", count: 0, timestamp: "29-06-2020"},
-        {company: "Uniqlo", count: 0, timestamp: "03-07-2020"},
+        {company: "HM", count: 23, timestamp: "05-06"},
+        {company: "HM", count: 19, timestamp: "09-06"},
+        {company: "HM", count: 6, timestamp: "13-06"},
+        {company: "HM", count: 8, timestamp: "17-06"},
+        {company: "HM", count: 10, timestamp: "21-06"},
+        {company: "HM", count: 0, timestamp: "25-06"},
+        {company: "HM", count: 3, timestamp: "29-06"},
+        {company: "HM", count: 3, timestamp: "03-07"},
+        {company: "Uniqlo", count: 0, timestamp: "05-06"},
+        {company: "Uniqlo", count: 4, timestamp: "09-06"},
+        {company: "Uniqlo", count: 0, timestamp: "13-06"},
+        {company: "Uniqlo", count: 12, timestamp: "17-06"},
+        {company: "Uniqlo", count: 0, timestamp: "21-06"},
+        {company: "Uniqlo", count: 0, timestamp: "25-06"},
+        {company: "Uniqlo", count: 0, timestamp: "29-06"},
+        {company: "Uniqlo", count: 0, timestamp: "03-07"},
 
-        {company: "Zara", count: 7, timestamp: "05-06-2020"},
-        {company: "Zara", count: 0, timestamp: "09-06-2020"},
-        {company: "Zara", count: 1, timestamp: "13-06-2020"},
-        {company: "Zara", count: 14, timestamp: "17-06-2020"},
-        {company: "Zara", count: 11, timestamp: "21-06-2020"},
-        {company: "Zara", count: 1, timestamp: "25-06-2020"},
-        {company: "Zara", count: 2, timestamp: "29-06-2020"},
-        {company: "Zara", count: 0, timestamp: "03-07-2020"},
+        {company: "Zara", count: 7, timestamp: "05-06"},
+        {company: "Zara", count: 0, timestamp: "09-06"},
+        {company: "Zara", count: 1, timestamp: "13-06"},
+        {company: "Zara", count: 14, timestamp: "17-06"},
+        {company: "Zara", count: 11, timestamp: "21-06"},
+        {company: "Zara", count: 1, timestamp: "25-06"},
+        {company: "Zara", count: 2, timestamp: "29-06"},
+        {company: "Zara", count: 0, timestamp: "03-07"},
       ],
       "T-shirts": [
-        {company: "HM", count: 11, timestamp: "05-06-2020"},
-        {company: "HM", count: 2, timestamp: "09-06-2020"},
-        {company: "HM", count: 7, timestamp: "13-06-2020"},
-        {company: "HM", count: 6, timestamp: "17-06-2020"},
-        {company: "HM", count: 8, timestamp: "21-06-2020"},
-        {company: "HM", count: 0, timestamp: "25-06-2020"},
-        {company: "HM", count: 0, timestamp: "29-06-2020"},
-        {company: "HM", count: 5, timestamp: "03-07-2020"},
+        {company: "HM", count: 11, timestamp: "05-06"},
+        {company: "HM", count: 2, timestamp: "09-06"},
+        {company: "HM", count: 7, timestamp: "13-06"},
+        {company: "HM", count: 6, timestamp: "17-06"},
+        {company: "HM", count: 8, timestamp: "21-06"},
+        {company: "HM", count: 0, timestamp: "25-06"},
+        {company: "HM", count: 0, timestamp: "29-06"},
+        {company: "HM", count: 5, timestamp: "03-07"},
 
-        {company: "Uniqlo", count: 0, timestamp: "05-06-2020"},
-        {company: "Uniqlo", count: 17, timestamp: "09-06-2020"},
-        {company: "Uniqlo", count: 0, timestamp: "13-06-2020"},
-        {company: "Uniqlo", count: 28, timestamp: "17-06-2020"},
-        {company: "Uniqlo", count: 0, timestamp: "21-06-2020"},
-        {company: "Uniqlo", count: 0, timestamp: "25-06-2020"},
-        {company: "Uniqlo", count: 0, timestamp: "29-06-2020"},
-        {company: "Uniqlo", count: 0, timestamp: "03-07-2020"},
+        {company: "Uniqlo", count: 0, timestamp: "05-06"},
+        {company: "Uniqlo", count: 17, timestamp: "09-06"},
+        {company: "Uniqlo", count: 0, timestamp: "13-06"},
+        {company: "Uniqlo", count: 28, timestamp: "17-06"},
+        {company: "Uniqlo", count: 0, timestamp: "21-06"},
+        {company: "Uniqlo", count: 0, timestamp: "25-06"},
+        {company: "Uniqlo", count: 0, timestamp: "29-06"},
+        {company: "Uniqlo", count: 0, timestamp: "03-07"},
 
-        {company: "Zara", count: 1, timestamp: "05-06-2020"},
-        {company: "Zara", count: 1, timestamp: "09-06-2020"},
-        {company: "Zara", count: 4, timestamp: "13-06-2020"},
-        {company: "Zara", count: 0, timestamp: "17-06-2020"},
-        {company: "Zara", count: 8, timestamp: "21-06-2020"},
-        {company: "Zara", count: 0, timestamp: "25-06-2020"},
-        {company: "Zara", count: 0, timestamp: "29-06-2020"},
-        {company: "Zara", count: 0, timestamp: "03-07-2020"},
+        {company: "Zara", count: 1, timestamp: "05-06"},
+        {company: "Zara", count: 1, timestamp: "09-06"},
+        {company: "Zara", count: 4, timestamp: "13-06"},
+        {company: "Zara", count: 0, timestamp: "17-06"},
+        {company: "Zara", count: 8, timestamp: "21-06"},
+        {company: "Zara", count: 0, timestamp: "25-06"},
+        {company: "Zara", count: 0, timestamp: "29-06"},
+        {company: "Zara", count: 0, timestamp: "03-07"},
       ]
     };
     this.prices = {
-      "All": {
+      "All categories": {
         "HM": {
           "1,0 - 1.99": 0.04,
           "2.0 - 2.99": 0.09,
@@ -308,7 +313,7 @@ export class MarketingDashboardComponent implements OnInit {
     this.filtersForm = this.formBuilder.group({
       retailers: [this.retailers],
       categories: [this.selectedCategory],
-      timeFrame: [this.timeFrames]
+      timeFrame: [this.timeFrames[0]]
     });
   }
 
@@ -336,8 +341,8 @@ export class MarketingDashboardComponent implements OnInit {
       this.chart[i.name] = {};
       this.chart[i.name].options = {
         maintainAspectRatio: false,
+        aspectRatio: 3.3,
         responsive: true,
-        aspectRatio: 4.5,
         scales: {
           yAxes: [{
             stacked: true,
@@ -346,12 +351,40 @@ export class MarketingDashboardComponent implements OnInit {
             },
           }],
           xAxes: [{
+            display: false,
             stacked: true,
             gridLines: {
               display: false,
             },
           }]
         },
+        tooltips: {
+          mode: "single",
+          callbacks: {
+            label: (tooltipItem, data) => {
+              let label = data.datasets[tooltipItem.datasetIndex].label || "";
+
+              if (label) {
+                label += ": ";
+              }
+              label += tooltipItem.xLabel + "%";
+              return label;
+            }
+          }
+        },
+        plugins: {
+          datalabels: {
+            color: "white",
+            display: true,
+            formatter: value => value < 5 ? "" : `${value}%`
+          }
+        },
+        legend: {
+          position: "bottom",
+          labels: {
+            boxWidth: 12
+          }
+        }
       };
       this.chart[i.name].data = [];
       for (let j in i.dataPoints) {
@@ -392,6 +425,11 @@ export class MarketingDashboardComponent implements OnInit {
             callback: (tick, index, array) => (index % 2) ? "" : tick
           }
         }]
+      },
+      legend: {
+        labels: {
+          boxWidth: 12
+        }
       }
     };
     this.newArrivalsChart.data = [];
