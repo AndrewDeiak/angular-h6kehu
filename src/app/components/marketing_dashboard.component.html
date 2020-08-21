@@ -78,16 +78,34 @@
             <span
               class="marketing-dashboard__widget-sub-title">{{selectedCategory === "All categories" ? "Price points per brand" : selectedCategory}}</span>
           </div>
+          <mat-table [dataSource]="pricePointsPerBrand">
+            <ng-container *ngFor="let displayedColumn of displayedColumnsPricePoints" [matColumnDef]="displayedColumn">
+              <ng-container *ngIf="displayedColumn === 'priceRange'">
+                <mat-header-cell *matHeaderCellDef>Full Price Structure</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element[displayedColumn]}}</mat-cell>
+              </ng-container>
 
-          <canvas *ngIf="hasBubbleChart"
-                  baseChart
-                  [chartType]="'bubble'"
-                  [datasets]="bubbleChart.data"
-                  [options]="bubbleChart.options"
-                  [legend]="false"
-                  [colors]="colors"
-                  (chartClick)="onChartClick($event)">
-          </canvas>
+              <ng-container *ngIf="displayedColumn !== 'priceRange'">
+                <mat-header-cell *matHeaderCellDef>{{displayedColumn}}</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  <div class="percent-cell">
+                    <div class="circle-wrapper">
+                      <!-- TODO: make as directive to calculate circle radius -->
+                      <div class="circle"
+                           [style.background-color]="element[displayedColumn].color"
+                           [style.width.px]="element[displayedColumn].percent / 2.3"
+                           [style.height.px]="element[displayedColumn].percent / 2.3">
+                      </div>
+                    </div>
+                    <div class="percent">{{element[displayedColumn].percent}} %</div>
+                  </div>
+                </mat-cell>
+              </ng-container>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumnsPricePoints"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumnsPricePoints;"></mat-row>
+          </mat-table>
         </div>
       </div>
 
@@ -104,9 +122,9 @@
                       baseChart
                       [chartType]="'horizontalBar'"
                       [plugins]="pluginDataLabels"
-                      [datasets]="chart[retailer].data"
-                      [labels]="chart[retailer].labels"
-                      [options]="chart[retailer].options"
+                      [datasets]="stackedCharts[retailer].data"
+                      [labels]="stackedCharts[retailer].labels"
+                      [options]="stackedCharts[retailer].options"
                       [legend]="true"
                       [colors]="colors"
                       (chartClick)="onChartClick($event)">

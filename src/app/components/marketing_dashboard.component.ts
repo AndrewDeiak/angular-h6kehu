@@ -17,7 +17,7 @@ Chart.defaults.global.plugins.datalabels.display = false;
 export class MarketingDashboardComponent implements OnInit {
   public filtersForm: FormGroup;
   public dataset: any = {};
-  public chart: any = {};
+  public stackedCharts: any = {};
   public bubbleChart: any = {};
   public retailers: any = ["Zara", "Uniqlo", "HM"];
   public selectedRetailers: any = ["Zara", "Uniqlo", "HM"];
@@ -44,7 +44,6 @@ export class MarketingDashboardComponent implements OnInit {
   public labels: any = ["Accessories", "Blazers", "Shirts", "Bodysuits", "Dresses", "Jeans", "Jumpsuits", "Knitwear", "Nightwear", "Outerwear", "Polo Shirts", "Shoes", "Shorts", "Skirts", "Socks and Tights", "Sweatshirts", "Swimwear", "T-Shirts", "Trousers", "Underwear", "Others"];
   public colors: any = ["#009689", "#225450", "#d8b75c", "#D67049", "#D8B75D", "#AC365C", "#5E152C", "#2F6936", "#61A74A", "#2995AB", "#009689", "#225450", "#8A3A24", "#D67049", "#D8B75D", "#AC365C", "#5E152C", "#2F6936", "#61A74A", "#2995AB", "#009689"];
   public data: any = [];
-  public retailer: any = {};
   public newArrivals: any = {};
   public newArrivalsChart: any = {};
   public prices: any = {};
@@ -53,15 +52,108 @@ export class MarketingDashboardComponent implements OnInit {
   public hasStackedChart: boolean = false;
   public pluginDataLabels = [pluginDataLabels];
   private _onDestroy = new Subject<void>();
+  public pricePointsPerBrand = [
+    {
+      priceRange: "€0 - 9.99",
+      "Zara": {
+        color: "#009689",
+        percent: 0
+      },
+      "Uniqlo": {
+        color: "#225450",
+        percent: 35
+      },
+      "HM": {
+        color: "#d8b75c",
+        percent: 10
+      },
+    },
+    {
+      priceRange: "€10 - 19.99",
+      "Zara": {
+        color: "#009689",
+        percent: 2.5
+      },
+      "Uniqlo": {
+        color: "#225450",
+        percent: 5
+      },
+      "HM": {
+        color: "#d8b75c",
+        percent: 10
+      },
+    },
+    {
+      priceRange: "€20 - 29.99",
+      "Zara": {
+        color: "#009689",
+        percent: 2.5
+      },
+      "Uniqlo": {
+        color: "#225450",
+        percent: 20
+      },
+      "HM": {
+        color: "#d8b75c",
+        percent: 10
+      },
+    },
+    {
+      priceRange: "€30 - 39.99",
+      "Zara": {
+        color: "#009689",
+        percent: 5
+      },
+      "Uniqlo": {
+        color: "#225450",
+        percent: 10
+      },
+      "HM": {
+        color: "#d8b75c",
+        percent: 20
+      },
+    },
+    {
+      priceRange: "€40 - 49.99",
+      "Zara": {
+        color: "#009689",
+        percent: 5
+      },
+      "Uniqlo": {
+        color: "#225450",
+        percent: 10
+      },
+      "HM": {
+        color: "#d8b75c",
+        percent: 20
+      },
+    },
+    {
+      priceRange: "€50+",
+      "Zara": {
+        color: "#009689",
+        percent: 85
+      },
+      "Uniqlo": {
+        color: "#225450",
+        percent: 20
+      },
+      "HM": {
+        color: "#d8b75c",
+        percent: 30
+      },
+    },
+  ];
+  public displayedColumnsPricePoints = ["priceRange",  "Zara", "Uniqlo", "HM"];
 
   constructor(
     private formBuilder: FormBuilder) {
-    for (let i in this.retailers) {
-      this.retailer = {};
-      this.retailer.name = this.retailers[i];
-      this.retailer.dataPoints = this.dataPoints[this.selectedCategory][this.retailers[i]];
-      this.retailer.categories = this.labels;
-      this.data.push(this.retailer);
+    for (let retailer of this.retailers) {
+      let dataItem: any = {};
+      dataItem.name = retailer;
+      dataItem.dataPoints = this.dataPoints[this.selectedCategory][retailer];
+      dataItem.categories = this.labels;
+      this.data.push(dataItem);
     }
     this.newArrivals = {
       "All categories": [
@@ -319,15 +411,20 @@ export class MarketingDashboardComponent implements OnInit {
 
   onChangeForm() {
     this.filtersForm.valueChanges.pipe(takeUntil(this._onDestroy)).subscribe(value => {
+      // TODO find a better approach
+      const retailers = [...value.retailers];
+      retailers.unshift("priceRange");
+      this.displayedColumnsPricePoints = retailers;
+
       this.selectedCategory = value.categories;
       this.selectedRetailers = value.retailers;
       this.data = [];
-      for (let i of value.retailers) {
-        this.retailer = {};
-        this.retailer.name = i;
-        this.retailer.dataPoints = this.dataPoints[this.selectedCategory][i];
-        this.retailer.categories = this.labels;
-        this.data.push(this.retailer);
+      for (let retailer of value.retailers) {
+        let dataItem: any = {};
+        dataItem.name = retailer;
+        dataItem.dataPoints = this.dataPoints[this.selectedCategory][retailer];
+        dataItem.categories = this.labels;
+        this.data.push(dataItem);
       }
       this.createStackedChart();
       this.createNewArrivalsChart();
@@ -337,25 +434,21 @@ export class MarketingDashboardComponent implements OnInit {
 
   createStackedChart() {
     this.hasStackedChart = false;
-    for (let i of this.data) {
-      this.chart[i.name] = {};
-      this.chart[i.name].options = {
+    for (let dataItem of this.data) {
+      this.stackedCharts[dataItem.name] = {};
+      this.stackedCharts[dataItem.name].options = {
         maintainAspectRatio: false,
         aspectRatio: 3.3,
         responsive: true,
         scales: {
           yAxes: [{
             stacked: true,
-            gridLines: {
-              display: false,
-            },
+            gridLines: {display: false},
           }],
           xAxes: [{
             display: false,
             stacked: true,
-            gridLines: {
-              display: false,
-            },
+            gridLines: {display: false},
           }]
         },
         tooltips: {
@@ -381,23 +474,23 @@ export class MarketingDashboardComponent implements OnInit {
         },
         legend: {
           position: "bottom",
-          labels: {
-            boxWidth: 12
-          }
+          labels: {boxWidth: 12}
         }
       };
-      this.chart[i.name].data = [];
-      for (let j in i.dataPoints) {
-        this.dataset = {};
-        this.dataset.data = [];
-        this.dataset.data.push(i.dataPoints[j]);
-        this.dataset.label = i.categories[j];
-        this.dataset.stack = i.name;
-        this.dataset.backgroundColor = this.colors[j];
-        this.chart[i.name].data.push(this.dataset);
+
+      this.stackedCharts[dataItem.name].data = [];
+
+      for (let dataItemPoint in dataItem.dataPoints) {
+        let dataset: any = {};
+        dataset.data = [];
+        dataset.data.push(dataItem.dataPoints[dataItemPoint]);
+        dataset.label = dataItem.categories[dataItemPoint];
+        dataset.stack = dataItem.name;
+        dataset.backgroundColor = this.colors[dataItemPoint];
+        this.stackedCharts[dataItem.name].data.push(dataset);
       }
-      this.chart[i.name].labels = [];
-      this.chart[i.name].labels.push(this.retailers[this.data.indexOf(i)]);
+      this.stackedCharts[dataItem.name].labels = [];
+      this.stackedCharts[dataItem.name].labels.push(this.retailers[this.data.indexOf(dataItem)]);
       setTimeout(() => {
         this.hasStackedChart = true;
       });
@@ -429,25 +522,26 @@ export class MarketingDashboardComponent implements OnInit {
       legend: {
         labels: {
           boxWidth: 12
-        }
+        },
+        position: "bottom"
       }
     };
     this.newArrivalsChart.data = [];
     this.newArrivalsChart.labels = [];
 
-    for (let i in this.selectedRetailers) {
+    for (let retailer in this.selectedRetailers) {
       let dataSet: any = {};
       let t = [];
       for (let j in this.newArrivals[this.selectedCategory]) {
-        if (this.selectedRetailers[i] == this.newArrivals[this.selectedCategory][j].company) {
+        if (this.selectedRetailers[retailer] == this.newArrivals[this.selectedCategory][j].company) {
           t.push(this.newArrivals[this.selectedCategory][j].count);
           this.newArrivalsChart.labels.push(this.newArrivals[this.selectedCategory][j].timestamp);
         }
       }
       dataSet.data = t;
-      dataSet.label = this.selectedRetailers[i];
+      dataSet.label = this.selectedRetailers[retailer];
       dataSet.fill = true;
-      dataSet.backgroundColor = this.colors[i];
+      dataSet.backgroundColor = this.colors[retailer];
       this.newArrivalsChart.data.push(dataSet);
     }
     this.newArrivalsChart.labels = this.newArrivalsChart.labels.filter(this.onlyUnique);
