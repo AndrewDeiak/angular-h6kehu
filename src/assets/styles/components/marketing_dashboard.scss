@@ -129,6 +129,9 @@
 
     &-price {
       overflow-x: auto;
+      height: 419px;
+      display: flex;
+      flex-direction: column;
 
       .mat-table {
         min-width: 450px;
@@ -172,10 +175,12 @@
     }
 
     &-assortment {
-      height: 150px;
+      height: 154px;
       overflow-x: hidden;
       overflow-y: auto;
       padding-right: 10px;
+      display: flex;
+      flex-direction: column;
     }
   }
 
@@ -218,6 +223,8 @@
     width: 100%;
     height: 261px;
     padding-bottom: 50px;
+    display: flex;
+    flex-direction: column;
   }
 
   .hidden-chart {
@@ -248,11 +255,43 @@
       }
     }
   }
+
+  .no-results-found {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    padding: 28px 0;
+    color: #a3a3a3;
+
+    .empty-label {
+      padding-top: 13px;
+    }
+  }
 }
 
 .marketing-dashboard__toolbar-select {
   .mat-pseudo-checkbox-checked {
     background: #00968A;
+  }
+
+  .mat-option-text {
+    display: flex;
+    align-items: center;
+  }
+
+  .icon-disabled {
+    width: 20px;
+    height: 20px;
+
+    &._left {
+      margin-right: 10px;
+    }
+
+    &._right {
+      margin-left: 10px;
+    }
   }
 
   &.mat-option.mat-selected:not(.mat-option-disabled) {
