@@ -129,7 +129,7 @@
 
     &-price {
       overflow-x: auto;
-      height: 419px;
+      height: 465px;
       display: flex;
       flex-direction: column;
 
@@ -175,7 +175,7 @@
     }
 
     &-assortment {
-      height: 154px;
+      height: 200px;
       overflow-x: hidden;
       overflow-y: auto;
       padding-right: 10px;
@@ -229,9 +229,16 @@
 
   .hidden-chart {
     position: relative;
-    background: url("../../img/hidden-chart.jpg") no-repeat center center;
-    background-size: cover;
     height: 150px;
+
+    &-discount{
+      background: url("../../img/discount-evolution-hidden.jpg") no-repeat center center;
+      background-size: contain;
+    }
+    &-average{
+      background: url("../../img/average-price-hidden.jpg") no-repeat center center;
+      background-size: contain;
+    }
 
     button {
       position: absolute;
@@ -248,10 +255,10 @@
       color: #fff;
       cursor: pointer;
       transition: 0.3s ease;
+      box-shadow: 1px 1px 8px 8px rgb(255, 255, 255, 0.48);
 
       &:hover {
         background: #038076;
-        box-shadow: 1px 1px 8px 8px rgb(255, 255, 255, 0.48);
       }
     }
   }

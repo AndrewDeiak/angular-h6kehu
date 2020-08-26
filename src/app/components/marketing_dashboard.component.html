@@ -94,8 +94,7 @@
               class="marketing-dashboard__widget-sub-title">{{selectedCategory === "All categories" ? "Price points per brand" : selectedCategory}}</span>
           </div>
 
-          <ng-container
-            *ngIf="selectedBrands && selectedBrands.length && selectedCategory; else emptyTemplate">
+          <ng-container *ngIf="selectedBrands && selectedBrands.length && selectedCategory && timeFrame; else emptyTemplate">
             <mat-table [dataSource]="priceStructure?.data">
               <ng-container *ngFor="let displayedColumn of priceStructure.displayedColumns"
                             [matColumnDef]="displayedColumn">
@@ -140,7 +139,7 @@
           </div>
           <div class="marketing-dashboard__widget-assortment">
             <canvas baseChart
-                    *ngIf="selectedBrands && selectedBrands.length && selectedCategory; else emptyTemplate"
+                    *ngIf="selectedBrands && selectedBrands.length && timeFrame ; else emptyTemplate"
                     chartType="horizontalBar"
                     [datasets]="assortmentMixChart.data"
                     [labels]="assortmentMixChart.labels"
@@ -150,6 +149,7 @@
             </canvas>
           </div>
         </div>
+
         <div class="marketing-dashboard__widget-wrapper marketing-dashboard__new-ins-wrapper">
           <div class="marketing-dashboard__widget marketing-dashboard__new-ins">
             <div class="marketing-dashboard__widget-title">
@@ -159,7 +159,7 @@
               </span>
             </div>
 
-            <canvas *ngIf="selectedBrands && selectedBrands.length && selectedCategory; else emptyTemplate"
+            <canvas *ngIf="selectedBrands && selectedBrands.length && selectedCategory && timeFrame; else emptyTemplate"
                     baseChart
                     chartType="bar"
                     [datasets]="newInsChart.data"
@@ -180,7 +180,7 @@
             <span class="marketing-dashboard__widget-sub-title">Average price per category</span>
           </div>
 
-          <div class="hidden-chart">
+          <div class="hidden-chart hidden-chart-average">
             <button>Access full data</button>
           </div>
         </div>
@@ -193,7 +193,7 @@
             <span class="marketing-dashboard__widget-sub-title">Discount structure per brand</span>
           </div>
 
-          <div class="hidden-chart">
+          <div class="hidden-chart hidden-chart-discount">
             <button>Access full data</button>
           </div>
         </div>
@@ -205,6 +205,6 @@
 <ng-template #emptyTemplate>
   <div class="no-results-found">
     <img src="../../assets/img/no-results-found.svg" alt="no-results-found">
-    <div class="empty-label">No results found</div>
+    <div class="empty-label">Select filters</div>
   </div>
 </ng-template>

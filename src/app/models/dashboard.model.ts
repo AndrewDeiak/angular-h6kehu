@@ -2,11 +2,11 @@ export interface DashboardData {
   brands: SelectItem[];
   brandColors: { [key: string]: string };
   categories: SelectItem[];
+  assortmentMix: AssortmentMix;
   availableCategories: {
     [key: string]: {
       priceStructure: PriceStructure;
-      newIns: NewIns[];
-      assortmentMix: AssortmentMix[];
+      newIns: NewIns;
       statistic?: {
         avgDiscount: Statistic;
         highestMfp: Statistic;
@@ -26,6 +26,7 @@ export interface StatisticData {
 }
 
 export interface SelectItem {
+  id?: string;
   value: string;
   disabled: boolean;
 }
@@ -41,13 +42,18 @@ interface PriceStructureData {
 }
 
 interface NewIns {
-  count: number;
-  company: string;
-  timestamp: string;
+  values: {[key: string]: number[]};
+  timestamps: string[];
 }
 
 interface AssortmentMix {
-  data: number[];
-  label: string;
-  color: string;
+  categoriesLabels: string[];
+  values: {[key: string]: number[]};
+  colors: string[];
+}
+
+interface AssortmentMix2 {
+  value: number;
+  brand: string;
+  category: string;
 }

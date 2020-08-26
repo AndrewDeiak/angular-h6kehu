@@ -1,17 +1,25 @@
-import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from "@angular/core";
+import {Component, OnDestroy, OnInit} from "@angular/core";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import * as Chart from "chart.js";
+import {ChartDataSets} from "chart.js";
 import * as pluginDataLabels from "chartjs-plugin-datalabels";
-import {Subject} from "rxjs";
+import {combineLatest, Subject} from "rxjs";
 import {takeUntil} from "rxjs/operators";
 import {DashboardData, PriceStructure, SelectItem, StatisticData} from "../models/dashboard.model";
 
 Chart.defaults.global.plugins.datalabels.display = false;
 
+enum TimeFrames {
+  LastWeek = "lastWeek",
+  LastMoth = "lastMonth",
+  CustomPeriod = "customPeriod"
+}
+
+export const WEEK_LENGTH = 7;
+
 @Component({
   selector: "app-marketing-dashboard",
   templateUrl: "./marketing_dashboard.component.html",
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MarketingDashboardComponent implements OnInit, OnDestroy {
   public RESPONSE_DATA: DashboardData = {
@@ -51,6 +59,15 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
       {value: "Swimwear", disabled: true},
       {value: "Others", disabled: true},
     ],
+    assortmentMix: {
+      categoriesLabels: ["Accessories", "Blazers", "Shirts", "Bodysuits", "Dresses", "Jeans", "Jumpsuits", "Knitwear", "Nightwear", "Outerwear", "Polo Shirts", "Shoes", "Shorts", "Skirts", "Socks and Tights", "Sweatshirts", "Swimwear", "T-Shirts", "Trousers", "Underwear", "Others"],
+      colors: ["#009689", "#225450", "#d8b75c", "#D67049", "#D8B75D", "#AC365C", "#5E152C", "#2F6936", "#61A74A", "#2995AB", "#009689", "#225450", "#8A3A24", "#D67049", "#D8B75D", "#AC365C", "#5E152C", "#2F6936", "#61A74A", "#2995AB", "#009689"],
+      values: {
+        Zara: [5, 4, 3, 2, 1, 5, 4, 3, 2, 1, 10, 10, 9, 8, 7, 1, 5, 5, 5, 5, 5],
+        HM: [1, 1, 19, 2, 1, 1, 4, 3, 2, 1, 14, 1, 2, 8, 14, 1, 2, 2, 2, 5, 14],
+        Uniqlo: [1, 8, 12, 2, 1, 1, 4, 3, 2, 1, 14, 1, 9, 8, 7, 1, 5, 5, 5, 5, 5]
+      },
+    },
     availableCategories: {
       "All categories": {
         priceStructure: {
@@ -95,550 +112,64 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
           displayedColumns: ["Price range", "Zara", "Uniqlo", "HM"],
           measurement: "%"
         },
-        newIns: [
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "25-07-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "26-07-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "27-07-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "28-07-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "29-07-2020"
-          },
-          {
-            count: 2,
-            company: "Zara",
-            timestamp: "30-07-2020"
-          },
-          {
-            count: 8,
-            company: "Zara",
-            timestamp: "31-07-2020"
-          },
-          {
-            count: 10,
-            company: "Zara",
-            timestamp: "01-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "02-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "03-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "04-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "05-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "06-08-2020"
-          },
-          {
-            count: 6,
-            company: "Zara",
-            timestamp: "07-08-2020"
-          },
-          {
-            count: 10,
-            company: "Zara",
-            timestamp: "08-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "09-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "10-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "11-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "12-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "13-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "14-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "15-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "16-08-2020"
-          },
-          {
-            count: 13,
-            company: "Zara",
-            timestamp: "17-08-2020"
-          },
-          {
-            count: 15,
-            company: "Zara",
-            timestamp: "18-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "19-08-2020"
-          },
-          {
-            count: 13,
-            company: "Zara",
-            timestamp: "20-08-2020"
-          },
-          {
-            count: 3,
-            company: "Zara",
-            timestamp: "21-08-2020"
-          },
-          {
-            count: 1,
-            company: "Zara",
-            timestamp: "22-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "23-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "24-08-2020"
-          },
-          {
-            count: 22,
-            company: "HM",
-            timestamp: "25-07-2020"
-          },
-          {
-            count: 41,
-            company: "HM",
-            timestamp: "26-07-2020"
-          },
-          {
-            count: 7,
-            company: "HM",
-            timestamp: "27-07-2020"
-          },
-          {
-            count: 58,
-            company: "HM",
-            timestamp: "28-07-2020"
-          },
-          {
-            count: 38,
-            company: "HM",
-            timestamp: "29-07-2020"
-          },
-          {
-            count: 44,
-            company: "HM",
-            timestamp: "30-07-2020"
-          },
-          {
-            count: 105,
-            company: "HM",
-            timestamp: "31-07-2020"
-          },
-          {
-            count: 38,
-            company: "HM",
-            timestamp: "01-08-2020"
-          },
-          {
-            count: 74,
-            company: "HM",
-            timestamp: "02-08-2020"
-          },
-          {
-            count: 2,
-            company: "HM",
-            timestamp: "03-08-2020"
-          },
-          {
-            count: 4,
-            company: "HM",
-            timestamp: "04-08-2020"
-          },
-          {
-            count: 145,
-            company: "HM",
-            timestamp: "05-08-2020"
-          },
-          {
-            count: 116,
-            company: "HM",
-            timestamp: "06-08-2020"
-          },
-          {
-            count: 116,
-            company: "HM",
-            timestamp: "07-08-2020"
-          },
-          {
-            count: 116,
-            company: "HM",
-            timestamp: "08-08-2020"
-          },
-          {
-            count: 116,
-            company: "HM",
-            timestamp: "09-08-2020"
-          },
-          {
-            count: 116,
-            company: "HM",
-            timestamp: "10-08-2020"
-          },
-          {
-            count: 116,
-            company: "HM",
-            timestamp: "11-08-2020"
-          },
-          {
-            count: 116,
-            company: "HM",
-            timestamp: "12-08-2020"
-          },
-          {
-            count: 122,
-            company: "HM",
-            timestamp: "13-08-2020"
-          },
-          {
-            count: 95,
-            company: "HM",
-            timestamp: "14-08-2020"
-          },
-          {
-            count: 12,
-            company: "HM",
-            timestamp: "15-08-2020"
-          },
-          {
-            count: 6,
-            company: "HM",
-            timestamp: "16-08-2020"
-          },
-          {
-            count: 24,
-            company: "HM",
-            timestamp: "17-08-2020"
-          },
-          {
-            count: 1,
-            company: "HM",
-            timestamp: "18-08-2020"
-          },
-          {
-            count: 122,
-            company: "HM",
-            timestamp: "19-08-2020"
-          },
-          {
-            count: 20,
-            company: "HM",
-            timestamp: "20-08-2020"
-          },
-          {
-            count: 65,
-            company: "HM",
-            timestamp: "21-08-2020"
-          },
-          {
-            count: 15,
-            company: "HM",
-            timestamp: "22-08-2020"
-          },
-          {
-            count: 0,
-            company: "HM",
-            timestamp: "23-08-2020"
-          },
-          {
-            count: 0,
-            company: "HM",
-            timestamp: "24-08-2020"
-          },
-          {
-            count: 3,
-            company: "Uniqlo",
-            timestamp: "25-07-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "26-07-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "27-07-2020"
-          },
-          {
-            count: 36,
-            company: "Uniqlo",
-            timestamp: "28-07-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "29-07-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "30-07-2020"
-          },
-          {
-            count: 6,
-            company: "Uniqlo",
-            timestamp: "31-07-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "01-08-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "02-08-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "03-08-2020"
-          },
-          {
-            count: 188,
-            company: "Uniqlo",
-            timestamp: "04-08-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "05-08-2020"
-          },
-          {
-            count: 9,
-            company: "Uniqlo",
-            timestamp: "06-08-2020"
-          },
-          {
-            count: 28,
-            company: "Uniqlo",
-            timestamp: "07-08-2020"
-          },
-          {
-            count: 3,
-            company: "Uniqlo",
-            timestamp: "08-08-2020"
-          },
-          {
-            count: 3,
-            company: "Uniqlo",
-            timestamp: "09-08-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "10-08-2020"
-          },
-          {
-            count: 4,
-            company: "Uniqlo",
-            timestamp: "11-08-2020"
-          },
-          {
-            count: 7,
-            company: "Uniqlo",
-            timestamp: "12-08-2020"
-          },
-          {
-            count: 5,
-            company: "Uniqlo",
-            timestamp: "13-08-2020"
-          },
-          {
-            count: 2,
-            company: "Uniqlo",
-            timestamp: "14-08-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "15-08-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "16-08-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "17-08-2020"
-          },
-          {
-            count: 7,
-            company: "Uniqlo",
-            timestamp: "18-08-2020"
-          },
-          {
-            count: 46,
-            company: "Uniqlo",
-            timestamp: "19-08-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "20-08-2020"
-          },
-          {
-            count: 2,
-            company: "Uniqlo",
-            timestamp: "21-08-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "22-08-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "23-08-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "24-08-2020"
-          },
-        ],
-        assortmentMix: [
-          {
-            data: [20, 5, 5],
-            label: "Accessories",
-            color: "#009689",
-          },
-          {
-            data: [5, 5, 20],
-            label: "Dresses",
-            color: "#225450",
-          },
-          {
-            data: [2, 5, 5],
-            label: "Blouses&Shirts",
-            color: "#d8b75c",
-          },
-          {
-            data: [2, 20, 5],
-            label: "Trousers",
-            color: "#D67049",
-          },
-          {
-            data: [11, 5, 5],
-            label: "Jeans",
-            color: "#D8B75D",
-          },
-          {
-            data: [5, 5, 5],
-            label: "Knitwear",
-            color: "#AC365C",
-          },
-          {
-            data: [5, 5, 5],
-            label: "Outerwear",
-            color: "#5E152C",
-          },
-          {
-            data: [5, 5, 5],
-            label: "Shoes",
-            color: "#2F6936",
-          },
-          {
-            data: [5, 5, 5],
-            label: "Shorts",
-            color: "#61A74A",
-          },
-          {
-            data: [5, 5, 5],
-            label: "Skirts",
-            color: "#2995AB",
-          },
-          {
-            data: [5, 5, 5],
-            label: "Sweatshirts",
-            color: "#009689",
-          },
-          {
-            data: [5, 5, 5],
-            label: "T-shirts",
-            color: "#225450",
-          },
-          {
-            data: [5, 5, 5],
-            label: "Underwear",
-            color: "#8A3A24",
-          },
-          {
-            data: [5, 5, 5],
-            label: "Swimwear",
-            color: "#D67049",
-          },
-          {
-            data: [5, 5, 5],
-            label: "Others",
-            color: "#D8B75D",
-          },
-        ],
+        newIns: {
+          values: {
+            Zara: [
+              76, 87, 65, 34, 19,
+              21, 21, 72, 1, 24,
+              68, 70, 89, 47, 52,
+              4, 81, 73, 45, 81,
+              72, 100, 26, 76, 16,
+              77, 26, 5, 56, 37, 32],
+            HM: [
+              72, 17, 45, 16, 38,
+              54, 70, 35, 27, 91,
+              93, 86, 29, 82, 91,
+              26, 99, 75, 86, 25,
+              57, 57, 76, 88, 43,
+              6, 20, 47, 39, 43, 99],
+            Uniqlo: [
+              80, 16, 1, 43, 98,
+              92, 65, 69, 13, 73,
+              73, 23, 70, 65, 7,
+              40, 18, 57, 42, 85,
+              16, 15, 47, 52, 59,
+              63, 46, 38, 9, 50, 88],
+          },
+          timestamps: [
+            "25 Jul",
+            "26 Jul",
+            "27 Jul",
+            "28 Jul",
+            "29 Jul",
+            "30 Jul",
+            "31 Jul",
+            "01 Aug",
+            "02 Aug",
+            "03 Aug",
+            "04 Aug",
+            "05 Aug",
+            "06 Aug",
+            "07 Aug",
+            "08 Aug",
+            "09 Aug",
+            "10 Aug",
+            "11 Aug",
+            "12 Aug",
+            "13 Aug",
+            "14 Aug",
+            "15 Aug",
+            "16 Aug",
+            "17 Aug",
+            "18 Aug",
+            "19 Aug",
+            "20 Aug",
+            "21 Aug",
+            "22 Aug",
+            "23 Aug",
+            "24 Aug"
+          ],
+        },
         statistic: {
           avgDiscount: {
             data: [
@@ -701,550 +232,6 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
           displayedColumns: ["Price range", "Zara", "Uniqlo", "HM"],
           measurement: "%"
         },
-        newIns: [
-          {
-            count: 150,
-            company: "Zara",
-            timestamp: "25-07-2020"
-          },
-          {
-            count: 140,
-            company: "Zara",
-            timestamp: "26-07-2020"
-          },
-          {
-            count: 130,
-            company: "Zara",
-            timestamp: "27-07-2020"
-          },
-          {
-            count: 120,
-            company: "Zara",
-            timestamp: "28-07-2020"
-          },
-          {
-            count: 70,
-            company: "Zara",
-            timestamp: "29-07-2020"
-          },
-          {
-            count: 2,
-            company: "Zara",
-            timestamp: "30-07-2020"
-          },
-          {
-            count: 80,
-            company: "Zara",
-            timestamp: "31-07-2020"
-          },
-          {
-            count: 10,
-            company: "Zara",
-            timestamp: "01-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "02-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "03-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "04-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "05-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "06-08-2020"
-          },
-          {
-            count: 6,
-            company: "Zara",
-            timestamp: "07-08-2020"
-          },
-          {
-            count: 10,
-            company: "Zara",
-            timestamp: "08-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "09-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "10-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "11-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "12-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "13-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "14-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "15-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "16-08-2020"
-          },
-          {
-            count: 13,
-            company: "Zara",
-            timestamp: "17-08-2020"
-          },
-          {
-            count: 15,
-            company: "Zara",
-            timestamp: "18-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "19-08-2020"
-          },
-          {
-            count: 13,
-            company: "Zara",
-            timestamp: "20-08-2020"
-          },
-          {
-            count: 3,
-            company: "Zara",
-            timestamp: "21-08-2020"
-          },
-          {
-            count: 1,
-            company: "Zara",
-            timestamp: "22-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "23-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "24-08-2020"
-          },
-          {
-            count: 22,
-            company: "HM",
-            timestamp: "25-07-2020"
-          },
-          {
-            count: 41,
-            company: "HM",
-            timestamp: "26-07-2020"
-          },
-          {
-            count: 7,
-            company: "HM",
-            timestamp: "27-07-2020"
-          },
-          {
-            count: 58,
-            company: "HM",
-            timestamp: "28-07-2020"
-          },
-          {
-            count: 38,
-            company: "HM",
-            timestamp: "29-07-2020"
-          },
-          {
-            count: 44,
-            company: "HM",
-            timestamp: "30-07-2020"
-          },
-          {
-            count: 105,
-            company: "HM",
-            timestamp: "31-07-2020"
-          },
-          {
-            count: 38,
-            company: "HM",
-            timestamp: "01-08-2020"
-          },
-          {
-            count: 74,
-            company: "HM",
-            timestamp: "02-08-2020"
-          },
-          {
-            count: 2,
-            company: "HM",
-            timestamp: "03-08-2020"
-          },
-          {
-            count: 4,
-            company: "HM",
-            timestamp: "04-08-2020"
-          },
-          {
-            count: 145,
-            company: "HM",
-            timestamp: "05-08-2020"
-          },
-          {
-            count: 116,
-            company: "HM",
-            timestamp: "06-08-2020"
-          },
-          {
-            count: 61,
-            company: "HM",
-            timestamp: "07-08-2020"
-          },
-          {
-            count: 58,
-            company: "HM",
-            timestamp: "08-08-2020"
-          },
-          {
-            count: 9,
-            company: "HM",
-            timestamp: "09-08-2020"
-          },
-          {
-            count: 35,
-            company: "HM",
-            timestamp: "10-08-2020"
-          },
-          {
-            count: 69,
-            company: "HM",
-            timestamp: "11-08-2020"
-          },
-          {
-            count: 106,
-            company: "HM",
-            timestamp: "12-08-2020"
-          },
-          {
-            count: 122,
-            company: "HM",
-            timestamp: "13-08-2020"
-          },
-          {
-            count: 95,
-            company: "HM",
-            timestamp: "14-08-2020"
-          },
-          {
-            count: 12,
-            company: "HM",
-            timestamp: "15-08-2020"
-          },
-          {
-            count: 6,
-            company: "HM",
-            timestamp: "16-08-2020"
-          },
-          {
-            count: 24,
-            company: "HM",
-            timestamp: "17-08-2020"
-          },
-          {
-            count: 1,
-            company: "HM",
-            timestamp: "18-08-2020"
-          },
-          {
-            count: 122,
-            company: "HM",
-            timestamp: "19-08-2020"
-          },
-          {
-            count: 20,
-            company: "HM",
-            timestamp: "20-08-2020"
-          },
-          {
-            count: 65,
-            company: "HM",
-            timestamp: "21-08-2020"
-          },
-          {
-            count: 15,
-            company: "HM",
-            timestamp: "22-08-2020"
-          },
-          {
-            count: 0,
-            company: "HM",
-            timestamp: "23-08-2020"
-          },
-          {
-            count: 0,
-            company: "HM",
-            timestamp: "24-08-2020"
-          },
-          {
-            count: 3,
-            company: "Uniqlo",
-            timestamp: "25-07-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "26-07-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "27-07-2020"
-          },
-          {
-            count: 36,
-            company: "Uniqlo",
-            timestamp: "28-07-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "29-07-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "30-07-2020"
-          },
-          {
-            count: 6,
-            company: "Uniqlo",
-            timestamp: "31-07-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "01-08-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "02-08-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "03-08-2020"
-          },
-          {
-            count: 188,
-            company: "Uniqlo",
-            timestamp: "04-08-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "05-08-2020"
-          },
-          {
-            count: 9,
-            company: "Uniqlo",
-            timestamp: "06-08-2020"
-          },
-          {
-            count: 28,
-            company: "Uniqlo",
-            timestamp: "07-08-2020"
-          },
-          {
-            count: 3,
-            company: "Uniqlo",
-            timestamp: "08-08-2020"
-          },
-          {
-            count: 3,
-            company: "Uniqlo",
-            timestamp: "09-08-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "10-08-2020"
-          },
-          {
-            count: 4,
-            company: "Uniqlo",
-            timestamp: "11-08-2020"
-          },
-          {
-            count: 7,
-            company: "Uniqlo",
-            timestamp: "12-08-2020"
-          },
-          {
-            count: 5,
-            company: "Uniqlo",
-            timestamp: "13-08-2020"
-          },
-          {
-            count: 2,
-            company: "Uniqlo",
-            timestamp: "14-08-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "15-08-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "16-08-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "17-08-2020"
-          },
-          {
-            count: 7,
-            company: "Uniqlo",
-            timestamp: "18-08-2020"
-          },
-          {
-            count: 46,
-            company: "Uniqlo",
-            timestamp: "19-08-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "20-08-2020"
-          },
-          {
-            count: 2,
-            company: "Uniqlo",
-            timestamp: "21-08-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "22-08-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "23-08-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "24-08-2020"
-          },
-        ],
-        assortmentMix: [
-          {
-            data: [20, 5, 5],
-            label: "Accessories",
-            color: "#009689",
-          },
-          {
-            data: [5, 5, 20],
-            label: "Dresses",
-            color: "#225450",
-          },
-          {
-            data: [2, 5, 5],
-            label: "Blouses&Shirts",
-            color: "#d8b75c",
-          },
-          {
-            data: [2, 20, 5],
-            label: "Trousers",
-            color: "#D67049",
-          },
-          {
-            data: [11, 5, 5],
-            label: "Jeans",
-            color: "#D8B75D",
-          },
-          {
-            data: [5, 5, 5],
-            label: "Knitwear",
-            color: "#AC365C",
-          },
-          {
-            data: [5, 5, 5],
-            label: "Outerwear",
-            color: "#5E152C",
-          },
-          {
-            data: [5, 5, 5],
-            label: "Shoes",
-            color: "#2F6936",
-          },
-          {
-            data: [5, 5, 5],
-            label: "Shorts",
-            color: "#61A74A",
-          },
-          {
-            data: [5, 5, 5],
-            label: "Skirts",
-            color: "#2995AB",
-          },
-          {
-            data: [5, 5, 5],
-            label: "Sweatshirts",
-            color: "#009689",
-          },
-          {
-            data: [5, 5, 5],
-            label: "T-shirts",
-            color: "#225450",
-          },
-          {
-            data: [5, 5, 5],
-            label: "Underwear",
-            color: "#8A3A24",
-          },
-          {
-            data: [5, 5, 5],
-            label: "Swimwear",
-            color: "#D67049",
-          },
-          {
-            data: [5, 5, 5],
-            label: "Others",
-            color: "#D8B75D",
-          },
-        ],
         statistic: {
           avgDiscount: {
             data: [
@@ -1262,7 +249,66 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
             ],
             measurement: "\u20ac"
           }
-        }
+        },
+        newIns: {
+          values: {
+            Zara: [
+              76, 87, 65, 34, 19,
+              21, 21, 72, 1, 24,
+              68, 70, 89, 47, 52,
+              4, 81, 73, 45, 81,
+              72, 100, 26, 76, 16,
+              77, 26, 5, 56, 37, 32],
+            HM: [
+              72, 17, 45, 16, 38,
+              54, 70, 35, 27, 91,
+              93, 86, 29, 82, 91,
+              26, 99, 75, 86, 25,
+              57, 57, 76, 88, 43,
+              6, 20, 47, 39, 43, 99],
+            Uniqlo: [
+              80, 22, 1, 43, 98,
+              92, 65, 69, 13, 73,
+              73, 23, 70, 65, 7,
+              40, 32, 57, 42, 85,
+              16, 15, 333, 52, 59,
+              63, 46, 38, 9, 999, 88],
+          },
+          timestamps: [
+            "25 Jul",
+            "26 Jul",
+            "27 Jul",
+            "28 Jul",
+            "29 Jul",
+            "30 Jul",
+            "31 Jul",
+            "01 Aug",
+            "02 Aug",
+            "03 Aug",
+            "04 Aug",
+            "05 Aug",
+            "06 Aug",
+            "07 Aug",
+            "08 Aug",
+            "09 Aug",
+            "10 Aug",
+            "11 Aug",
+            "12 Aug",
+            "13 Aug",
+            "14 Aug",
+            "15 Aug",
+            "16 Aug",
+            "17 Aug",
+            "18 Aug",
+            "19 Aug",
+            "20 Aug",
+            "21 Aug",
+            "22 Aug",
+            "23 Aug",
+            "24 Aug"
+          ],
+        },
+
       },
       Dresses: {
         priceStructure: {
@@ -1307,550 +353,6 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
           displayedColumns: ["Price range", "Zara", "Uniqlo", "HM"],
           measurement: "%"
         },
-        newIns: [
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "25-07-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "26-07-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "27-07-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "28-07-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "29-07-2020"
-          },
-          {
-            count: 2,
-            company: "Zara",
-            timestamp: "30-07-2020"
-          },
-          {
-            count: 8,
-            company: "Zara",
-            timestamp: "31-07-2020"
-          },
-          {
-            count: 10,
-            company: "Zara",
-            timestamp: "01-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "02-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "03-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "04-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "05-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "06-08-2020"
-          },
-          {
-            count: 6,
-            company: "Zara",
-            timestamp: "07-08-2020"
-          },
-          {
-            count: 10,
-            company: "Zara",
-            timestamp: "08-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "09-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "10-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "11-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "12-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "13-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "14-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "15-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "16-08-2020"
-          },
-          {
-            count: 13,
-            company: "Zara",
-            timestamp: "17-08-2020"
-          },
-          {
-            count: 15,
-            company: "Zara",
-            timestamp: "18-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "19-08-2020"
-          },
-          {
-            count: 13,
-            company: "Zara",
-            timestamp: "20-08-2020"
-          },
-          {
-            count: 3,
-            company: "Zara",
-            timestamp: "21-08-2020"
-          },
-          {
-            count: 1,
-            company: "Zara",
-            timestamp: "22-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "23-08-2020"
-          },
-          {
-            count: 0,
-            company: "Zara",
-            timestamp: "24-08-2020"
-          },
-          {
-            count: 22,
-            company: "HM",
-            timestamp: "25-07-2020"
-          },
-          {
-            count: 41,
-            company: "HM",
-            timestamp: "26-07-2020"
-          },
-          {
-            count: 7,
-            company: "HM",
-            timestamp: "27-07-2020"
-          },
-          {
-            count: 58,
-            company: "HM",
-            timestamp: "28-07-2020"
-          },
-          {
-            count: 38,
-            company: "HM",
-            timestamp: "29-07-2020"
-          },
-          {
-            count: 44,
-            company: "HM",
-            timestamp: "30-07-2020"
-          },
-          {
-            count: 105,
-            company: "HM",
-            timestamp: "31-07-2020"
-          },
-          {
-            count: 38,
-            company: "HM",
-            timestamp: "01-08-2020"
-          },
-          {
-            count: 74,
-            company: "HM",
-            timestamp: "02-08-2020"
-          },
-          {
-            count: 2,
-            company: "HM",
-            timestamp: "03-08-2020"
-          },
-          {
-            count: 4,
-            company: "HM",
-            timestamp: "04-08-2020"
-          },
-          {
-            count: 145,
-            company: "HM",
-            timestamp: "05-08-2020"
-          },
-          {
-            count: 116,
-            company: "HM",
-            timestamp: "06-08-2020"
-          },
-          {
-            count: 61,
-            company: "HM",
-            timestamp: "07-08-2020"
-          },
-          {
-            count: 58,
-            company: "HM",
-            timestamp: "08-08-2020"
-          },
-          {
-            count: 9,
-            company: "HM",
-            timestamp: "09-08-2020"
-          },
-          {
-            count: 35,
-            company: "HM",
-            timestamp: "10-08-2020"
-          },
-          {
-            count: 69,
-            company: "HM",
-            timestamp: "11-08-2020"
-          },
-          {
-            count: 106,
-            company: "HM",
-            timestamp: "12-08-2020"
-          },
-          {
-            count: 122,
-            company: "HM",
-            timestamp: "13-08-2020"
-          },
-          {
-            count: 95,
-            company: "HM",
-            timestamp: "14-08-2020"
-          },
-          {
-            count: 12,
-            company: "HM",
-            timestamp: "15-08-2020"
-          },
-          {
-            count: 6,
-            company: "HM",
-            timestamp: "16-08-2020"
-          },
-          {
-            count: 24,
-            company: "HM",
-            timestamp: "17-08-2020"
-          },
-          {
-            count: 1,
-            company: "HM",
-            timestamp: "18-08-2020"
-          },
-          {
-            count: 122,
-            company: "HM",
-            timestamp: "19-08-2020"
-          },
-          {
-            count: 20,
-            company: "HM",
-            timestamp: "20-08-2020"
-          },
-          {
-            count: 65,
-            company: "HM",
-            timestamp: "21-08-2020"
-          },
-          {
-            count: 15,
-            company: "HM",
-            timestamp: "22-08-2020"
-          },
-          {
-            count: 0,
-            company: "HM",
-            timestamp: "23-08-2020"
-          },
-          {
-            count: 0,
-            company: "HM",
-            timestamp: "24-08-2020"
-          },
-          {
-            count: 3,
-            company: "Uniqlo",
-            timestamp: "25-07-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "26-07-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "27-07-2020"
-          },
-          {
-            count: 36,
-            company: "Uniqlo",
-            timestamp: "28-07-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "29-07-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "30-07-2020"
-          },
-          {
-            count: 6,
-            company: "Uniqlo",
-            timestamp: "31-07-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "01-08-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "02-08-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "03-08-2020"
-          },
-          {
-            count: 188,
-            company: "Uniqlo",
-            timestamp: "04-08-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "05-08-2020"
-          },
-          {
-            count: 9,
-            company: "Uniqlo",
-            timestamp: "06-08-2020"
-          },
-          {
-            count: 28,
-            company: "Uniqlo",
-            timestamp: "07-08-2020"
-          },
-          {
-            count: 3,
-            company: "Uniqlo",
-            timestamp: "08-08-2020"
-          },
-          {
-            count: 3,
-            company: "Uniqlo",
-            timestamp: "09-08-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "10-08-2020"
-          },
-          {
-            count: 4,
-            company: "Uniqlo",
-            timestamp: "11-08-2020"
-          },
-          {
-            count: 7,
-            company: "Uniqlo",
-            timestamp: "12-08-2020"
-          },
-          {
-            count: 5,
-            company: "Uniqlo",
-            timestamp: "13-08-2020"
-          },
-          {
-            count: 2,
-            company: "Uniqlo",
-            timestamp: "14-08-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "15-08-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "16-08-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "17-08-2020"
-          },
-          {
-            count: 7,
-            company: "Uniqlo",
-            timestamp: "18-08-2020"
-          },
-          {
-            count: 46,
-            company: "Uniqlo",
-            timestamp: "19-08-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "20-08-2020"
-          },
-          {
-            count: 2,
-            company: "Uniqlo",
-            timestamp: "21-08-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "22-08-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "23-08-2020"
-          },
-          {
-            count: 0,
-            company: "Uniqlo",
-            timestamp: "24-08-2020"
-          },
-        ],
-        assortmentMix: [
-          {
-            data: [20, 5, 5],
-            label: "Accessories",
-            color: "#009689",
-          },
-          {
-            data: [5, 5, 20],
-            label: "Dresses",
-            color: "#225450",
-          },
-          {
-            data: [2, 5, 5],
-            label: "Blouses&Shirts",
-            color: "#d8b75c",
-          },
-          {
-            data: [2, 20, 5],
-            label: "Trousers",
-            color: "#D67049",
-          },
-          {
-            data: [11, 5, 5],
-            label: "Jeans",
-            color: "#D8B75D",
-          },
-          {
-            data: [5, 5, 5],
-            label: "Knitwear",
-            color: "#AC365C",
-          },
-          {
-            data: [5, 5, 5],
-            label: "Outerwear",
-            color: "#5E152C",
-          },
-          {
-            data: [5, 5, 5],
-            label: "Shoes",
-            color: "#2F6936",
-          },
-          {
-            data: [5, 5, 5],
-            label: "Shorts",
-            color: "#61A74A",
-          },
-          {
-            data: [5, 5, 5],
-            label: "Skirts",
-            color: "#2995AB",
-          },
-          {
-            data: [5, 5, 5],
-            label: "Sweatshirts",
-            color: "#009689",
-          },
-          {
-            data: [5, 5, 5],
-            label: "T-shirts",
-            color: "#225450",
-          },
-          {
-            data: [5, 5, 5],
-            label: "Underwear",
-            color: "#8A3A24",
-          },
-          {
-            data: [5, 5, 5],
-            label: "Swimwear",
-            color: "#D67049",
-          },
-          {
-            data: [5, 5, 5],
-            label: "Others",
-            color: "#D8B75D",
-          },
-        ],
         statistic: {
           avgDiscount: {
             data: [
@@ -1868,26 +370,89 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
             ],
             measurement: "\u20ac"
           }
-        }
+        },
+        newIns: {
+          values: {
+            Zara: [
+              76, 87, 65, 34, 19,
+              21, 21, 72, 1, 24,
+              68, 70, 89, 47, 52,
+              4, 81, 73, 45, 81,
+              72, 100, 26, 76, 16,
+              77, 26, 5, 56, 37, 32],
+            HM: [
+              72, 17, 45, 16, 38,
+              54, 70, 35, 27, 91,
+              93, 86, 29, 82, 91,
+              26, 99, 75, 86, 25,
+              57, 57, 76, 88, 43,
+              6, 20, 47, 39, 43, 99],
+            Uniqlo: [
+              80, 16, 1, 43, 98,
+              92, 32, 69, 13, 73,
+              73, 23, 70, 112, 7,
+              40, 18, 57, 42, 85,
+              16, 15, 47, 52, 59,
+              63, 23, 38, 9, 123, 1],
+          },
+          timestamps: [
+            "25 Jul",
+            "26 Jul",
+            "27 Jul",
+            "28 Jul",
+            "29 Jul",
+            "30 Jul",
+            "31 Jul",
+            "01 Aug",
+            "02 Aug",
+            "03 Aug",
+            "04 Aug",
+            "05 Aug",
+            "06 Aug",
+            "07 Aug",
+            "08 Aug",
+            "09 Aug",
+            "10 Aug",
+            "11 Aug",
+            "12 Aug",
+            "13 Aug",
+            "14 Aug",
+            "15 Aug",
+            "16 Aug",
+            "17 Aug",
+            "18 Aug",
+            "19 Aug",
+            "20 Aug",
+            "21 Aug",
+            "22 Aug",
+            "23 Aug",
+            "24 Aug"
+          ],
+        },
+
       }
     },
   };
   public timeFrames: SelectItem[] = [
     {
       value: "Last week",
+      id: TimeFrames.LastWeek,
       disabled: false
     },
     {
       value: "Last month",
+      id: TimeFrames.LastMoth,
       disabled: false
     }, {
       value: "Custom period",
+      id: TimeFrames.CustomPeriod,
       disabled: true
     }
   ];
   public chartsPlugins = [pluginDataLabels];
   public assortmentMixChart = {
     options: {
+      scaleShowLabels: false,
       maintainAspectRatio: false,
       responsive: true,
       scales: {
@@ -1969,16 +534,17 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
     return categories ? categories.value : null;
   }
 
+  public get timeFrame(): string {
+    const timeFrame = this.filtersForm.controls.timeFrame.value;
+    return timeFrame ? timeFrame.value : null;
+  }
+
   public get selectedBrands(): SelectItem[] {
     return this.filtersForm.controls.brands.value;
   }
 
   public ngOnInit(): void {
     this.filtersForm = this.buildForm();
-    if (this.selectedBrands && this.selectedBrands.length && this.selectedCategory) {
-      this.initNewInsChart();
-      this.initAssortmentMixChart();
-    }
     this.onChangeForm();
   }
 
@@ -1995,7 +561,7 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
 
   private onChangeForm(): void {
     this.filtersForm.valueChanges.pipe(takeUntil(this.unsubscribe$)).subscribe(formGroup => {
-      if (this.selectedBrands && this.selectedBrands.length && this.selectedCategory) {
+      if (this.selectedBrands && this.selectedBrands.length && this.selectedCategory && this.timeFrame) {
         this.priceStructure = this.RESPONSE_DATA.availableCategories[this.selectedCategory].priceStructure;
         const priceRangeColumn = this.RESPONSE_DATA.availableCategories[this.selectedCategory].priceStructure.displayedColumns[0];
         const brands = formGroup.brands.map(item => item.value);
@@ -2003,49 +569,76 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
         const statistic = this.RESPONSE_DATA.availableCategories[this.selectedCategory].statistic;
         this.highestMfp = this.getMaxValueStatistic(statistic.highestMfp.data);
         this.highestAvgDiscount = this.getMaxValueStatistic(statistic.avgDiscount.data);
-        this.assortmentMixChart.labels = formGroup.brands.map(item => item.value);
         this.initNewInsChart();
-        this.initAssortmentMixChart();
       }
     });
+
+    combineLatest([this.filtersForm.controls.brands.valueChanges, this.filtersForm.controls.timeFrame.valueChanges])
+      .subscribe(([brands, timeFrame]: [string[], string]) => {
+        if (brands && brands.length && timeFrame) {
+          this.initAssortmentMixChart();
+        }
+      });
+  }
+
+  private initAssortmentMixChart(): void {
+    this.assortmentMixChart.data = [];
+    this.assortmentMixChart.labels = [];
+    const assortmentMix = this.RESPONSE_DATA.assortmentMix;
+    const categories = assortmentMix.categoriesLabels;
+    const colors = assortmentMix.colors;
+
+    const dataSets: ChartDataSets[] = [];
+    categories.forEach((category, categoryIndex) => {
+      const data: number[] = [];
+
+      this.selectedBrands.forEach(selectedBrand => data.push(assortmentMix.values[selectedBrand.value][categoryIndex]));
+      const color = colors[categoryIndex];
+      dataSets.push({
+        label: category,
+        data,
+        backgroundColor: color,
+        hoverBackgroundColor: color,
+        hoverBorderColor: color,
+        borderColor: color
+      });
+    });
+    this.assortmentMixChart.data = dataSets;
+    this.assortmentMixChart.labels = this.selectedBrands.map(item => item.value);
   }
 
   private initNewInsChart(): void {
     this.newInsChart.data = [];
     this.newInsChart.labels = [];
-    const newInsData = this.RESPONSE_DATA.availableCategories[this.selectedCategory].newIns;
+    const newIns = this.RESPONSE_DATA.availableCategories[this.selectedCategory].newIns;
     this.selectedBrands.forEach(selectedBrand => {
-      const dataSet: any = {};
-      const data = [];
+      const dataSet: ChartDataSets = {};
+      const brandName = selectedBrand.value;
+      const brandData = newIns.values[brandName];
+      let data: number[] = [];
 
-      newInsData.forEach(newIns => {
-        if (selectedBrand.value === newIns.company) {
-          data.push(newIns.count);
-          this.newInsChart.labels.push(newIns.timestamp);
-        }
-      });
+      switch (this.filtersForm.controls.timeFrame.value.id) {
+        case TimeFrames.LastWeek:
+          const brandDataLength = brandData.length;
+          data = brandData.slice(brandDataLength - WEEK_LENGTH);
+          this.newInsChart.labels = newIns.timestamps.slice(brandDataLength - WEEK_LENGTH);
+          break;
+        case TimeFrames.LastMoth:
+          data = this.getEveryThirdItem(brandData);
+          this.newInsChart.labels = this.getEveryThirdItem(newIns.timestamps);
+          break;
+      }
+
       dataSet.data = data;
-      dataSet.label = selectedBrand.value;
+      dataSet.label = brandName;
       dataSet.backgroundColor = dataSet.hoverBackgroundColor = dataSet.hoverBorderColor = dataSet.borderColor
-        = this.RESPONSE_DATA.brandColors[selectedBrand.value];
+        = this.RESPONSE_DATA.brandColors[brandName];
       this.newInsChart.data.push(dataSet);
     });
-    this.newInsChart.labels = this.newInsChart.labels.filter(this.onlyUnique);
   }
 
-  private onlyUnique(value, index, self): boolean {
-    return self.indexOf(value) === index;
-  }
-
-  private initAssortmentMixChart(): void {
-    this.assortmentMixChart.data = this.RESPONSE_DATA.availableCategories[this.selectedCategory].assortmentMix.map(item => ({
-      data: item.data,
-      label: item.label,
-      backgroundColor: item.color,
-      hoverBackgroundColor: item.color,
-      hoverBorderColor: item.color,
-      borderColor: item.color
-    }));
+  private getEveryThirdItem(data: Array<any>): Array<any> {
+    return data.filter((item, index) => index % 3 === 0);
   }
 
   private buildForm(): FormGroup {
