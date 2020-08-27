@@ -564,9 +564,9 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
 
   private onChangeForm(): void {
     const formControls = this.filtersForm.controls;
-    const selectedCategoriesData: AvailableCategoriesData = this.RESPONSE_DATA.availableCategories[this.selectedCategory];
     this.filtersForm.valueChanges.pipe(takeUntil(this.unsubscribe$)).subscribe(formGroup => {
       if (this.selectedBrands && this.selectedBrands.length && this.selectedCategory && this.selectedTimeFrame) {
+        const selectedCategoriesData: AvailableCategoriesData = this.RESPONSE_DATA.availableCategories[this.selectedCategory];
         this.priceStructure = selectedCategoriesData.priceStructure;
         const priceRangeColumn = this.priceStructure.displayedColumns[0];
         const brandsColumns: string[] = formGroup.brands.map((item: SelectItem) => item.value);
