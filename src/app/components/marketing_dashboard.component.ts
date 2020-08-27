@@ -1,11 +1,11 @@
-import {Component, OnDestroy, OnInit} from "@angular/core";
+import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from "@angular/core";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import * as Chart from "chart.js";
 import {ChartDataSets} from "chart.js";
 import * as pluginDataLabels from "chartjs-plugin-datalabels";
 import {combineLatest, Subject} from "rxjs";
 import {takeUntil} from "rxjs/operators";
-import {DashboardData, PriceStructure, SelectItem, StatisticData} from "../models/dashboard.model";
+import {AssortmentMix, DashboardData, PriceStructure, SelectItem, StatisticData} from "../models/dashboard.model";
 
 Chart.defaults.global.plugins.datalabels.display = false;
 
@@ -20,6 +20,7 @@ export const WEEK_LENGTH = 7;
 @Component({
   selector: "app-marketing-dashboard",
   templateUrl: "./marketing_dashboard.component.html",
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MarketingDashboardComponent implements OnInit, OnDestroy {
   public RESPONSE_DATA: DashboardData = {
@@ -232,24 +233,6 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
           displayedColumns: ["Price range", "Zara", "Uniqlo", "HM"],
           measurement: "%"
         },
-        statistic: {
-          avgDiscount: {
-            data: [
-              {brand: "Zara", value: 1.55},
-              {brand: "HM", value: 2.77},
-              {brand: "Uniqlo", value: 3.11},
-            ],
-            measurement: "%"
-          },
-          highestMfp: {
-            data: [
-              {brand: "Zara", value: 10.99},
-              {brand: "HM", value: 20.45},
-              {brand: "Uniqlo", value: 30.45},
-            ],
-            measurement: "\u20ac"
-          }
-        },
         newIns: {
           values: {
             Zara: [
@@ -308,6 +291,24 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
             "24 Aug"
           ],
         },
+        statistic: {
+          avgDiscount: {
+            data: [
+              {brand: "Zara", value: 1.55},
+              {brand: "HM", value: 2.77},
+              {brand: "Uniqlo", value: 3.11},
+            ],
+            measurement: "%"
+          },
+          highestMfp: {
+            data: [
+              {brand: "Zara", value: 10.99},
+              {brand: "HM", value: 20.45},
+              {brand: "Uniqlo", value: 30.45},
+            ],
+            measurement: "\u20ac"
+          }
+        },
 
       },
       Dresses: {
@@ -352,24 +353,6 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
           ],
           displayedColumns: ["Price range", "Zara", "Uniqlo", "HM"],
           measurement: "%"
-        },
-        statistic: {
-          avgDiscount: {
-            data: [
-              {brand: "Zara", value: 11.55},
-              {brand: "HM", value: 22.77},
-              {brand: "Uniqlo", value: 33.11},
-            ],
-            measurement: "%"
-          },
-          highestMfp: {
-            data: [
-              {brand: "Zara", value: 11.99},
-              {brand: "HM", value: 22.45},
-              {brand: "Uniqlo", value: 33.45},
-            ],
-            measurement: "\u20ac"
-          }
         },
         newIns: {
           values: {
@@ -429,23 +412,41 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
             "24 Aug"
           ],
         },
-
+        statistic: {
+          avgDiscount: {
+            data: [
+              {brand: "Zara", value: 11.55},
+              {brand: "HM", value: 22.77},
+              {brand: "Uniqlo", value: 33.11},
+            ],
+            measurement: "%"
+          },
+          highestMfp: {
+            data: [
+              {brand: "Zara", value: 11.99},
+              {brand: "HM", value: 22.45},
+              {brand: "Uniqlo", value: 33.45},
+            ],
+            measurement: "\u20ac"
+          }
+        },
       }
     },
   };
   public timeFrames: SelectItem[] = [
     {
-      value: "Last week",
       id: TimeFrames.LastWeek,
+      value: "Last week",
       disabled: false
     },
     {
-      value: "Last month",
       id: TimeFrames.LastMoth,
+      value: "Last month",
       disabled: false
-    }, {
-      value: "Custom period",
+    },
+    {
       id: TimeFrames.CustomPeriod,
+      value: "Custom period",
       disabled: true
     }
   ];
@@ -493,10 +494,10 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
         labels: {boxWidth: 12}
       },
     },
-    data: null,
+    dataSets: null,
     labels: null,
   };
-  public newInsChart: any = {
+  public newInsChart = {
     options: {
       maintainAspectRatio: false,
       responsive: true,
@@ -517,7 +518,7 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
         position: "bottom"
       }
     },
-    data: null,
+    dataSets: null,
     labels: null,
   };
   public filtersForm: FormGroup;
@@ -529,18 +530,18 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
   constructor(private fb: FormBuilder) {
   }
 
+  public get selectedBrands(): SelectItem[] {
+    return this.filtersForm.controls.brands.value;
+  }
+
   public get selectedCategory(): string {
     const categories = this.filtersForm.controls.categories.value;
     return categories ? categories.value : null;
   }
 
-  public get timeFrame(): string {
+  public get selectedTimeFrame(): string {
     const timeFrame = this.filtersForm.controls.timeFrame.value;
     return timeFrame ? timeFrame.value : null;
-  }
-
-  public get selectedBrands(): SelectItem[] {
-    return this.filtersForm.controls.brands.value;
   }
 
   public ngOnInit(): void {
@@ -553,15 +554,18 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
-  private getMaxValueStatistic(statisticData: StatisticData[]): StatisticData {
-    const selectedBrands = this.selectedBrands.map(item => item.value);
-    const selectedStatisticData: StatisticData[] = statisticData.filter((item: StatisticData) => selectedBrands.indexOf(item.brand) !== -1);
-    return selectedStatisticData.reduce((prev, current) => (prev.value > current.value) ? prev : current, {brand: null, value: null});
+  private buildForm(): FormGroup {
+    return this.fb.group({
+      brands: null,
+      categories: null,
+      timeFrame: null,
+    });
   }
 
   private onChangeForm(): void {
+    const formControls = this.filtersForm.controls;
     this.filtersForm.valueChanges.pipe(takeUntil(this.unsubscribe$)).subscribe(formGroup => {
-      if (this.selectedBrands && this.selectedBrands.length && this.selectedCategory && this.timeFrame) {
+      if (this.selectedBrands && this.selectedBrands.length && this.selectedCategory && this.selectedTimeFrame) {
         this.priceStructure = this.RESPONSE_DATA.availableCategories[this.selectedCategory].priceStructure;
         const priceRangeColumn = this.RESPONSE_DATA.availableCategories[this.selectedCategory].priceStructure.displayedColumns[0];
         const brands = formGroup.brands.map(item => item.value);
@@ -573,7 +577,8 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
       }
     });
 
-    combineLatest([this.filtersForm.controls.brands.valueChanges, this.filtersForm.controls.timeFrame.valueChanges])
+    combineLatest([formControls.brands.valueChanges, formControls.timeFrame.valueChanges])
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe(([brands, timeFrame]: [string[], string]) => {
         if (brands && brands.length && timeFrame) {
           this.initAssortmentMixChart();
@@ -581,41 +586,45 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
       });
   }
 
+  private getMaxValueStatistic(statisticData: StatisticData[]): StatisticData {
+    const selectedBrands = this.selectedBrands.map(item => item.value);
+    const selectedStatisticData: StatisticData[] = statisticData.filter((item: StatisticData) => selectedBrands.indexOf(item.brand) !== -1);
+    return selectedStatisticData.reduce((prev, current) => (prev.value > current.value) ? prev : current, {brand: null, value: null});
+  }
+
   private initAssortmentMixChart(): void {
-    this.assortmentMixChart.data = [];
+    this.assortmentMixChart.dataSets = [];
     this.assortmentMixChart.labels = [];
-    const assortmentMix = this.RESPONSE_DATA.assortmentMix;
-    const categories = assortmentMix.categoriesLabels;
+    const assortmentMix: AssortmentMix = this.RESPONSE_DATA.assortmentMix;
+    const categoriesLabels: string[] = assortmentMix.categoriesLabels;
     const colors = assortmentMix.colors;
 
-    const dataSets: ChartDataSets[] = [];
-    categories.forEach((category, categoryIndex) => {
-      const data: number[] = [];
-
-      this.selectedBrands.forEach(selectedBrand => data.push(assortmentMix.values[selectedBrand.value][categoryIndex]));
+    this.assortmentMixChart.dataSets = categoriesLabels.map((category, categoryIndex) => {
+      const data: number[] = this.selectedBrands.map(selectedBrand => assortmentMix.values[selectedBrand.value][categoryIndex]);
       const color = colors[categoryIndex];
-      dataSets.push({
+
+      return {
         label: category,
         data,
         backgroundColor: color,
         hoverBackgroundColor: color,
         hoverBorderColor: color,
         borderColor: color
-      });
+      } as ChartDataSets;
     });
-    this.assortmentMixChart.data = dataSets;
     this.assortmentMixChart.labels = this.selectedBrands.map(item => item.value);
   }
 
   private initNewInsChart(): void {
-    this.newInsChart.data = [];
+    this.newInsChart.dataSets = [];
     this.newInsChart.labels = [];
     const newIns = this.RESPONSE_DATA.availableCategories[this.selectedCategory].newIns;
-    this.selectedBrands.forEach(selectedBrand => {
-      const dataSet: ChartDataSets = {};
+
+    this.newInsChart.dataSets = this.selectedBrands.map((selectedBrand: SelectItem) => {
       const brandName = selectedBrand.value;
-      const brandData = newIns.values[brandName];
-      let data: number[] = [];
+      const brandData: number[] = newIns.values[brandName];
+      const color = this.RESPONSE_DATA.brandColors[brandName];
+      let data: number[];
 
       switch (this.filtersForm.controls.timeFrame.value.id) {
         case TimeFrames.LastWeek:
@@ -629,23 +638,18 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
           break;
       }
 
-      dataSet.data = data;
-      dataSet.label = brandName;
-      dataSet.backgroundColor = dataSet.hoverBackgroundColor = dataSet.hoverBorderColor = dataSet.borderColor
-        = this.RESPONSE_DATA.brandColors[brandName];
-      this.newInsChart.data.push(dataSet);
+      return {
+        label: brandName,
+        data,
+        backgroundColor: color,
+        hoverBackgroundColor: color,
+        hoverBorderColor: color,
+        borderColor: color
+      } as ChartDataSets;
     });
   }
 
-  private getEveryThirdItem(data: Array<any>): Array<any> {
+  private getEveryThirdItem<T>(data: Array<T>): Array<T> {
     return data.filter((item, index) => index % 3 === 0);
-  }
-
-  private buildForm(): FormGroup {
-    return this.fb.group({
-      brands: null,
-      categories: null,
-      timeFrame: null,
-    });
   }
 }

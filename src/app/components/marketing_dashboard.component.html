@@ -50,11 +50,12 @@
             <mat-form-field appearance="fill">
               <mat-label>Time frame</mat-label>
               <mat-select formControlName="timeFrame">
-                <mat-option class="marketing-dashboard__toolbar-select" *ngFor="let timeFrame of timeFrames"
-                            [disabled]="timeFrame.disabled"
-                            [value]="timeFrame">
+                <mat-option class="marketing-dashboard__toolbar-select"
+                            *ngFor="let timeFrame of timeFrames"
+                            [value]="timeFrame"
+                            [disabled]="timeFrame.disabled">
                   <img *ngIf="timeFrame.disabled" src="../../assets/img/icon-disabled.svg" alt="icon-disabled"
-                       class="icon-disabled">
+                       class="icon-disabled _left">
                   {{timeFrame.value}}
                 </mat-option>
               </mat-select>
@@ -74,15 +75,15 @@
 
           <div class="marketing-dashboard__statistic-item">
             <p>Highest avg discount</p>
-            <div
-              class="marketing-dashboard__statistic-item-value">{{highestAvgDiscount?.value}}{{RESPONSE_DATA.availableCategories[this.selectedCategory]?.statistic?.avgDiscount?.measurement}}
+            <div class="marketing-dashboard__statistic-item-value">
+              {{highestAvgDiscount?.value}}{{RESPONSE_DATA.availableCategories[this.selectedCategory]?.statistic?.avgDiscount?.measurement}}
               <span>{{highestAvgDiscount?.brand}}</span></div>
           </div>
 
           <div class="marketing-dashboard__statistic-item">
             <p>Highest mfp</p>
-            <div
-              class="marketing-dashboard__statistic-item-value">{{highestMfp?.value}}{{RESPONSE_DATA.availableCategories[this.selectedCategory]?.statistic?.highestMfp?.measurement}}
+            <div class="marketing-dashboard__statistic-item-value">
+              {{highestMfp?.value}}{{RESPONSE_DATA.availableCategories[this.selectedCategory]?.statistic?.highestMfp?.measurement}}
               <span></span></div>
           </div>
         </div>
@@ -90,11 +91,13 @@
         <div class="marketing-dashboard__widget marketing-dashboard__widget-price">
           <div class="marketing-dashboard__widget-title">
             Price structure
-            <span
-              class="marketing-dashboard__widget-sub-title">{{selectedCategory === "All categories" ? "Price points per brand" : selectedCategory}}</span>
+            <span class="marketing-dashboard__widget-sub-title">
+              {{selectedCategory === "All categories" ? "Price points per brand" : selectedCategory}}
+            </span>
           </div>
 
-          <ng-container *ngIf="selectedBrands && selectedBrands.length && selectedCategory && timeFrame; else emptyTemplate">
+          <ng-container
+            *ngIf="selectedBrands && selectedBrands.length && selectedCategory && selectedTimeFrame; else emptyTemplate">
             <mat-table [dataSource]="priceStructure?.data">
               <ng-container *ngFor="let displayedColumn of priceStructure.displayedColumns"
                             [matColumnDef]="displayedColumn">
@@ -114,17 +117,14 @@
                              [style.height.px]="element[displayedColumn] / 2.3">
                         </div>
                       </div>
-                      <div
-                        class="percent">{{element[displayedColumn]}} {{priceStructure.measurement}}</div>
+                      <div class="percent">{{element[displayedColumn]}} {{priceStructure.measurement}}</div>
                     </div>
                   </mat-cell>
                 </ng-container>
               </ng-container>
 
-              <mat-header-row
-                *matHeaderRowDef="priceStructure.displayedColumns"></mat-header-row>
-              <mat-row
-                *matRowDef="let row; columns: priceStructure.displayedColumns;"></mat-row>
+              <mat-header-row *matHeaderRowDef="priceStructure.displayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: priceStructure.displayedColumns;"></mat-row>
             </mat-table>
           </ng-container>
         </div>
@@ -134,14 +134,13 @@
         <div class="marketing-dashboard__widget">
           <div class="marketing-dashboard__widget-title">
             Assortment Mix
-            <span
-              class="marketing-dashboard__widget-sub-title">Categories split per brand</span>
+            <span class="marketing-dashboard__widget-sub-title">Categories split per brand</span>
           </div>
           <div class="marketing-dashboard__widget-assortment">
             <canvas baseChart
-                    *ngIf="selectedBrands && selectedBrands.length && timeFrame ; else emptyTemplate"
+                    *ngIf="selectedBrands && selectedBrands.length && selectedTimeFrame ; else emptyTemplate"
                     chartType="horizontalBar"
-                    [datasets]="assortmentMixChart.data"
+                    [datasets]="assortmentMixChart.dataSets"
                     [labels]="assortmentMixChart.labels"
                     [options]="assortmentMixChart.options"
                     [plugins]="chartsPlugins"
@@ -159,13 +158,14 @@
               </span>
             </div>
 
-            <canvas *ngIf="selectedBrands && selectedBrands.length && selectedCategory && timeFrame; else emptyTemplate"
-                    baseChart
-                    chartType="bar"
-                    [datasets]="newInsChart.data"
-                    [labels]="newInsChart.labels"
-                    [options]="newInsChart.options"
-                    [legend]="true">
+            <canvas
+              *ngIf="selectedBrands && selectedBrands.length && selectedCategory && selectedTimeFrame; else emptyTemplate"
+              baseChart
+              chartType="bar"
+              [datasets]="newInsChart.dataSets"
+              [labels]="newInsChart.labels"
+              [options]="newInsChart.options"
+              [legend]="true">
             </canvas>
           </div>
         </div>

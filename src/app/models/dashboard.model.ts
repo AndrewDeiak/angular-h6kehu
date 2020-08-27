@@ -46,14 +46,8 @@ interface NewIns {
   timestamps: string[];
 }
 
-interface AssortmentMix {
+export interface AssortmentMix {
   categoriesLabels: string[];
   values: {[key: string]: number[]};
   colors: string[];
-}
-
-interface AssortmentMix2 {
-  value: number;
-  brand: string;
-  category: string;
 }
