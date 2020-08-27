@@ -5,7 +5,7 @@ import {ChartDataSets} from "chart.js";
 import * as pluginDataLabels from "chartjs-plugin-datalabels";
 import {combineLatest, Subject} from "rxjs";
 import {takeUntil} from "rxjs/operators";
-import {AssortmentMix, DashboardData, PriceStructure, SelectItem, StatisticData} from "../models/dashboard.model";
+import {AssortmentMix, AvailableCategoriesData, DashboardData, PriceStructure, SelectItem, StatisticData} from "../models/dashboard.model";
 
 Chart.defaults.global.plugins.datalabels.display = false;
 
@@ -564,13 +564,15 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
 
   private onChangeForm(): void {
     const formControls = this.filtersForm.controls;
+    const selectedCategoriesData: AvailableCategoriesData = this.RESPONSE_DATA.availableCategories[this.selectedCategory];
     this.filtersForm.valueChanges.pipe(takeUntil(this.unsubscribe$)).subscribe(formGroup => {
       if (this.selectedBrands && this.selectedBrands.length && this.selectedCategory && this.selectedTimeFrame) {
-        this.priceStructure = this.RESPONSE_DATA.availableCategories[this.selectedCategory].priceStructure;
-        const priceRangeColumn = this.RESPONSE_DATA.availableCategories[this.selectedCategory].priceStructure.displayedColumns[0];
-        const brands = formGroup.brands.map(item => item.value);
-        this.RESPONSE_DATA.availableCategories[this.selectedCategory].priceStructure.displayedColumns = [priceRangeColumn, ...brands];
-        const statistic = this.RESPONSE_DATA.availableCategories[this.selectedCategory].statistic;
+        this.priceStructure = selectedCategoriesData.priceStructure;
+        const priceRangeColumn = this.priceStructure.displayedColumns[0];
+        const brandsColumns: string[] = formGroup.brands.map((item: SelectItem) => item.value);
+        this.priceStructure.displayedColumns = [priceRangeColumn, ...brandsColumns];
+
+        const statistic = selectedCategoriesData.statistic;
         this.highestMfp = this.getMaxValueStatistic(statistic.highestMfp.data);
         this.highestAvgDiscount = this.getMaxValueStatistic(statistic.avgDiscount.data);
         this.initNewInsChart();
@@ -587,6 +589,7 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
   }
 
   private getMaxValueStatistic(statisticData: StatisticData[]): StatisticData {
+    // TODO: find another better approach
     const selectedBrands = this.selectedBrands.map(item => item.value);
     const selectedStatisticData: StatisticData[] = statisticData.filter((item: StatisticData) => selectedBrands.indexOf(item.brand) !== -1);
     return selectedStatisticData.reduce((prev, current) => (prev.value > current.value) ? prev : current, {brand: null, value: null});

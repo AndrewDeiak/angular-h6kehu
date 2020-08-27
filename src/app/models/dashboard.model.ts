@@ -3,15 +3,15 @@ export interface DashboardData {
   brandColors: { [key: string]: string };
   categories: SelectItem[];
   assortmentMix: AssortmentMix;
-  availableCategories: {
-    [key: string]: {
-      priceStructure: PriceStructure;
-      newIns: NewIns;
-      statistic?: {
-        avgDiscount: Statistic;
-        highestMfp: Statistic;
-      };
-    }
+  availableCategories: { [key: string]: AvailableCategoriesData};
+}
+
+export interface AvailableCategoriesData{
+  priceStructure: PriceStructure;
+  newIns: NewIns;
+  statistic?: {
+    avgDiscount: Statistic;
+    highestMfp: Statistic;
   };
 }
 
@@ -28,7 +28,7 @@ export interface StatisticData {
 export interface SelectItem {
   id?: string;
   value: string;
-  disabled: boolean;
+  disabled?: boolean;
 }
 
 export interface PriceStructure {
@@ -42,12 +42,12 @@ interface PriceStructureData {
 }
 
 interface NewIns {
-  values: {[key: string]: number[]};
+  values: { [key: string]: number[] };
   timestamps: string[];
 }
 
 export interface AssortmentMix {
   categoriesLabels: string[];
-  values: {[key: string]: number[]};
+  values: { [key: string]: number[] };
   colors: string[];
 }
