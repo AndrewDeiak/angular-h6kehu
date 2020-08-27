@@ -75,15 +75,15 @@
 
           <div class="marketing-dashboard__statistic-item">
             <p>Highest avg discount</p>
-            <div class="marketing-dashboard__statistic-item-value">
-              {{highestAvgDiscount?.value}}{{RESPONSE_DATA.availableCategories[this.selectedCategory]?.statistic?.avgDiscount?.measurement}}
+            <div class="marketing-dashboard__statistic-item-value" *ngIf="highestAvgDiscount">
+              {{highestAvgDiscount.value}}{{RESPONSE_DATA.availableCategories[this.selectedCategory]?.statistic?.avgDiscount?.measurement}}
               <span>{{highestAvgDiscount?.brand}}</span></div>
           </div>
 
           <div class="marketing-dashboard__statistic-item">
             <p>Highest mfp</p>
-            <div class="marketing-dashboard__statistic-item-value">
-              {{highestMfp?.value}}{{RESPONSE_DATA.availableCategories[this.selectedCategory]?.statistic?.highestMfp?.measurement}}
+            <div class="marketing-dashboard__statistic-item-value" *ngIf="highestMfp">
+              {{highestMfp.value}}{{RESPONSE_DATA.availableCategories[this.selectedCategory]?.statistic?.highestMfp?.measurement}}
               <span></span></div>
           </div>
         </div>

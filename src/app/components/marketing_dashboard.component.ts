@@ -5,7 +5,8 @@ import {ChartDataSets} from "chart.js";
 import * as pluginDataLabels from "chartjs-plugin-datalabels";
 import {combineLatest, Subject} from "rxjs";
 import {takeUntil} from "rxjs/operators";
-import {AssortmentMix, AvailableCategoriesData, DashboardData, PriceStructure, SelectItem, StatisticData} from "../models/dashboard.model";
+import {AssortmentMix, DashboardData, PriceStructure, SelectItem, StatisticData} from "../models/dashboard.model";
+import {Constants} from "../utils/constants";
 
 Chart.defaults.global.plugins.datalabels.display = false;
 
@@ -42,23 +43,23 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
       HM: "#d8b75c",
     },
     categories: [
-      {value: "All categories", disabled: false},
-      {value: "Dresses", disabled: false},
-      {value: "T-shirts", disabled: false},
-      {value: "Accessories", disabled: true},
-      {value: "Shirts", disabled: true},
-      {value: "Blouses&Shirts", disabled: true},
-      {value: "Trousers", disabled: true},
-      {value: "Jeans", disabled: true},
-      {value: "Knitwear", disabled: true},
-      {value: "Outerwear", disabled: true},
-      {value: "Shoes", disabled: true},
-      {value: "Shorts", disabled: true},
-      {value: "Skirts", disabled: true},
-      {value: "Sweatshirts", disabled: true},
-      {value: "Underwear", disabled: true},
-      {value: "Swimwear", disabled: true},
-      {value: "Others", disabled: true},
+      {value: "All categories", disabled: false, id: "all_categories"},
+      {value: "Dresses", disabled: false, id: "dresses"},
+      {value: "T-shirts", disabled: false, id: "t_shirts"},
+      {value: "Accessories", disabled: true, id: "accessories"},
+      {value: "Shirts", disabled: true, id: "shirts"},
+      {value: "Blouses&Shirts", disabled: true, id: "blouses"},
+      {value: "Trousers", disabled: true, id: "trousers"},
+      {value: "Jeans", disabled: true, id: "jeans"},
+      {value: "Knitwear", disabled: true, id: "knitwear"},
+      {value: "Outerwear", disabled: true, id: "outerwear"},
+      {value: "Shoes", disabled: true, id: "shoes"},
+      {value: "Shorts", disabled: true, id: "shorts"},
+      {value: "Skirts", disabled: true, id: "skirts"},
+      {value: "Sweatshirts", disabled: true, id: "sweatshirts"},
+      {value: "Underwear", disabled: true, id: "underwear"},
+      {value: "Swimwear", disabled: true, id: "swimwear"},
+      {value: "Others", disabled: true, id: "others"},
     ],
     assortmentMix: {
       categoriesLabels: ["Accessories", "Blazers", "Shirts", "Bodysuits", "Dresses", "Jeans", "Jumpsuits", "Knitwear", "Nightwear", "Outerwear", "Polo Shirts", "Shoes", "Shorts", "Skirts", "Socks and Tights", "Sweatshirts", "Swimwear", "T-Shirts", "Trousers", "Underwear", "Others"],
@@ -546,6 +547,12 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.filtersForm = this.buildForm();
+    if (this.selectedBrands && this.selectedBrands.length && this.selectedCategory && this.selectedTimeFrame) {
+      this.initPriceStructureTable();
+      this.initNewInsChart();
+      this.initStatisticBoxes();
+    }
+    this.initAssortmentMixChart();
     this.onChangeForm();
   }
 
@@ -555,67 +562,22 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
   }
 
   private buildForm(): FormGroup {
+    const defaultSelectedBrands = this.RESPONSE_DATA.brands.filter(brand => !brand.disabled);
+    const defaultSelectedTimeFrame = this.timeFrames.find(timeFrame => timeFrame.id === TimeFrames.LastWeek);
+    const defaultSelectedCategory = this.RESPONSE_DATA.categories.find(category => category.id === Constants.ALL_CATEGORIES_ID);
+
     return this.fb.group({
-      brands: null,
-      categories: null,
-      timeFrame: null,
+      brands: [defaultSelectedBrands],
+      categories: [defaultSelectedCategory],
+      timeFrame: [defaultSelectedTimeFrame],
     });
   }
 
-  private onChangeForm(): void {
-    const formControls = this.filtersForm.controls;
-    this.filtersForm.valueChanges.pipe(takeUntil(this.unsubscribe$)).subscribe(formGroup => {
-      if (this.selectedBrands && this.selectedBrands.length && this.selectedCategory && this.selectedTimeFrame) {
-        const selectedCategoriesData: AvailableCategoriesData = this.RESPONSE_DATA.availableCategories[this.selectedCategory];
-        this.priceStructure = selectedCategoriesData.priceStructure;
-        const priceRangeColumn = this.priceStructure.displayedColumns[0];
-        const brandsColumns: string[] = formGroup.brands.map((item: SelectItem) => item.value);
-        this.priceStructure.displayedColumns = [priceRangeColumn, ...brandsColumns];
-
-        const statistic = selectedCategoriesData.statistic;
-        this.highestMfp = this.getMaxValueStatistic(statistic.highestMfp.data);
-        this.highestAvgDiscount = this.getMaxValueStatistic(statistic.avgDiscount.data);
-        this.initNewInsChart();
-      }
-    });
-
-    combineLatest([formControls.brands.valueChanges, formControls.timeFrame.valueChanges])
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(([brands, timeFrame]: [string[], string]) => {
-        if (brands && brands.length && timeFrame) {
-          this.initAssortmentMixChart();
-        }
-      });
-  }
-
-  private getMaxValueStatistic(statisticData: StatisticData[]): StatisticData {
-    // TODO: find another better approach
-    const selectedBrands = this.selectedBrands.map(item => item.value);
-    const selectedStatisticData: StatisticData[] = statisticData.filter((item: StatisticData) => selectedBrands.indexOf(item.brand) !== -1);
-    return selectedStatisticData.reduce((prev, current) => (prev.value > current.value) ? prev : current, {brand: null, value: null});
-  }
-
-  private initAssortmentMixChart(): void {
-    this.assortmentMixChart.dataSets = [];
-    this.assortmentMixChart.labels = [];
-    const assortmentMix: AssortmentMix = this.RESPONSE_DATA.assortmentMix;
-    const categoriesLabels: string[] = assortmentMix.categoriesLabels;
-    const colors = assortmentMix.colors;
-
-    this.assortmentMixChart.dataSets = categoriesLabels.map((category, categoryIndex) => {
-      const data: number[] = this.selectedBrands.map(selectedBrand => assortmentMix.values[selectedBrand.value][categoryIndex]);
-      const color = colors[categoryIndex];
-
-      return {
-        label: category,
-        data,
-        backgroundColor: color,
-        hoverBackgroundColor: color,
-        hoverBorderColor: color,
-        borderColor: color
-      } as ChartDataSets;
-    });
-    this.assortmentMixChart.labels = this.selectedBrands.map(item => item.value);
+  private initPriceStructureTable(): void {
+    this.priceStructure = this.RESPONSE_DATA.availableCategories[this.selectedCategory].priceStructure;
+    const priceRangeColumn = this.priceStructure.displayedColumns[0];
+    const brandsColumns: string[] = this.filtersForm.controls.brands.value.map((item: SelectItem) => item.value);
+    this.priceStructure.displayedColumns = [priceRangeColumn, ...brandsColumns];
   }
 
   private initNewInsChart(): void {
@@ -650,6 +612,59 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
         borderColor: color
       } as ChartDataSets;
     });
+  }
+
+  private initStatisticBoxes(): void {
+    const statistic = this.RESPONSE_DATA.availableCategories[this.selectedCategory].statistic;
+    this.highestMfp = this.getMaxValueStatistic(statistic.highestMfp.data);
+    this.highestAvgDiscount = this.getMaxValueStatistic(statistic.avgDiscount.data);
+  }
+
+  private initAssortmentMixChart(): void {
+    if (this.selectedBrands && this.selectedBrands.length && this.selectedTimeFrame) {
+      this.assortmentMixChart.dataSets = [];
+      this.assortmentMixChart.labels = [];
+      const assortmentMix: AssortmentMix = this.RESPONSE_DATA.assortmentMix;
+      const categoriesLabels: string[] = assortmentMix.categoriesLabels;
+      const colors = assortmentMix.colors;
+
+      this.assortmentMixChart.dataSets = categoriesLabels.map((category, categoryIndex) => {
+        const data: number[] = this.selectedBrands.map(selectedBrand => assortmentMix.values[selectedBrand.value][categoryIndex]);
+        const color = colors[categoryIndex];
+
+        return {
+          label: category,
+          data,
+          backgroundColor: color,
+          hoverBackgroundColor: color,
+          hoverBorderColor: color,
+          borderColor: color
+        } as ChartDataSets;
+      });
+      this.assortmentMixChart.labels = this.selectedBrands.map(item => item.value);
+    }
+  }
+
+  private onChangeForm(): void {
+    const formControls = this.filtersForm.controls;
+    this.filtersForm.valueChanges.pipe(takeUntil(this.unsubscribe$)).subscribe(formGroup => {
+      if (this.selectedBrands && this.selectedBrands.length && this.selectedCategory && this.selectedTimeFrame) {
+        this.initPriceStructureTable();
+        this.initNewInsChart();
+        this.initStatisticBoxes();
+      }
+    });
+
+    combineLatest([formControls.brands.valueChanges, formControls.timeFrame.valueChanges])
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(() => this.initAssortmentMixChart());
+  }
+
+  private getMaxValueStatistic(statisticData: StatisticData[]): StatisticData {
+    // TODO: find another better approach
+    const selectedBrands = this.selectedBrands.map(item => item.value);
+    const selectedStatisticData: StatisticData[] = statisticData.filter((item: StatisticData) => selectedBrands.indexOf(item.brand) !== -1);
+    return selectedStatisticData.reduce((prev, current) => (prev.value > current.value) ? prev : current, {brand: null, value: null});
   }
 
   private getEveryThirdItem<T>(data: Array<T>): Array<T> {
