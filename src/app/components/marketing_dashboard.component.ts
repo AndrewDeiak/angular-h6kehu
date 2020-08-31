@@ -27,7 +27,7 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
   public RESPONSE_DATA: DashboardData = {
     brands: [
       {value: "Zara", locked: false},
-      {value: "HM", locked: false},
+      {value: "H&M", locked: false},
       {value: "Uniqlo", locked: false},
       {value: "Mango", locked: true},
       {value: "Nike", locked: true},
@@ -40,7 +40,7 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
     brandColors: {
       Zara: "#009689",
       Uniqlo: "#225450",
-      HM: "#d8b75c",
+      "H&M": "#d8b75c",
     },
     categories: [
       {value: "All categories", locked: false, id: "all_categories"},
@@ -66,7 +66,7 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
       colors: ["#009689", "#225450", "#d8b75c", "#D67049", "#D8B75D", "#AC365C", "#5E152C", "#2F6936", "#61A74A", "#2995AB", "#009689", "#225450", "#8A3A24", "#D67049", "#D8B75D", "#AC365C", "#5E152C", "#2F6936", "#61A74A", "#2995AB", "#009689"],
       values: {
         Zara: [5, 4, 3, 2, 1, 5, 4, 3, 2, 1, 10, 10, 9, 8, 7, 1, 5, 5, 5, 5, 5],
-        HM: [1, 1, 19, 2, 1, 1, 4, 3, 2, 1, 14, 1, 2, 8, 14, 1, 2, 2, 2, 5, 14],
+        "H&M": [1, 1, 19, 2, 1, 1, 4, 3, 2, 1, 14, 1, 2, 8, 14, 1, 2, 2, 2, 5, 14],
         Uniqlo: [1, 8, 12, 2, 1, 1, 4, 3, 2, 1, 14, 1, 9, 8, 7, 1, 5, 5, 5, 5, 5]
       },
     },
@@ -78,40 +78,40 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
               priceRange: "€0 - 9.99",
               Zara: 0,
               Uniqlo: 35,
-              HM: 10,
+              "H&M": 10,
             },
             {
               priceRange: "€10 - 19.99",
               Zara: 2.5,
               Uniqlo: 5,
-              HM: 10,
+              "H&M": 10,
             },
             {
               priceRange: "€20 - 29.99",
               Zara: 2.5,
               Uniqlo: 20,
-              HM: 5,
+              "H&M": 5,
             },
             {
               priceRange: "€30 - 39.99",
               Zara: 5,
               Uniqlo: 10,
-              HM: 25,
+              "H&M": 25,
             },
             {
               priceRange: "€40 - 49.99",
               Zara: 5,
               Uniqlo: 10,
-              HM: 40,
+              "H&M": 40,
             },
             {
               priceRange: "€50+",
               Zara: 85,
               Uniqlo: 20,
-              HM: 10,
+              "H&M": 10,
             },
           ],
-          displayedColumns: ["Price range", "Zara", "Uniqlo", "HM"],
+          displayedColumns: ["Price range", "Zara", "Uniqlo", "H&M"],
           measurement: "%"
         },
         newIns: {
@@ -123,7 +123,7 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
               4, 81, 73, 45, 81,
               72, 100, 26, 76, 16,
               77, 26, 5, 56, 37, 32],
-            HM: [
+            "H&M": [
               72, 17, 45, 16, 38,
               54, 70, 35, 27, 91,
               93, 86, 29, 82, 91,
@@ -176,7 +176,7 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
           avgDiscount: {
             data: [
               {brand: "Zara", value: 2121.55},
-              {brand: "HM", value: 7777.77},
+              {brand: "H&M", value: 7777.77},
               {brand: "Uniqlo", value: 89.11},
             ],
             measurement: "%"
@@ -184,7 +184,7 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
           highestMfp: {
             data: [
               {brand: "Zara", value: 10.99},
-              {brand: "HM", value: 40.45},
+              {brand: "H&M", value: 40.45},
               {brand: "Uniqlo", value: 30.45},
             ],
             measurement: "\u20ac"
@@ -198,40 +198,40 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
               priceRange: "€0 - 9.99",
               Zara: 0,
               Uniqlo: 20,
-              HM: 10,
+              "H&M": 10,
             },
             {
               priceRange: "€10 - 19.99",
               Zara: 2.5,
               Uniqlo: 30,
-              HM: 10,
+              "H&M": 10,
             },
             {
               priceRange: "€20 - 29.99",
               Zara: 2.5,
               Uniqlo: 10,
-              HM: 10,
+              "H&M": 10,
             },
             {
               priceRange: "€30 - 39.99",
               Zara: 5,
               Uniqlo: 10,
-              HM: 5,
+              "H&M": 5,
             },
             {
               priceRange: "€40 - 49.99",
               Zara: 5,
               Uniqlo: 10,
-              HM: 55,
+              "H&M": 55,
             },
             {
               priceRange: "€50+",
               Zara: 85,
               Uniqlo: 20,
-              HM: 10,
+              "H&M": 10,
             },
           ],
-          displayedColumns: ["Price range", "Zara", "Uniqlo", "HM"],
+          displayedColumns: ["Price range", "Zara", "Uniqlo", "H&M"],
           measurement: "%"
         },
         newIns: {
@@ -243,7 +243,7 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
               4, 81, 73, 45, 81,
               72, 100, 26, 76, 16,
               77, 26, 5, 56, 37, 32],
-            HM: [
+            "H&M": [
               72, 17, 45, 16, 38,
               54, 70, 35, 27, 91,
               93, 86, 29, 82, 91,
@@ -296,7 +296,7 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
           avgDiscount: {
             data: [
               {brand: "Zara", value: 1.55},
-              {brand: "HM", value: 2.77},
+              {brand: "H&M", value: 2.77},
               {brand: "Uniqlo", value: 3.11},
             ],
             measurement: "%"
@@ -304,7 +304,7 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
           highestMfp: {
             data: [
               {brand: "Zara", value: 10.99},
-              {brand: "HM", value: 20.45},
+              {brand: "H&M", value: 20.45},
               {brand: "Uniqlo", value: 30.45},
             ],
             measurement: "\u20ac"
@@ -319,40 +319,40 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
               priceRange: "€0 - 9.99",
               Zara: 10,
               Uniqlo: 35,
-              HM: 10,
+              "H&M": 10,
             },
             {
               priceRange: "€10 - 19.99",
               Zara: 2.5,
               Uniqlo: 5,
-              HM: 10,
+              "H&M": 10,
             },
             {
               priceRange: "€20 - 29.99",
               Zara: 2.5,
               Uniqlo: 20,
-              HM: 10,
+              "H&M": 10,
             },
             {
               priceRange: "€30 - 39.99",
               Zara: 5,
               Uniqlo: 10,
-              HM: 20,
+              "H&M": 20,
             },
             {
               priceRange: "€40 - 49.99",
               Zara: 5,
               Uniqlo: 10,
-              HM: 20,
+              "H&M": 20,
             },
             {
               priceRange: "€50+",
               Zara: 75,
               Uniqlo: 20,
-              HM: 30,
+              "H&M": 30,
             },
           ],
-          displayedColumns: ["Price range", "Zara", "Uniqlo", "HM"],
+          displayedColumns: ["Price range", "Zara", "Uniqlo", "H&M"],
           measurement: "%"
         },
         newIns: {
@@ -364,7 +364,7 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
               4, 81, 73, 45, 81,
               72, 100, 26, 76, 16,
               77, 26, 5, 56, 37, 32],
-            HM: [
+            "H&M": [
               72, 17, 45, 16, 38,
               54, 70, 35, 27, 91,
               93, 86, 29, 82, 91,
@@ -417,7 +417,7 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
           avgDiscount: {
             data: [
               {brand: "Zara", value: 11.55},
-              {brand: "HM", value: 22.77},
+              {brand: "H&M", value: 22.77},
               {brand: "Uniqlo", value: 33.11},
             ],
             measurement: "%"
@@ -425,7 +425,7 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
           highestMfp: {
             data: [
               {brand: "Zara", value: 11.99},
-              {brand: "HM", value: 22.45},
+              {brand: "H&M", value: 22.45},
               {brand: "Uniqlo", value: 33.45},
             ],
             measurement: "\u20ac"
