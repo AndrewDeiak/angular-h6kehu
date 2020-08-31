@@ -26,16 +26,16 @@ export const WEEK_LENGTH = 7;
 export class MarketingDashboardComponent implements OnInit, OnDestroy {
   public RESPONSE_DATA: DashboardData = {
     brands: [
-      {value: "Zara", disabled: false},
-      {value: "HM", disabled: false},
-      {value: "Uniqlo", disabled: false},
-      {value: "Mango", disabled: true},
-      {value: "Nike", disabled: true},
-      {value: "Asos", disabled: true},
-      {value: "Gucci", disabled: true},
-      {value: "Victoria Secret", disabled: true},
-      {value: "Ralph Lauren", disabled: true},
-      {value: "YOUR BRAND", disabled: true}
+      {value: "Zara", locked: false},
+      {value: "HM", locked: false},
+      {value: "Uniqlo", locked: false},
+      {value: "Mango", locked: true},
+      {value: "Nike", locked: true},
+      {value: "Asos", locked: true},
+      {value: "Gucci", locked: true},
+      {value: "Victoria Secret", locked: true},
+      {value: "Ralph Lauren", locked: true},
+      {value: "+3000 more", locked: true}
     ],
     brandColors: {
       Zara: "#009689",
@@ -43,23 +43,23 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
       HM: "#d8b75c",
     },
     categories: [
-      {value: "All categories", disabled: false, id: "all_categories"},
-      {value: "Dresses", disabled: false, id: "dresses"},
-      {value: "T-shirts", disabled: false, id: "t_shirts"},
-      {value: "Accessories", disabled: true, id: "accessories"},
-      {value: "Shirts", disabled: true, id: "shirts"},
-      {value: "Blouses&Shirts", disabled: true, id: "blouses"},
-      {value: "Trousers", disabled: true, id: "trousers"},
-      {value: "Jeans", disabled: true, id: "jeans"},
-      {value: "Knitwear", disabled: true, id: "knitwear"},
-      {value: "Outerwear", disabled: true, id: "outerwear"},
-      {value: "Shoes", disabled: true, id: "shoes"},
-      {value: "Shorts", disabled: true, id: "shorts"},
-      {value: "Skirts", disabled: true, id: "skirts"},
-      {value: "Sweatshirts", disabled: true, id: "sweatshirts"},
-      {value: "Underwear", disabled: true, id: "underwear"},
-      {value: "Swimwear", disabled: true, id: "swimwear"},
-      {value: "Others", disabled: true, id: "others"},
+      {value: "All categories", locked: false, id: "all_categories"},
+      {value: "Dresses", locked: false, id: "dresses"},
+      {value: "T-shirts", locked: false, id: "t_shirts"},
+      {value: "Accessories", locked: true, id: "accessories"},
+      {value: "Shirts", locked: true, id: "shirts"},
+      {value: "Blouses&Shirts", locked: true, id: "blouses"},
+      {value: "Trousers", locked: true, id: "trousers"},
+      {value: "Jeans", locked: true, id: "jeans"},
+      {value: "Knitwear", locked: true, id: "knitwear"},
+      {value: "Outerwear", locked: true, id: "outerwear"},
+      {value: "Shoes", locked: true, id: "shoes"},
+      {value: "Shorts", locked: true, id: "shorts"},
+      {value: "Skirts", locked: true, id: "skirts"},
+      {value: "Sweatshirts", locked: true, id: "sweatshirts"},
+      {value: "Underwear", locked: true, id: "underwear"},
+      {value: "Swimwear", locked: true, id: "swimwear"},
+      {value: "+30 categories", locked: true, id: "30_categories"},
     ],
     assortmentMix: {
       categoriesLabels: ["Accessories", "Blazers", "Shirts", "Bodysuits", "Dresses", "Jeans", "Jumpsuits", "Knitwear", "Nightwear", "Outerwear", "Polo Shirts", "Shoes", "Shorts", "Skirts", "Socks and Tights", "Sweatshirts", "Swimwear", "T-Shirts", "Trousers", "Underwear", "Others"],
@@ -438,17 +438,17 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
     {
       id: TimeFrames.LastWeek,
       value: "Last week",
-      disabled: false
+      locked: false
     },
     {
       id: TimeFrames.LastMoth,
       value: "Last month",
-      disabled: false
+      locked: false
     },
     {
       id: TimeFrames.CustomPeriod,
       value: "Custom period",
-      disabled: true
+      locked: true
     }
   ];
   public chartsPlugins = [pluginDataLabels];
@@ -561,8 +561,14 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
+  public onControlOptionClick(locked: boolean): void {
+    if (locked) {
+      window.open("https://google.com");
+    }
+  }
+
   private buildForm(): FormGroup {
-    const defaultSelectedBrands = this.RESPONSE_DATA.brands.filter(brand => !brand.disabled);
+    const defaultSelectedBrands = this.RESPONSE_DATA.brands.filter(brand => !brand.locked);
     const defaultSelectedTimeFrame = this.timeFrames.find(timeFrame => timeFrame.id === TimeFrames.LastWeek);
     const defaultSelectedCategory = this.RESPONSE_DATA.categories.find(category => category.id === Constants.ALL_CATEGORIES_ID);
 

@@ -28,7 +28,7 @@ export interface StatisticData {
 export interface SelectItem {
   id?: string;
   value: string;
-  disabled?: boolean;
+  locked?: boolean;
 }
 
 export interface PriceStructure {

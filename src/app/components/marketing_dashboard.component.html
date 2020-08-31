@@ -24,11 +24,12 @@
               <mat-select formControlName="brands" multiple>
                 <mat-option *ngFor="let brand of RESPONSE_DATA.brands"
                             [value]="brand"
-                            [disabled]="brand.disabled"
+                            [disabled]="brand.locked"
+                            (click)="onControlOptionClick(brand.locked)"
                             class="marketing-dashboard__toolbar-select">
                   {{brand.value}}
-                  <img *ngIf="brand.disabled" src="../../assets/img/icon-disabled.svg" alt="icon-disabled"
-                       class="icon-disabled _right">
+                  <img *ngIf="brand.locked" src="../../assets/img/locked-icon.svg" alt="locked-icon"
+                       class="locked-icon">
                 </mat-option>
               </mat-select>
             </mat-form-field>
@@ -38,11 +39,12 @@
               <mat-select formControlName="categories">
                 <mat-option class="marketing-dashboard__toolbar-select"
                             *ngFor="let category of RESPONSE_DATA.categories"
+                            [disabled]="category.locked"
                             [value]="category"
-                            [disabled]="category.disabled">
-                  <img *ngIf="category.disabled" src="../../assets/img/icon-disabled.svg" alt="icon-disabled"
-                       class="icon-disabled _left">
+                            (click)="onControlOptionClick(category.locked)">
                   {{category.value}}
+                  <img *ngIf="category.locked" src="../../assets/img/locked-icon.svg" alt="locked-icon"
+                       class="locked-icon">
                 </mat-option>
               </mat-select>
             </mat-form-field>
@@ -52,11 +54,12 @@
               <mat-select formControlName="timeFrame">
                 <mat-option class="marketing-dashboard__toolbar-select"
                             *ngFor="let timeFrame of timeFrames"
+                            [disabled]="timeFrame.locked"
                             [value]="timeFrame"
-                            [disabled]="timeFrame.disabled">
-                  <img *ngIf="timeFrame.disabled" src="../../assets/img/icon-disabled.svg" alt="icon-disabled"
-                       class="icon-disabled _left">
+                            (click)="onControlOptionClick(timeFrame.locked)">
                   {{timeFrame.value}}
+                  <img *ngIf="timeFrame.locked" src="../../assets/img/locked-icon.svg" alt="locked-icon"
+                       class="locked-icon">
                 </mat-option>
               </mat-select>
             </mat-form-field>
