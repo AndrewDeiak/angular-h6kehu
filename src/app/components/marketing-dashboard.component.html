@@ -79,14 +79,14 @@
           <div class="marketing-dashboard__statistic-item">
             <p>Highest avg discount</p>
             <div class="marketing-dashboard__statistic-item-value" *ngIf="highestAvgDiscount">
-              {{highestAvgDiscount.value}}{{RESPONSE_DATA.availableCategories[this.selectedCategory]?.statistic?.avgDiscount?.measurement}}
+              {{highestAvgDiscount.value}}{{RESPONSE_DATA[selectedTimeFrame.id][this.selectedCategory]?.statistic?.avgDiscount?.measurement}}
               <span>{{highestAvgDiscount?.brand}}</span></div>
           </div>
 
           <div class="marketing-dashboard__statistic-item">
             <p>Highest most frequent price</p>
             <div class="marketing-dashboard__statistic-item-value" *ngIf="highestMfp">
-              {{highestMfp.value}}{{RESPONSE_DATA.availableCategories[this.selectedCategory]?.statistic?.highestMfp?.measurement}}
+              {{highestMfp.value}}{{RESPONSE_DATA[selectedTimeFrame.id][this.selectedCategory]?.statistic?.highestMfp?.measurement}}
               <span></span></div>
           </div>
         </div>
@@ -137,7 +137,9 @@
         <div class="marketing-dashboard__widget">
           <div class="marketing-dashboard__widget-title">
             Assortment Mix
-            <span class="marketing-dashboard__widget-sub-title">Categories split per brand</span>
+            <span class="marketing-dashboard__widget-sub-title">
+              {{selectedCategory === "All categories" ? "Categories split per brand" : selectedCategory}}
+            </span>
           </div>
           <div class="marketing-dashboard__widget-assortment">
             <canvas baseChart

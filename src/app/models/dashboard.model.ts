@@ -2,11 +2,12 @@ export interface DashboardData {
   brands: SelectItem[];
   brandColors: { [key: string]: string };
   categories: SelectItem[];
-  assortmentMix: AssortmentMix;
-  availableCategories: { [key: string]: AvailableCategoriesData};
+  lastWeek: { [key: string]: AvailableCategoriesData };
+  lastMonth: { [key: string]: AvailableCategoriesData };
 }
 
-export interface AvailableCategoriesData{
+export interface AvailableCategoriesData {
+  assortmentMix: AssortmentMix;
   priceStructure: PriceStructure;
   newIns: NewIns;
   statistic?: {
