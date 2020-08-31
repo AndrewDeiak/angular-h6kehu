@@ -1,10 +1,12 @@
 import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from "@angular/core";
 import {FormBuilder, FormGroup} from "@angular/forms";
+import {MatDialog} from "@angular/material/dialog";
 import * as Chart from "chart.js";
 import {ChartDataSets} from "chart.js";
 import * as pluginDataLabels from "chartjs-plugin-datalabels";
-import {combineLatest, Subject} from "rxjs";
+import {merge, Subject} from "rxjs";
 import {takeUntil} from "rxjs/operators";
+import {MarketingDashboardPopoverComponent} from "../marketing-dashboard-popover/marketing-dashboard-popover.component";
 import {AssortmentMix, DashboardData, PriceStructure, SelectItem, StatisticData} from "../models/dashboard.model";
 import {Constants} from "../utils/constants";
 
@@ -16,11 +18,19 @@ enum TimeFrames {
   CustomPeriod = "customPeriod"
 }
 
+function onHoverChartElements(event, elements): void {
+  event.target.style.cursor = elements[0] ? "pointer" : "default";
+}
+
+function onHoverLegend(event, legendItem): void {
+  event.target.style.cursor = legendItem ? "pointer" : "default";
+}
+
 export const WEEK_LENGTH = 7;
 
 @Component({
   selector: "app-marketing-dashboard",
-  templateUrl: "./marketing_dashboard.component.html",
+  templateUrl: "./marketing-dashboard.component.html",
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MarketingDashboardComponent implements OnInit, OnDestroy {
@@ -111,7 +121,7 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
               "H&M": 10,
             },
           ],
-          displayedColumns: ["Price range", "Zara", "Uniqlo", "H&M"],
+          displayedColumns: ["Full price structure", "Zara", "Uniqlo", "H&M"],
           measurement: "%"
         },
         newIns: {
@@ -492,9 +502,12 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
       },
       legend: {
         position: "bottom",
-        labels: {boxWidth: 12}
+        labels: {boxWidth: 12},
+        onHover: onHoverLegend,
       },
+      onClick: this.onClickChartElement.bind(this),
     },
+    onHover: onHoverChartElements,
     dataSets: null,
     labels: null,
   };
@@ -516,8 +529,11 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
       },
       legend: {
         labels: {boxWidth: 12},
-        position: "bottom"
-      }
+        position: "bottom",
+        onHover: onHoverLegend,
+      },
+      onHover: onHoverChartElements,
+      onClick: this.onClickChartElement.bind(this),
     },
     dataSets: null,
     labels: null,
@@ -528,7 +544,8 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
   public priceStructure: PriceStructure = null;
   private unsubscribe$ = new Subject<void>();
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,
+              public dialog: MatDialog) {
   }
 
   public get selectedBrands(): SelectItem[] {
@@ -565,6 +582,13 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
     if (locked) {
       window.open("https://google.com");
     }
+  }
+
+  public _openPointDetails(): void {
+    const dialogRef = this.dialog.open(MarketingDashboardPopoverComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
   private buildForm(): FormGroup {
@@ -661,7 +685,7 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
       }
     });
 
-    combineLatest([formControls.brands.valueChanges, formControls.timeFrame.valueChanges])
+    merge(formControls.brands.valueChanges, formControls.timeFrame.valueChanges)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(() => this.initAssortmentMixChart());
   }
@@ -675,5 +699,11 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
 
   private getEveryThirdItem<T>(data: Array<T>): Array<T> {
     return data.filter((item, index) => index % 3 === 0);
+  }
+
+  private onClickChartElement(event, array): void {
+    if (array && array.length) {
+      this._openPointDetails();
+    }
   }
 }

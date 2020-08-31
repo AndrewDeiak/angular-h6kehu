@@ -84,7 +84,7 @@
           </div>
 
           <div class="marketing-dashboard__statistic-item">
-            <p>Highest mfp</p>
+            <p>Highest most frequent price</p>
             <div class="marketing-dashboard__statistic-item-value" *ngIf="highestMfp">
               {{highestMfp.value}}{{RESPONSE_DATA.availableCategories[this.selectedCategory]?.statistic?.highestMfp?.measurement}}
               <span></span></div>
@@ -104,15 +104,15 @@
             <mat-table [dataSource]="priceStructure?.data">
               <ng-container *ngFor="let displayedColumn of priceStructure.displayedColumns"
                             [matColumnDef]="displayedColumn">
-                <ng-container *ngIf="displayedColumn === 'Price range'">
+                <ng-container *ngIf="displayedColumn === 'Full price structure'">
                   <mat-header-cell *matHeaderCellDef>Full Price Structure</mat-header-cell>
                   <mat-cell *matCellDef="let element">{{element.priceRange}}</mat-cell>
                 </ng-container>
 
-                <ng-container *ngIf="displayedColumn !== 'Price range'">
+                <ng-container *ngIf="displayedColumn !== 'Full price structure'">
                   <mat-header-cell *matHeaderCellDef>{{displayedColumn}}</mat-header-cell>
                   <mat-cell *matCellDef="let element">
-                    <div class="percent-cell">
+                    <div class="percent-cell" (click)="_openPointDetails()">
                       <div class="circle-wrapper">
                         <div class="circle"
                              [style.background-color]="RESPONSE_DATA.brandColors[displayedColumn]"

@@ -156,6 +156,7 @@
         display: flex;
         align-items: center;
         width: 100%;
+        cursor: pointer;
 
         .percent {
           width: 50%;
@@ -197,7 +198,7 @@
 
       p {
         margin: 0;
-        font-size: 14px;
+        font-size: 12px;
       }
 
       &-value {
