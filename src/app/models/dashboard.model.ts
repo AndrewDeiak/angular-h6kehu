@@ -2,28 +2,40 @@ export interface DashboardData {
   brands: SelectItem[];
   brandColors: { [key: string]: string };
   categories: SelectItem[];
-  lastWeek: { [key: string]: AvailableCategoriesData };
-  lastMonth: { [key: string]: AvailableCategoriesData };
+  lastWeek: AvailableCategoriesData;
+  lastMonth: AvailableCategoriesData;
 }
 
 export interface AvailableCategoriesData {
-  assortmentMix: AssortmentMix;
-  priceStructure: PriceStructure;
-  newIns: NewIns;
-  statistic?: {
-    avgDiscount: Statistic;
-    highestMfp: Statistic;
+  [key: string]: {
+    assortmentMix: AssortmentMix;
+    priceStructure: PriceStructure;
+    newIns: NewIns;
+    statistic?: {
+      avgDiscount: Statistic;
+      highestMfp: Statistic;
+      newIns: NewInsStatistic;
+    };
   };
+}
+
+export interface NewInsStatistic {
+  currentPeriod: Statistic;
+  previousPeriod: Statistic;
 }
 
 export interface Statistic {
   data: StatisticData[];
-  measurement: string;
+  measurement?: string;
 }
 
 export interface StatisticData {
   brand: string;
   value: number;
+}
+
+export interface CalculatedStatisticData extends StatisticData {
+  measurement: string;
 }
 
 export interface SelectItem {

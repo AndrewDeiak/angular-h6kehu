@@ -73,20 +73,24 @@
         <div class="marketing-dashboard__statistic">
           <div class="marketing-dashboard__statistic-item">
             <p>New ins</p>
-            <div class="marketing-dashboard__statistic-item-value">982,1 <span>+42%</span></div>
+            <div class="marketing-dashboard__statistic-item-value"
+                 *ngIf="newInsStatistic && selectedBrands && selectedBrands.length && selectedCategory && selectedTimeFrame">
+              {{newInsStatistic?.sum}} <span>{{newInsStatistic?.profit}}</span></div>
           </div>
 
           <div class="marketing-dashboard__statistic-item">
             <p>Highest avg discount</p>
-            <div class="marketing-dashboard__statistic-item-value" *ngIf="highestAvgDiscount">
-              {{highestAvgDiscount.value}}{{RESPONSE_DATA[selectedTimeFrame.id][this.selectedCategory]?.statistic?.avgDiscount?.measurement}}
+            <div class="marketing-dashboard__statistic-item-value"
+                 *ngIf="highestAvgDiscount && selectedBrands && selectedBrands.length && selectedCategory && selectedTimeFrame">
+              {{highestAvgDiscount.value}}{{highestAvgDiscount.measurement}}
               <span>{{highestAvgDiscount?.brand}}</span></div>
           </div>
 
           <div class="marketing-dashboard__statistic-item">
             <p>Highest most frequent price</p>
-            <div class="marketing-dashboard__statistic-item-value" *ngIf="highestMfp">
-              {{highestMfp.value}}{{RESPONSE_DATA[selectedTimeFrame.id][this.selectedCategory]?.statistic?.highestMfp?.measurement}}
+            <div class="marketing-dashboard__statistic-item-value"
+                 *ngIf="highestMfp && selectedBrands && selectedBrands.length && selectedCategory && selectedTimeFrame">
+              {{highestMfp.value}}{{highestMfp.measurement}}
               <span></span></div>
           </div>
         </div>
@@ -95,7 +99,7 @@
           <div class="marketing-dashboard__widget-title">
             Price structure
             <span class="marketing-dashboard__widget-sub-title">
-              {{selectedCategory === "All categories" ? "Price points per brand" : selectedCategory}}
+              {{selectedCategory.id === _constants.ALL_CATEGORIES_ID ? "Price points per brand" : selectedCategory.value}}
             </span>
           </div>
 
@@ -138,7 +142,7 @@
           <div class="marketing-dashboard__widget-title">
             Assortment Mix
             <span class="marketing-dashboard__widget-sub-title">
-              {{selectedCategory === "All categories" ? "Categories split per brand" : selectedCategory}}
+              {{selectedCategory.id === _constants.ALL_CATEGORIES_ID ? "Categories split per brand" : selectedCategory.value}}
             </span>
           </div>
           <div class="marketing-dashboard__widget-assortment">
@@ -159,7 +163,7 @@
             <div class="marketing-dashboard__widget-title">
               New ins
               <span class="marketing-dashboard__widget-sub-title">
-                {{selectedCategory === "All categories" ? "New arrivals per brand" : selectedCategory}}
+                {{selectedCategory.id === _constants.ALL_CATEGORIES_ID ? "New arrivals per brand" : selectedCategory.value}}
               </span>
             </div>
 
