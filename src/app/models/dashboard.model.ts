@@ -62,13 +62,13 @@ interface PriceStructureData {
 }
 
 interface NewIns {
-  values: { [key: string]: number[] };
+  data: { [key: string]: number[] };
   timestamps: string[];
 }
 
 export interface AssortmentMix {
   categoriesLabels: string[];
-  values: { [key: string]: number[] };
+  data: { [key: string]: number[] };
   colors: string[];
 }
 

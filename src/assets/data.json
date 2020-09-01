@@ -155,7 +155,7 @@
           "#D67049",
           "#968d4b"
         ],
-        "values": {
+        "data": {
           "Zara": [
             5,
             4,
@@ -257,7 +257,7 @@
         "measurement": "%"
       },
       "newIns": {
-        "values": {
+        "data": {
           "Zara": [
             99,
             77,
@@ -379,10 +379,9 @@
         "colors": [
           "#009689",
           "#225450",
-          "#d8b75c",
-          "#D67049"
+          "#d8b75c"
         ],
-        "values": {
+        "data": {
           "Zara": [
             33.3,
             33.3,
@@ -448,7 +447,7 @@
         "measurement": "%"
       },
       "newIns": {
-        "values": {
+        "data": {
           "Zara": [
             16,
             77,
@@ -570,10 +569,9 @@
         "colors": [
           "#009689",
           "#225450",
-          "#d8b75c",
-          "#D67049"
+          "#d8b75c"
         ],
-        "values": {
+        "data": {
           "Zara": [
             30,
             30,
@@ -639,7 +637,7 @@
         "measurement": "%"
       },
       "newIns": {
-        "values": {
+        "data": {
           "Zara": [
             16,
             77,
@@ -789,7 +787,7 @@
           "#D67049",
           "#968d4b"
         ],
-        "values": {
+        "data": {
           "Zara": [
             10,
             4,
@@ -891,7 +889,7 @@
         "measurement": "%"
       },
       "newIns": {
-        "values": {
+        "data": {
           "Zara": [
             99,
             87,
@@ -1109,10 +1107,9 @@
         "colors": [
           "#009689",
           "#225450",
-          "#d8b75c",
-          "#D67049"
+          "#d8b75c"
         ],
-        "values": {
+        "data": {
           "Zara": [
             50,
             20,
@@ -1178,7 +1175,7 @@
         "measurement": "%"
       },
       "newIns": {
-        "values": {
+        "data": {
           "Zara": [
             76,
             87,
@@ -1396,10 +1393,9 @@
         "colors": [
           "#009689",
           "#225450",
-          "#d8b75c",
-          "#D67049"
+          "#d8b75c"
         ],
-        "values": {
+        "data": {
           "Zara": [
             85,
             5,
@@ -1465,7 +1461,7 @@
         "measurement": "%"
       },
       "newIns": {
-        "values": {
+        "data": {
           "Zara": [
             76,
             87,

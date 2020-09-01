@@ -295,7 +295,7 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
     if (newIns) {
       this._newInsChart.dataSets = this.selectedBrands.map((selectedBrand: SelectItem) => {
         const brandName = selectedBrand.value;
-        const brandData: number[] = newIns.values[brandName];
+        const brandData: number[] = newIns.data[brandName];
         const color = this.dashboardData.brandColors[brandName];
         let data: number[];
 
@@ -378,7 +378,7 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
       const colors = assortmentMix.colors;
 
       this._assortmentMixChart.dataSets = categoriesLabels.map((category, categoryIndex) => {
-        const data: number[] = this.selectedBrands.map(selectedBrand => assortmentMix.values[selectedBrand.value][categoryIndex]);
+        const data: number[] = this.selectedBrands.map(selectedBrand => assortmentMix.data[selectedBrand.value][categoryIndex]);
         const color = colors[categoryIndex];
 
         return {
