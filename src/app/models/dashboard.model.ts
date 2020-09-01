@@ -11,7 +11,7 @@ export interface AvailableCategoriesData {
     assortmentMix: AssortmentMix;
     priceStructure: PriceStructure;
     newIns: NewIns;
-    statistic?: {
+    statistic: {
       avgDiscount: Statistic;
       highestMfp: Statistic;
       newIns: NewInsStatistic;
@@ -26,7 +26,7 @@ export interface NewInsStatistic {
 
 export interface Statistic {
   data: StatisticData[];
-  measurement?: string;
+  measurement: string;
 }
 
 export interface StatisticData {
@@ -36,6 +36,11 @@ export interface StatisticData {
 
 export interface CalculatedStatisticData extends StatisticData {
   measurement: string;
+}
+
+export interface CalculatedNewInsStatistic {
+  sum: number;
+  profit: string;
 }
 
 export interface SelectItem {

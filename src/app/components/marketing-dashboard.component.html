@@ -12,7 +12,7 @@
       </div>
 
       <div class="marketing-dashboard__column">
-        <form class="marketing-dashboard__toolbar" [formGroup]="filtersForm" novalidate>
+        <form class="marketing-dashboard__toolbar" [formGroup]="_filtersForm" novalidate>
           <div class="marketing-dashboard__toolbar-title">
             <img src="../../assets/img/icon-filter.svg" alt="icon-filter">
             Set filters:
@@ -25,7 +25,7 @@
                 <mat-option *ngFor="let brand of RESPONSE_DATA.brands"
                             [value]="brand"
                             [disabled]="brand.locked"
-                            (click)="onControlOptionClick(brand.locked)"
+                            (click)="_onControlOptionClick(brand.locked)"
                             class="marketing-dashboard__toolbar-select">
                   {{brand.value}}
                   <img *ngIf="brand.locked" src="../../assets/img/locked-icon.svg" alt="locked-icon"
@@ -41,7 +41,7 @@
                             *ngFor="let category of RESPONSE_DATA.categories"
                             [disabled]="category.locked"
                             [value]="category"
-                            (click)="onControlOptionClick(category.locked)">
+                            (click)="_onControlOptionClick(category.locked)">
                   {{category.value}}
                   <img *ngIf="category.locked" src="../../assets/img/locked-icon.svg" alt="locked-icon"
                        class="locked-icon">
@@ -53,10 +53,10 @@
               <mat-label>Time frame</mat-label>
               <mat-select formControlName="timeFrame">
                 <mat-option class="marketing-dashboard__toolbar-select"
-                            *ngFor="let timeFrame of timeFrames"
+                            *ngFor="let timeFrame of _timeFrames"
                             [disabled]="timeFrame.locked"
                             [value]="timeFrame"
-                            (click)="onControlOptionClick(timeFrame.locked)">
+                            (click)="_onControlOptionClick(timeFrame.locked)">
                   {{timeFrame.value}}
                   <img *ngIf="timeFrame.locked" src="../../assets/img/locked-icon.svg" alt="locked-icon"
                        class="locked-icon">
@@ -74,23 +74,23 @@
           <div class="marketing-dashboard__statistic-item">
             <p>New ins</p>
             <div class="marketing-dashboard__statistic-item-value"
-                 *ngIf="newInsStatistic && selectedBrands && selectedBrands.length && selectedCategory && selectedTimeFrame">
-              {{newInsStatistic?.sum}} <span>{{newInsStatistic?.profit}}</span></div>
+                 *ngIf="_newInsStatistic && selectedBrands && selectedBrands.length && selectedCategory && selectedTimeFrame">
+              {{_newInsStatistic.sum}} <span>{{_newInsStatistic.profit}}</span></div>
           </div>
 
           <div class="marketing-dashboard__statistic-item">
             <p>Highest avg discount</p>
             <div class="marketing-dashboard__statistic-item-value"
-                 *ngIf="highestAvgDiscount && selectedBrands && selectedBrands.length && selectedCategory && selectedTimeFrame">
-              {{highestAvgDiscount.value}}{{highestAvgDiscount.measurement}}
-              <span>{{highestAvgDiscount?.brand}}</span></div>
+                 *ngIf="_highestAvgDiscountStatistic && selectedBrands && selectedBrands.length && selectedCategory && selectedTimeFrame">
+              {{_highestAvgDiscountStatistic.value}}{{_highestAvgDiscountStatistic.measurement}}
+              <span>{{_highestAvgDiscountStatistic?.brand}}</span></div>
           </div>
 
           <div class="marketing-dashboard__statistic-item">
             <p>Highest most frequent price</p>
             <div class="marketing-dashboard__statistic-item-value"
-                 *ngIf="highestMfp && selectedBrands && selectedBrands.length && selectedCategory && selectedTimeFrame">
-              {{highestMfp.value}}{{highestMfp.measurement}}
+                 *ngIf="_highestMfpStatistic && selectedBrands && selectedBrands.length && selectedCategory && selectedTimeFrame">
+              {{_highestMfpStatistic.value}}{{_highestMfpStatistic.measurement}}
               <span></span></div>
           </div>
         </div>
@@ -105,8 +105,8 @@
 
           <ng-container
             *ngIf="selectedBrands && selectedBrands.length && selectedCategory && selectedTimeFrame; else emptyTemplate">
-            <mat-table [dataSource]="priceStructure?.data">
-              <ng-container *ngFor="let displayedColumn of priceStructure.displayedColumns"
+            <mat-table [dataSource]="_priceStructure?.data">
+              <ng-container *ngFor="let displayedColumn of _priceStructure.displayedColumns"
                             [matColumnDef]="displayedColumn">
                 <ng-container *ngIf="displayedColumn === 'Full price structure'">
                   <mat-header-cell *matHeaderCellDef>Full Price Structure</mat-header-cell>
@@ -124,14 +124,14 @@
                              [style.height.px]="element[displayedColumn] / 2.3">
                         </div>
                       </div>
-                      <div class="percent">{{element[displayedColumn]}} {{priceStructure.measurement}}</div>
+                      <div class="percent">{{element[displayedColumn]}} {{_priceStructure.measurement}}</div>
                     </div>
                   </mat-cell>
                 </ng-container>
               </ng-container>
 
-              <mat-header-row *matHeaderRowDef="priceStructure.displayedColumns"></mat-header-row>
-              <mat-row *matRowDef="let row; columns: priceStructure.displayedColumns;"></mat-row>
+              <mat-header-row *matHeaderRowDef="_priceStructure.displayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: _priceStructure.displayedColumns;"></mat-row>
             </mat-table>
           </ng-container>
         </div>
@@ -149,10 +149,10 @@
             <canvas baseChart
                     *ngIf="selectedBrands && selectedBrands.length && selectedTimeFrame ; else emptyTemplate"
                     chartType="horizontalBar"
-                    [datasets]="assortmentMixChart.dataSets"
-                    [labels]="assortmentMixChart.labels"
-                    [options]="assortmentMixChart.options"
-                    [plugins]="chartsPlugins"
+                    [datasets]="_assortmentMixChart.dataSets"
+                    [labels]="_assortmentMixChart.labels"
+                    [options]="_assortmentMixChart.options"
+                    [plugins]="_chartsPlugins"
                     [legend]="true">
             </canvas>
           </div>
@@ -171,9 +171,9 @@
               *ngIf="selectedBrands && selectedBrands.length && selectedCategory && selectedTimeFrame; else emptyTemplate"
               baseChart
               chartType="bar"
-              [datasets]="newInsChart.dataSets"
-              [labels]="newInsChart.labels"
-              [options]="newInsChart.options"
+              [datasets]="_newInsChart.dataSets"
+              [labels]="_newInsChart.labels"
+              [options]="_newInsChart.options"
               [legend]="true">
             </canvas>
           </div>

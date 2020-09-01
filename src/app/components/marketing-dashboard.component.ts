@@ -9,6 +9,7 @@ import {takeUntil} from "rxjs/operators";
 import {MarketingDashboardPopoverComponent} from "../marketing-dashboard-popover/marketing-dashboard-popover.component";
 import {
   AssortmentMix,
+  CalculatedNewInsStatistic,
   CalculatedStatisticData,
   DashboardData,
   NewInsStatistic,
@@ -34,8 +35,6 @@ function onHoverChartElements(event, elements): void {
 function onHoverLegend(event, legendItem): void {
   event.target.style.cursor = legendItem ? "pointer" : "default";
 }
-
-export const WEEK_LENGTH = 7;
 
 @Component({
   selector: "app-marketing-dashboard",
@@ -212,14 +211,16 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
                 {brand: "Zara", value: 1},
                 {brand: "H&M", value: 2},
                 {brand: "Uniqlo", value: 3},
-              ]
+              ],
+              measurement: null
             },
             previousPeriod: {
               data: [
-                {brand: "Zara", value: 4},
-                {brand: "H&M", value: 5},
-                {brand: "Uniqlo", value: 6},
-              ]
+                {brand: "Zara", value: 0},
+                {brand: "H&M", value: 0},
+                {brand: "Uniqlo", value: 0},
+              ],
+              measurement: null
             }
           }
         }
@@ -357,14 +358,16 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
                 {brand: "Zara", value: 1},
                 {brand: "H&M", value: 2},
                 {brand: "Uniqlo", value: 3},
-              ]
+              ],
+              measurement: null
             },
             previousPeriod: {
               data: [
                 {brand: "Zara", value: 4},
                 {brand: "H&M", value: 5},
                 {brand: "Uniqlo", value: 6},
-              ]
+              ],
+              measurement: null
             }
           }
         },
@@ -502,14 +505,16 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
                 {brand: "Zara", value: 1},
                 {brand: "H&M", value: 2},
                 {brand: "Uniqlo", value: 3},
-              ]
+              ],
+              measurement: null
             },
             previousPeriod: {
               data: [
                 {brand: "Zara", value: 4},
                 {brand: "H&M", value: 5},
                 {brand: "Uniqlo", value: 6},
-              ]
+              ],
+              measurement: null
             }
           }
         },
@@ -650,14 +655,16 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
                 {brand: "Zara", value: 100},
                 {brand: "H&M", value: 200},
                 {brand: "Uniqlo", value: 400},
-              ]
+              ],
+              measurement: null
             },
             previousPeriod: {
               data: [
                 {brand: "Zara", value: 1000},
                 {brand: "H&M", value: 2000},
                 {brand: "Uniqlo", value: 355},
-              ]
+              ],
+              measurement: null
             }
           }
         }
@@ -795,14 +802,16 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
                 {brand: "Zara", value: 1},
                 {brand: "H&M", value: 2},
                 {brand: "Uniqlo", value: 3},
-              ]
+              ],
+              measurement: null
             },
             previousPeriod: {
               data: [
                 {brand: "Zara", value: 4},
                 {brand: "H&M", value: 5},
                 {brand: "Uniqlo", value: 6},
-              ]
+              ],
+              measurement: null
             }
           }
         },
@@ -941,21 +950,23 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
                 {brand: "Zara", value: 1},
                 {brand: "H&M", value: 2},
                 {brand: "Uniqlo", value: 3},
-              ]
+              ],
+              measurement: null
             },
             previousPeriod: {
               data: [
                 {brand: "Zara", value: 4},
                 {brand: "H&M", value: 5},
                 {brand: "Uniqlo", value: 6},
-              ]
+              ],
+              measurement: null
             }
           }
         },
       }
     }
   };
-  public timeFrames: SelectItem[] = [
+  public _timeFrames: SelectItem[] = [
     {
       id: TimeFrames.LastWeek,
       value: "Last week",
@@ -972,8 +983,8 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
       locked: true
     }
   ];
-  public chartsPlugins = [pluginDataLabels];
-  public assortmentMixChart = {
+  public _chartsPlugins = [pluginDataLabels];
+  public _assortmentMixChart = {
     options: {
       scaleShowLabels: false,
       maintainAspectRatio: false,
@@ -1022,7 +1033,7 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
     dataSets: null,
     labels: null,
   };
-  public newInsChart = {
+  public _newInsChart = {
     options: {
       maintainAspectRatio: false,
       responsive: true,
@@ -1049,13 +1060,12 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
     dataSets: null,
     labels: null,
   };
-  public filtersForm: FormGroup;
-  public highestAvgDiscount: CalculatedStatisticData = null;
-  public highestMfp: CalculatedStatisticData = null;
-  // TODO: add interface
-  public newInsStatistic = null;
-  public priceStructure: PriceStructure = null;
+  public _highestAvgDiscountStatistic: CalculatedStatisticData;
+  public _highestMfpStatistic: CalculatedStatisticData;
+  public _newInsStatistic: CalculatedNewInsStatistic;
+  public _priceStructure: PriceStructure;
   public _constants = Constants;
+  public _filtersForm: FormGroup;
   private unsubscribe$ = new Subject<void>();
 
   constructor(private fb: FormBuilder,
@@ -1063,21 +1073,21 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
   }
 
   public get selectedBrands(): SelectItem[] {
-    return this.filtersForm.controls.brands.value;
+    return this._filtersForm.controls.brands.value;
   }
 
   public get selectedCategory(): SelectItem {
-    const categories = this.filtersForm.controls.categories.value;
+    const categories = this._filtersForm.controls.categories.value;
     return categories ? categories : null;
   }
 
   public get selectedTimeFrame(): SelectItem {
-    const timeFrame = this.filtersForm.controls.timeFrame.value;
+    const timeFrame = this._filtersForm.controls.timeFrame.value;
     return timeFrame ? timeFrame : null;
   }
 
   public ngOnInit(): void {
-    this.filtersForm = this.buildForm();
+    this._filtersForm = this.buildForm();
     this.init();
     this.onChangeForm();
   }
@@ -1087,7 +1097,7 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
-  public onControlOptionClick(locked: boolean): void {
+  public _onControlOptionClick(locked: boolean): void {
     if (locked) {
       window.open("https://google.com");
     }
@@ -1100,24 +1110,9 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
     });
   }
 
-  public getNewInsStatistic(statisticData: NewInsStatistic): any {
-    // TODO: refactor
-    const selectedBrands = this.selectedBrands.map(item => item.value);
-    const currentPeriodData: StatisticData[] = statisticData.currentPeriod.data.filter((item: StatisticData) => selectedBrands.indexOf(item.brand) !== -1);
-    const previousPeriodData: StatisticData[] = statisticData.previousPeriod.data.filter((item: StatisticData) => selectedBrands.indexOf(item.brand) !== -1);
-    const sumSelectedBrands = currentPeriodData.reduce((accumulator, currentValue) => accumulator + currentValue.value, 0);
-    const previousSumSelectedBrands = previousPeriodData.reduce((accumulator, currentValue) => accumulator + currentValue.value, 0);
-    const profit = Math.round(((sumSelectedBrands / previousSumSelectedBrands) * 100) - 100);
-
-    return {
-      profit: profit > 0 ? `+${profit}%` : `${profit}%`,
-      sum: sumSelectedBrands,
-    };
-  }
-
   private buildForm(): FormGroup {
     const defaultSelectedBrands = this.RESPONSE_DATA.brands.filter(brand => !brand.locked);
-    const defaultSelectedTimeFrame = this.timeFrames.find(timeFrame => timeFrame.id === TimeFrames.LastWeek);
+    const defaultSelectedTimeFrame = this._timeFrames.find(timeFrame => timeFrame.id === TimeFrames.LastWeek);
     const defaultSelectedCategory = this.RESPONSE_DATA.categories.find(category => category.id === Constants.ALL_CATEGORIES_ID);
 
     return this.fb.group({
@@ -1128,32 +1123,32 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
   }
 
   private initPriceStructureTable(): void {
-    this.priceStructure = this.RESPONSE_DATA[this.selectedTimeFrame.id][this.selectedCategory.value].priceStructure;
-    const priceRangeColumn = this.priceStructure.displayedColumns[0];
-    const brandsColumns: string[] = this.filtersForm.controls.brands.value.map((item: SelectItem) => item.value);
-    this.priceStructure.displayedColumns = [priceRangeColumn, ...brandsColumns];
+    this._priceStructure = this.RESPONSE_DATA[this.selectedTimeFrame.id][this.selectedCategory.value].priceStructure;
+    const priceRangeColumn = this._priceStructure.displayedColumns[0];
+    const brandsColumns: string[] = this._filtersForm.controls.brands.value.map((item: SelectItem) => item.value);
+    this._priceStructure.displayedColumns = [priceRangeColumn, ...brandsColumns];
   }
 
   private initNewInsChart(): void {
-    this.newInsChart.dataSets = [];
-    this.newInsChart.labels = [];
+    this._newInsChart.dataSets = [];
+    this._newInsChart.labels = [];
     const newIns = this.RESPONSE_DATA[this.selectedTimeFrame.id][this.selectedCategory.value].newIns;
 
-    this.newInsChart.dataSets = this.selectedBrands.map((selectedBrand: SelectItem) => {
+    this._newInsChart.dataSets = this.selectedBrands.map((selectedBrand: SelectItem) => {
       const brandName = selectedBrand.value;
       const brandData: number[] = newIns.values[brandName];
       const color = this.RESPONSE_DATA.brandColors[brandName];
       let data: number[];
 
-      switch (this.filtersForm.controls.timeFrame.value.id) {
+      switch (this._filtersForm.controls.timeFrame.value.id) {
         case TimeFrames.LastWeek:
           const brandDataLength = brandData.length;
-          data = brandData.slice(brandDataLength - WEEK_LENGTH);
-          this.newInsChart.labels = newIns.timestamps.slice(brandDataLength - WEEK_LENGTH);
+          data = brandData.slice(brandDataLength - this._constants.WEEK_LENGTH);
+          this._newInsChart.labels = newIns.timestamps.slice(brandDataLength - this._constants.WEEK_LENGTH);
           break;
         case TimeFrames.LastMoth:
           data = this.getEveryThirdItem(brandData);
-          this.newInsChart.labels = this.getEveryThirdItem(newIns.timestamps);
+          this._newInsChart.labels = this.getEveryThirdItem(newIns.timestamps);
           break;
       }
 
@@ -1170,9 +1165,9 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
 
   private initStatisticBoxes(): void {
     const statistic = this.RESPONSE_DATA[this.selectedTimeFrame.id][this.selectedCategory.value].statistic;
-    this.highestMfp = this.getMaxValueStatistic(statistic.highestMfp);
-    this.highestAvgDiscount = this.getMaxValueStatistic(statistic.avgDiscount);
-    this.newInsStatistic = this.getNewInsStatistic(statistic.newIns);
+    this._highestMfpStatistic = this.getMaxValueStatistic(statistic.highestMfp);
+    this._highestAvgDiscountStatistic = this.getMaxValueStatistic(statistic.avgDiscount);
+    this._newInsStatistic = this.getNewInsStatistic(statistic.newIns);
   }
 
   private getMaxValueStatistic(statisticData: Statistic): CalculatedStatisticData {
@@ -1188,14 +1183,40 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
     };
   }
 
+  private getNewInsStatistic(statisticData: NewInsStatistic): CalculatedNewInsStatistic {
+    const selectedBrands = this.selectedBrands.map(item => item.value);
+    const filterSelectedBrand = () => (item: StatisticData) => selectedBrands.indexOf(item.brand) !== -1;
+    const reducer = (accumulator: number, currentValue: StatisticData) => accumulator + currentValue.value;
+
+    const currentPeriodData: StatisticData[] = statisticData.currentPeriod.data.filter(filterSelectedBrand());
+    const previousPeriodData: StatisticData[] = statisticData.previousPeriod.data.filter(filterSelectedBrand());
+
+    const currentPeriodSum: number = currentPeriodData.reduce(reducer, 0);
+    const previousPeriodSum: number = previousPeriodData.reduce(reducer, 0);
+
+    let profit;
+    if (previousPeriodSum === 0) {
+      profit = currentPeriodSum;
+    } else if (currentPeriodSum === 0) {
+      profit = -previousPeriodSum;
+    } else {
+      profit = Math.round(((currentPeriodSum / previousPeriodSum) * 100) - 100);
+    }
+
+    return {
+      profit: profit > 0 ? `+${profit}%` : `${profit}%`,
+      sum: currentPeriodSum,
+    };
+  }
+
   private initAssortmentMixChart(): void {
-    this.assortmentMixChart.dataSets = [];
-    this.assortmentMixChart.labels = [];
+    this._assortmentMixChart.dataSets = [];
+    this._assortmentMixChart.labels = [];
     const assortmentMix: AssortmentMix = this.RESPONSE_DATA[this.selectedTimeFrame.id][this.selectedCategory.value].assortmentMix;
     const categoriesLabels: string[] = assortmentMix.categoriesLabels;
     const colors = assortmentMix.colors;
 
-    this.assortmentMixChart.dataSets = categoriesLabels.map((category, categoryIndex) => {
+    this._assortmentMixChart.dataSets = categoriesLabels.map((category, categoryIndex) => {
       const data: number[] = this.selectedBrands.map(selectedBrand => assortmentMix.values[selectedBrand.value][categoryIndex]);
       const color = colors[categoryIndex];
 
@@ -1208,11 +1229,11 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
         borderColor: color
       } as ChartDataSets;
     });
-    this.assortmentMixChart.labels = this.selectedBrands.map(item => item.value);
+    this._assortmentMixChart.labels = this.selectedBrands.map(item => item.value);
   }
 
   private onChangeForm(): void {
-    this.filtersForm.valueChanges.pipe(takeUntil(this.unsubscribe$)).subscribe(() => this.init());
+    this._filtersForm.valueChanges.pipe(takeUntil(this.unsubscribe$)).subscribe(() => this.init());
   }
 
   private init(): void {
