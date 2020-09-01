@@ -226,7 +226,7 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
   }
 
   private init(): void {
-    if (this.selectedBrands && this.selectedBrands.length && this.selectedCategory && this.selectedTimeFrame) {
+    if (this.allFiltersSelected) {
       this.initPriceStructureTable();
       this.initNewInsChart();
       this.initAssortmentMixChart();
@@ -261,9 +261,8 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
 
         switch (this._filtersForm.controls.timeFrame.value.id) {
           case TimeFrames.LastWeek:
-            const brandDataLength = brandData.length;
-            data = brandData.slice(brandDataLength - this._constants.WEEK_LENGTH);
-            this._newInsChart.labels = newIns.timestamps.slice(brandDataLength - this._constants.WEEK_LENGTH);
+            data = brandData;
+            this._newInsChart.labels = newIns.timestamps;
             break;
           case TimeFrames.LastMoth:
             data = this.getEveryThirdItem(brandData);

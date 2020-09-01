@@ -1,15 +1,45 @@
 {
   "brands": [
-    {"value": "Zara", "locked": false},
-    {"value": "H&M", "locked": false},
-    {"value": "Uniqlo", "locked": false},
-    {"value": "Mango", "locked": true},
-    {"value": "Nike", "locked": true},
-    {"value": "Asos", "locked": true},
-    {"value": "Gucci", "locked": true},
-    {"value": "Victoria Secret", "locked": true},
-    {"value": "Ralph Lauren", "locked": true},
-    {"value": "+3000 more", "locked": true}
+    {
+      "value": "Zara",
+      "locked": false
+    },
+    {
+      "value": "H&M",
+      "locked": false
+    },
+    {
+      "value": "Uniqlo",
+      "locked": false
+    },
+    {
+      "value": "Mango",
+      "locked": true
+    },
+    {
+      "value": "Nike",
+      "locked": true
+    },
+    {
+      "value": "Asos",
+      "locked": true
+    },
+    {
+      "value": "Gucci",
+      "locked": true
+    },
+    {
+      "value": "Victoria Secret",
+      "locked": true
+    },
+    {
+      "value": "Ralph Lauren",
+      "locked": true
+    },
+    {
+      "value": "+3000 more",
+      "locked": true
+    }
   ],
   "brandColors": {
     "Zara": "#009689",
@@ -17,31 +47,160 @@
     "H&M": "#d8b75c"
   },
   "categories": [
-    {"value": "All categories", "locked": false, "id": "all_categories"},
-    {"value": "Dresses", "locked": false, "id": "dresses"},
-    {"value": "T-shirts", "locked": false, "id": "t_shirts"},
-    {"value": "Accessories", "locked": true, "id": "accessories"},
-    {"value": "Shirts", "locked": true, "id": "shirts"},
-    {"value": "Blouses&Shirts", "locked": true, "id": "blouses"},
-    {"value": "Trousers", "locked": true, "id": "trousers"},
-    {"value": "Jeans", "locked": true, "id": "jeans"},
-    {"value": "Knitwear", "locked": true, "id": "knitwear"},
-    {"value": "Outerwear", "locked": true, "id": "outerwear"},
-    {"value": "Shoes", "locked": true, "id": "shoes"},
-    {"value": "Shorts", "locked": true, "id": "shorts"},
-    {"value": "Skirts", "locked": true, "id": "skirts"},
-    {"value": "+30 categories", "locked": true, "id": "30_categories"}
+    {
+      "value": "All categories",
+      "locked": false,
+      "id": "all_categories"
+    },
+    {
+      "value": "Dresses",
+      "locked": false,
+      "id": "dresses"
+    },
+    {
+      "value": "T-shirts",
+      "locked": false,
+      "id": "t_shirts"
+    },
+    {
+      "value": "Accessories",
+      "locked": true,
+      "id": "accessories"
+    },
+    {
+      "value": "Shirts",
+      "locked": true,
+      "id": "shirts"
+    },
+    {
+      "value": "Blouses&Shirts",
+      "locked": true,
+      "id": "blouses"
+    },
+    {
+      "value": "Trousers",
+      "locked": true,
+      "id": "trousers"
+    },
+    {
+      "value": "Jeans",
+      "locked": true,
+      "id": "jeans"
+    },
+    {
+      "value": "Knitwear",
+      "locked": true,
+      "id": "knitwear"
+    },
+    {
+      "value": "Outerwear",
+      "locked": true,
+      "id": "outerwear"
+    },
+    {
+      "value": "Shoes",
+      "locked": true,
+      "id": "shoes"
+    },
+    {
+      "value": "Shorts",
+      "locked": true,
+      "id": "shorts"
+    },
+    {
+      "value": "Skirts",
+      "locked": true,
+      "id": "skirts"
+    },
+    {
+      "value": "+30 categories",
+      "locked": true,
+      "id": "30_categories"
+    }
   ],
   "lastWeek": {
     "All categories": {
       "assortmentMix": {
-        "categoriesLabels": ["Dresses", "T-shirts", "Accessories", "Shirts", "Blouses&Shirts", "Trousers", "Jeans", "Knitwear", "Outerwear", "Shoes", "Shorts", "Shoes", "Shorts", "Skirts", "Others"],
-        "colors": ["#009689", "#225450", "#d8b75c", "#D67049", "#D8B75D", "#AC365C", "#5E152C", "#2F6936", "#61A74A",
-          "#2995AB", "#009689", "#225450", "#8A3A24", "#D67049", "#AC365C"],
+        "categoriesLabels": [
+          "Dresses",
+          "T-shirts",
+          "Accessories",
+          "Shirts",
+          "Blouses&Shirts",
+          "Trousers",
+          "Jeans",
+          "Knitwear",
+          "Outerwear",
+          "Shoes",
+          "Shorts",
+          "Shoes",
+          "Shorts",
+          "Skirts",
+          "Others"
+        ],
+        "colors": [
+          "#009689",
+          "#225450",
+          "#d8b75c",
+          "#D67049",
+          "#D8B75D",
+          "#AC365C",
+          "#5E152C",
+          "#2F6936",
+          "#61A74A",
+          "#2995AB",
+          "#009689",
+          "#225450",
+          "#8A3A24",
+          "#D67049",
+          "#AC365C"
+        ],
         "values": {
-          "Zara": [5, 4, 3, 2, 1, 5, 4, 3, 2, 1, 10, 50, 10],
-          "H&M": [1, 1, 19, 2, 1, 1, 4, 3, 2, 1, 14, 1, 50],
-          "Uniqlo": [1, 8, 12, 2, 1, 1, 4, 3, 2, 1, 14, 1, 50]
+          "Zara": [
+            5,
+            4,
+            3,
+            2,
+            1,
+            5,
+            4,
+            3,
+            2,
+            1,
+            10,
+            50,
+            10
+          ],
+          "H&M": [
+            1,
+            1,
+            19,
+            2,
+            1,
+            1,
+            4,
+            3,
+            2,
+            1,
+            14,
+            1,
+            50
+          ],
+          "Uniqlo": [
+            1,
+            8,
+            12,
+            2,
+            1,
+            1,
+            4,
+            3,
+            2,
+            1,
+            14,
+            1,
+            50
+          ]
         }
       },
       "priceStructure": {
@@ -83,58 +242,45 @@
             "H&M": 10
           }
         ],
-        "displayedColumns": ["Full price structure", "Zara", "Uniqlo", "H&M"],
+        "displayedColumns": [
+          "Full price structure",
+          "Zara",
+          "Uniqlo",
+          "H&M"
+        ],
         "measurement": "%"
       },
       "newIns": {
         "values": {
           "Zara": [
-            76, 87, 65, 34, 19,
-            21, 21, 72, 1, 24,
-            68, 70, 89, 47, 52,
-            4, 81, 73, 45, 81,
-            72, 100, 26, 76, 16,
-            77, 26, 5, 56, 37, 32],
+            99,
+            77,
+            26,
+            5,
+            56,
+            37,
+            32
+          ],
           "H&M": [
-            72, 17, 45, 16, 38,
-            54, 70, 35, 27, 91,
-            93, 86, 29, 82, 91,
-            26, 99, 75, 86, 25,
-            57, 57, 76, 88, 43,
-            6, 20, 47, 39, 43, 99],
+            43,
+            6,
+            20,
+            47,
+            39,
+            43,
+            99
+          ],
           "Uniqlo": [
-            80, 16, 1, 43, 98,
-            92, 65, 69, 13, 73,
-            73, 23, 70, 65, 7,
-            40, 18, 57, 42, 85,
-            16, 15, 47, 52, 59,
-            63, 46, 38, 9, 50, 88]
+            59,
+            63,
+            46,
+            38,
+            9,
+            50,
+            88
+          ]
         },
         "timestamps": [
-          "25 Jul",
-          "26 Jul",
-          "27 Jul",
-          "28 Jul",
-          "29 Jul",
-          "30 Jul",
-          "31 Jul",
-          "01 Aug",
-          "02 Aug",
-          "03 Aug",
-          "04 Aug",
-          "05 Aug",
-          "06 Aug",
-          "07 Aug",
-          "08 Aug",
-          "09 Aug",
-          "10 Aug",
-          "11 Aug",
-          "12 Aug",
-          "13 Aug",
-          "14 Aug",
-          "15 Aug",
-          "16 Aug",
-          "17 Aug",
           "18 Aug",
           "19 Aug",
           "20 Aug",
@@ -147,34 +293,70 @@
       "statistic": {
         "avgDiscount": {
           "data": [
-            {"brand": "Zara", "value": 2121.55},
-            {"brand": "H&M", "value": 7777.77},
-            {"brand": "Uniqlo", "value": 89.11}
+            {
+              "brand": "Zara",
+              "value": 2121.55
+            },
+            {
+              "brand": "H&M",
+              "value": 7777.77
+            },
+            {
+              "brand": "Uniqlo",
+              "value": 89.11
+            }
           ],
           "measurement": "%"
         },
         "highestMfp": {
           "data": [
-            {"brand": "Zara", "value": 10.99},
-            {"brand": "H&M", "value": 40.45},
-            {"brand": "Uniqlo", "value": 30.45}
+            {
+              "brand": "Zara",
+              "value": 10.99
+            },
+            {
+              "brand": "H&M",
+              "value": 40.45
+            },
+            {
+              "brand": "Uniqlo",
+              "value": 30.45
+            }
           ],
           "measurement": "\u20ac"
         },
         "newIns": {
           "currentPeriod": {
             "data": [
-              {"brand": "Zara", "value": 1},
-              {"brand": "H&M", "value": 2},
-              {"brand": "Uniqlo", "value": 3}
+              {
+                "brand": "Zara",
+                "value": 1
+              },
+              {
+                "brand": "H&M",
+                "value": 2
+              },
+              {
+                "brand": "Uniqlo",
+                "value": 3
+              }
             ],
             "measurement": null
           },
           "previousPeriod": {
             "data": [
-              {"brand": "Zara", "value": 0},
-              {"brand": "H&M", "value": 0},
-              {"brand": "Uniqlo", "value": 0}
+              {
+                "brand": "Zara",
+                "value": 0
+              },
+              {
+                "brand": "H&M",
+                "value": 0
+              },
+              {
+                "brand": "Uniqlo",
+                "value": 0
+              }
             ],
             "measurement": null
           }
@@ -183,12 +365,33 @@
     },
     "T-shirts": {
       "assortmentMix": {
-        "categoriesLabels": ["T-shirt-1", "T-shirt-2", "T-shirt-3"],
-        "colors": ["#009689", "#225450", "#d8b75c", "#D67049"],
+        "categoriesLabels": [
+          "Long Sleeve",
+          "Tank Tops",
+          "Short Sleeve"
+        ],
+        "colors": [
+          "#009689",
+          "#225450",
+          "#d8b75c",
+          "#D67049"
+        ],
         "values": {
-          "Zara": [33.3, 33.3, 33.4],
-          "H&M": [20, 30, 50],
-          "Uniqlo": [40, 40, 20]
+          "Zara": [
+            33.3,
+            33.3,
+            33.4
+          ],
+          "H&M": [
+            20,
+            30,
+            50
+          ],
+          "Uniqlo": [
+            40,
+            40,
+            20
+          ]
         }
       },
       "priceStructure": {
@@ -230,58 +433,45 @@
             "H&M": 10
           }
         ],
-        "displayedColumns": ["Full price structure", "Zara", "Uniqlo", "H&M"],
+        "displayedColumns": [
+          "Full price structure",
+          "Zara",
+          "Uniqlo",
+          "H&M"
+        ],
         "measurement": "%"
       },
       "newIns": {
         "values": {
           "Zara": [
-            76, 87, 65, 34, 19,
-            21, 21, 72, 1, 24,
-            68, 70, 89, 47, 52,
-            4, 81, 73, 45, 81,
-            72, 100, 26, 76, 16,
-            77, 26, 5, 56, 37, 32],
+            16,
+            77,
+            26,
+            5,
+            56,
+            37,
+            32
+          ],
           "H&M": [
-            72, 17, 45, 16, 38,
-            54, 70, 35, 27, 91,
-            93, 86, 29, 82, 91,
-            26, 99, 75, 86, 25,
-            57, 57, 76, 88, 43,
-            6, 20, 47, 39, 43, 99],
+            43,
+            6,
+            20,
+            47,
+            39,
+            43,
+            99
+          ],
           "Uniqlo": [
-            80, 22, 1, 43, 98,
-            92, 65, 69, 13, 73,
-            73, 23, 70, 65, 7,
-            40, 32, 57, 42, 85,
-            16, 15, 333, 52, 59,
-            63, 46, 38, 9, 999, 88]
+            63,
+            46,
+            38,
+            9,
+            999,
+            88,
+            2
+          ]
         },
         "timestamps": [
-          "25 Jul",
-          "26 Jul",
-          "27 Jul",
-          "28 Jul",
-          "29 Jul",
-          "30 Jul",
-          "31 Jul",
-          "01 Aug",
-          "02 Aug",
-          "03 Aug",
-          "04 Aug",
-          "05 Aug",
-          "06 Aug",
-          "07 Aug",
-          "08 Aug",
-          "09 Aug",
-          "10 Aug",
-          "11 Aug",
-          "12 Aug",
-          "13 Aug",
-          "14 Aug",
-          "15 Aug",
-          "16 Aug",
-          "17 Aug",
           "18 Aug",
           "19 Aug",
           "20 Aug",
@@ -294,34 +484,70 @@
       "statistic": {
         "avgDiscount": {
           "data": [
-            {"brand": "Zara", "value": 1.55},
-            {"brand": "H&M", "value": 2.77},
-            {"brand": "Uniqlo", "value": 3.11}
+            {
+              "brand": "Zara",
+              "value": 1.55
+            },
+            {
+              "brand": "H&M",
+              "value": 2.77
+            },
+            {
+              "brand": "Uniqlo",
+              "value": 3.11
+            }
           ],
           "measurement": "%"
         },
         "highestMfp": {
           "data": [
-            {"brand": "Zara", "value": 10.99},
-            {"brand": "H&M", "value": 20.45},
-            {"brand": "Uniqlo", "value": 30.45}
+            {
+              "brand": "Zara",
+              "value": 10.99
+            },
+            {
+              "brand": "H&M",
+              "value": 20.45
+            },
+            {
+              "brand": "Uniqlo",
+              "value": 30.45
+            }
           ],
           "measurement": "\u20ac"
         },
         "newIns": {
           "currentPeriod": {
             "data": [
-              {"brand": "Zara", "value": 1},
-              {"brand": "H&M", "value": 2},
-              {"brand": "Uniqlo", "value": 3}
+              {
+                "brand": "Zara",
+                "value": 1
+              },
+              {
+                "brand": "H&M",
+                "value": 2
+              },
+              {
+                "brand": "Uniqlo",
+                "value": 3
+              }
             ],
             "measurement": null
           },
           "previousPeriod": {
             "data": [
-              {"brand": "Zara", "value": 4},
-              {"brand": "H&M", "value": 5},
-              {"brand": "Uniqlo", "value": 6}
+              {
+                "brand": "Zara",
+                "value": 4
+              },
+              {
+                "brand": "H&M",
+                "value": 5
+              },
+              {
+                "brand": "Uniqlo",
+                "value": 6
+              }
             ],
             "measurement": null
           }
@@ -330,12 +556,33 @@
     },
     "Dresses": {
       "assortmentMix": {
-        "categoriesLabels": ["Dresses-1", "Dresses-2", "Dresses-3"],
-        "colors": ["#009689", "#225450", "#d8b75c", "#D67049"],
+        "categoriesLabels": [
+          "Dresses Midi",
+          "Dresses Long",
+          "Dresses Short"
+        ],
+        "colors": [
+          "#009689",
+          "#225450",
+          "#d8b75c",
+          "#D67049"
+        ],
         "values": {
-          "Zara": [30, 30, 40],
-          "H&M": [10, 40, 50],
-          "Uniqlo": [20, 60, 20]
+          "Zara": [
+            30,
+            30,
+            40
+          ],
+          "H&M": [
+            10,
+            40,
+            50
+          ],
+          "Uniqlo": [
+            20,
+            60,
+            20
+          ]
         }
       },
       "priceStructure": {
@@ -377,58 +624,45 @@
             "H&M": 30
           }
         ],
-        "displayedColumns": ["Full price structure", "Zara", "Uniqlo", "H&M"],
+        "displayedColumns": [
+          "Full price structure",
+          "Zara",
+          "Uniqlo",
+          "H&M"
+        ],
         "measurement": "%"
       },
       "newIns": {
         "values": {
           "Zara": [
-            76, 87, 65, 34, 19,
-            21, 21, 72, 1, 24,
-            68, 70, 89, 47, 52,
-            4, 81, 73, 45, 81,
-            72, 100, 26, 76, 16,
-            77, 26, 5, 56, 37, 32],
+            16,
+            77,
+            26,
+            5,
+            56,
+            37,
+            32
+          ],
           "H&M": [
-            72, 17, 45, 16, 38,
-            54, 70, 35, 27, 91,
-            93, 86, 29, 82, 91,
-            26, 99, 75, 86, 25,
-            57, 57, 76, 88, 43,
-            6, 20, 47, 39, 43, 99],
+            43,
+            6,
+            20,
+            47,
+            39,
+            43,
+            99
+          ],
           "Uniqlo": [
-            80, 16, 1, 43, 98,
-            92, 32, 69, 13, 73,
-            73, 23, 70, 112, 7,
-            40, 18, 57, 42, 85,
-            16, 15, 47, 52, 59,
-            63, 23, 38, 9, 123, 1]
+            59,
+            63,
+            23,
+            38,
+            9,
+            123,
+            1
+          ]
         },
         "timestamps": [
-          "25 Jul",
-          "26 Jul",
-          "27 Jul",
-          "28 Jul",
-          "29 Jul",
-          "30 Jul",
-          "31 Jul",
-          "01 Aug",
-          "02 Aug",
-          "03 Aug",
-          "04 Aug",
-          "05 Aug",
-          "06 Aug",
-          "07 Aug",
-          "08 Aug",
-          "09 Aug",
-          "10 Aug",
-          "11 Aug",
-          "12 Aug",
-          "13 Aug",
-          "14 Aug",
-          "15 Aug",
-          "16 Aug",
-          "17 Aug",
           "18 Aug",
           "19 Aug",
           "20 Aug",
@@ -441,34 +675,70 @@
       "statistic": {
         "avgDiscount": {
           "data": [
-            {"brand": "Zara", "value": 11.55},
-            {"brand": "H&M", "value": 22.77},
-            {"brand": "Uniqlo", "value": 33.11}
+            {
+              "brand": "Zara",
+              "value": 11.55
+            },
+            {
+              "brand": "H&M",
+              "value": 22.77
+            },
+            {
+              "brand": "Uniqlo",
+              "value": 33.11
+            }
           ],
           "measurement": "%"
         },
         "highestMfp": {
           "data": [
-            {"brand": "Zara", "value": 11.99},
-            {"brand": "H&M", "value": 22.45},
-            {"brand": "Uniqlo", "value": 33.45}
+            {
+              "brand": "Zara",
+              "value": 11.99
+            },
+            {
+              "brand": "H&M",
+              "value": 22.45
+            },
+            {
+              "brand": "Uniqlo",
+              "value": 33.45
+            }
           ],
           "measurement": "\u20ac"
         },
         "newIns": {
           "currentPeriod": {
             "data": [
-              {"brand": "Zara", "value": 1},
-              {"brand": "H&M", "value": 2},
-              {"brand": "Uniqlo", "value": 3}
+              {
+                "brand": "Zara",
+                "value": 1
+              },
+              {
+                "brand": "H&M",
+                "value": 2
+              },
+              {
+                "brand": "Uniqlo",
+                "value": 3
+              }
             ],
             "measurement": null
           },
           "previousPeriod": {
             "data": [
-              {"brand": "Zara", "value": 4},
-              {"brand": "H&M", "value": 5},
-              {"brand": "Uniqlo", "value": 6}
+              {
+                "brand": "Zara",
+                "value": 4
+              },
+              {
+                "brand": "H&M",
+                "value": 5
+              },
+              {
+                "brand": "Uniqlo",
+                "value": 6
+              }
             ],
             "measurement": null
           }
@@ -479,13 +749,86 @@
   "lastMonth": {
     "All categories": {
       "assortmentMix": {
-        "categoriesLabels": ["Dresses", "T-shirts", "Accessories", "Shirts", "Blouses&Shirts", "Trousers", "Jeans", "Knitwear", "Outerwear", "Shoes", "Shorts", "Shoes", "Shorts", "Skirts", "Others"],
-        "colors": ["#009689", "#225450", "#d8b75c", "#D67049", "#D8B75D", "#AC365C", "#5E152C", "#2F6936", "#61A74A",
-          "#2995AB", "#009689", "#225450", "#8A3A24", "#D67049", "#AC365C"],
+        "categoriesLabels": [
+          "Dresses",
+          "T-shirts",
+          "Accessories",
+          "Shirts",
+          "Blouses&Shirts",
+          "Trousers",
+          "Jeans",
+          "Knitwear",
+          "Outerwear",
+          "Shoes",
+          "Shorts",
+          "Shoes",
+          "Shorts",
+          "Skirts",
+          "Others"
+        ],
+        "colors": [
+          "#009689",
+          "#225450",
+          "#d8b75c",
+          "#D67049",
+          "#D8B75D",
+          "#AC365C",
+          "#5E152C",
+          "#2F6936",
+          "#61A74A",
+          "#2995AB",
+          "#009689",
+          "#225450",
+          "#8A3A24",
+          "#D67049",
+          "#AC365C"
+        ],
         "values": {
-          "Zara": [40, 4, 3, 2, 1, 5, 4, 3, 2, 1, 10, 15, 10],
-          "H&M": [1, 1, 19, 2, 1, 1, 4, 3, 2, 1, 14, 1, 50],
-          "Uniqlo": [1, 8, 12, 2, 1, 1, 4, 3, 2, 1, 14, 1, 50]
+          "Zara": [
+            40,
+            4,
+            3,
+            2,
+            1,
+            5,
+            4,
+            3,
+            2,
+            1,
+            10,
+            15,
+            10
+          ],
+          "H&M": [
+            1,
+            1,
+            19,
+            2,
+            1,
+            1,
+            4,
+            3,
+            2,
+            1,
+            14,
+            1,
+            50
+          ],
+          "Uniqlo": [
+            1,
+            8,
+            12,
+            2,
+            1,
+            1,
+            4,
+            3,
+            2,
+            1,
+            14,
+            1,
+            50
+          ]
         }
       },
       "priceStructure": {
@@ -527,32 +870,115 @@
             "H&M": 10
           }
         ],
-        "displayedColumns": ["Full price structure", "Zara", "Uniqlo", "H&M"],
+        "displayedColumns": [
+          "Full price structure",
+          "Zara",
+          "Uniqlo",
+          "H&M"
+        ],
         "measurement": "%"
       },
       "newIns": {
         "values": {
           "Zara": [
-            99, 87, 65, 34, 19,
-            21, 21, 72, 1, 24,
-            68, 70, 89, 47, 52,
-            4, 81, 73, 45, 81,
-            72, 100, 26, 76, 16,
-            77, 26, 5, 56, 37, 32],
+            99,
+            87,
+            65,
+            34,
+            19,
+            21,
+            21,
+            72,
+            1,
+            24,
+            68,
+            70,
+            89,
+            47,
+            52,
+            4,
+            81,
+            73,
+            45,
+            81,
+            72,
+            100,
+            26,
+            76,
+            16,
+            77,
+            26,
+            5,
+            56,
+            37,
+            32
+          ],
           "H&M": [
-            72, 17, 45, 16, 38,
-            54, 70, 35, 27, 91,
-            93, 86, 29, 82, 91,
-            26, 99, 75, 86, 25,
-            57, 57, 76, 88, 43,
-            6, 20, 47, 39, 43, 99],
+            72,
+            17,
+            45,
+            16,
+            38,
+            54,
+            70,
+            35,
+            27,
+            91,
+            93,
+            86,
+            29,
+            82,
+            91,
+            26,
+            99,
+            75,
+            86,
+            25,
+            57,
+            57,
+            76,
+            88,
+            43,
+            6,
+            20,
+            47,
+            39,
+            43,
+            99
+          ],
           "Uniqlo": [
-            80, 16, 1, 43, 98,
-            92, 65, 69, 13, 73,
-            73, 23, 70, 65, 7,
-            40, 18, 57, 42, 85,
-            16, 15, 47, 52, 59,
-            63, 46, 38, 9, 50, 88]
+            80,
+            16,
+            1,
+            43,
+            98,
+            92,
+            65,
+            69,
+            13,
+            73,
+            73,
+            23,
+            70,
+            65,
+            7,
+            40,
+            18,
+            57,
+            42,
+            85,
+            16,
+            15,
+            47,
+            52,
+            59,
+            63,
+            46,
+            38,
+            9,
+            50,
+            88
+          ]
         },
         "timestamps": [
           "25 Jul",
@@ -591,34 +1017,70 @@
       "statistic": {
         "avgDiscount": {
           "data": [
-            {"brand": "Zara", "value": 10.55},
-            {"brand": "H&M", "value": 877.77},
-            {"brand": "Uniqlo", "value": 89.11}
+            {
+              "brand": "Zara",
+              "value": 10.55
+            },
+            {
+              "brand": "H&M",
+              "value": 877.77
+            },
+            {
+              "brand": "Uniqlo",
+              "value": 89.11
+            }
           ],
           "measurement": "%"
         },
         "highestMfp": {
           "data": [
-            {"brand": "Zara", "value": 22.99},
-            {"brand": "H&M", "value": 99.45},
-            {"brand": "Uniqlo", "value": 30.45}
+            {
+              "brand": "Zara",
+              "value": 22.99
+            },
+            {
+              "brand": "H&M",
+              "value": 99.45
+            },
+            {
+              "brand": "Uniqlo",
+              "value": 30.45
+            }
           ],
           "measurement": "\u20ac"
         },
         "newIns": {
           "currentPeriod": {
             "data": [
-              {"brand": "Zara", "value": 100},
-              {"brand": "H&M", "value": 200},
-              {"brand": "Uniqlo", "value": 400}
+              {
+                "brand": "Zara",
+                "value": 100
+              },
+              {
+                "brand": "H&M",
+                "value": 200
+              },
+              {
+                "brand": "Uniqlo",
+                "value": 400
+              }
             ],
             "measurement": null
           },
           "previousPeriod": {
             "data": [
-              {"brand": "Zara", "value": 1000},
-              {"brand": "H&M", "value": 2000},
-              {"brand": "Uniqlo", "value": 355}
+              {
+                "brand": "Zara",
+                "value": 1000
+              },
+              {
+                "brand": "H&M",
+                "value": 2000
+              },
+              {
+                "brand": "Uniqlo",
+                "value": 355
+              }
             ],
             "measurement": null
           }
@@ -627,12 +1089,33 @@
     },
     "T-shirts": {
       "assortmentMix": {
-        "categoriesLabels": ["T-shirt-1", "T-shirt-2", "T-shirt-3"],
-        "colors": ["#009689", "#225450", "#d8b75c", "#D67049"],
+        "categoriesLabels": [
+          "Long Sleeve",
+          "Tank Tops",
+          "Short Sleeve"
+        ],
+        "colors": [
+          "#009689",
+          "#225450",
+          "#d8b75c",
+          "#D67049"
+        ],
         "values": {
-          "Zara": [50, 20, 30],
-          "H&M": [5, 5, 90],
-          "Uniqlo": [40, 40, 20]
+          "Zara": [
+            50,
+            20,
+            30
+          ],
+          "H&M": [
+            5,
+            5,
+            90
+          ],
+          "Uniqlo": [
+            40,
+            40,
+            20
+          ]
         }
       },
       "priceStructure": {
@@ -674,32 +1157,115 @@
             "H&M": 10
           }
         ],
-        "displayedColumns": ["Full price structure", "Zara", "Uniqlo", "H&M"],
+        "displayedColumns": [
+          "Full price structure",
+          "Zara",
+          "Uniqlo",
+          "H&M"
+        ],
         "measurement": "%"
       },
       "newIns": {
         "values": {
           "Zara": [
-            76, 87, 65, 34, 19,
-            21, 21, 72, 1, 24,
-            68, 70, 89, 47, 52,
-            4, 81, 73, 45, 81,
-            72, 100, 26, 76, 16,
-            77, 26, 5, 56, 37, 32],
+            76,
+            87,
+            65,
+            34,
+            19,
+            21,
+            21,
+            72,
+            1,
+            24,
+            68,
+            70,
+            89,
+            47,
+            52,
+            4,
+            81,
+            73,
+            45,
+            81,
+            72,
+            100,
+            26,
+            76,
+            16,
+            77,
+            26,
+            5,
+            56,
+            37,
+            32
+          ],
           "H&M": [
-            72, 17, 45, 16, 38,
-            54, 70, 35, 27, 91,
-            93, 86, 29, 82, 91,
-            26, 99, 75, 86, 25,
-            57, 57, 76, 88, 43,
-            6, 20, 47, 39, 43, 99],
+            72,
+            17,
+            45,
+            16,
+            38,
+            54,
+            70,
+            35,
+            27,
+            91,
+            93,
+            86,
+            29,
+            82,
+            91,
+            26,
+            99,
+            75,
+            86,
+            25,
+            57,
+            57,
+            76,
+            88,
+            43,
+            6,
+            20,
+            47,
+            39,
+            43,
+            99
+          ],
           "Uniqlo": [
-            80, 22, 1, 43, 98,
-            92, 65, 69, 13, 73,
-            73, 23, 70, 65, 7,
-            40, 32, 57, 42, 85,
-            16, 15, 333, 52, 59,
-            63, 46, 38, 9, 999, 88]
+            80,
+            22,
+            1,
+            43,
+            98,
+            92,
+            65,
+            69,
+            13,
+            73,
+            73,
+            23,
+            70,
+            65,
+            7,
+            40,
+            32,
+            57,
+            42,
+            85,
+            16,
+            15,
+            333,
+            52,
+            59,
+            63,
+            46,
+            38,
+            9,
+            999,
+            88
+          ]
         },
         "timestamps": [
           "25 Jul",
@@ -738,34 +1304,70 @@
       "statistic": {
         "avgDiscount": {
           "data": [
-            {"brand": "Zara", "value": 1.55},
-            {"brand": "H&M", "value": 2.77},
-            {"brand": "Uniqlo", "value": 3.11}
+            {
+              "brand": "Zara",
+              "value": 1.55
+            },
+            {
+              "brand": "H&M",
+              "value": 2.77
+            },
+            {
+              "brand": "Uniqlo",
+              "value": 3.11
+            }
           ],
           "measurement": "%"
         },
         "highestMfp": {
           "data": [
-            {"brand": "Zara", "value": 10.99},
-            {"brand": "H&M", "value": 20.45},
-            {"brand": "Uniqlo", "value": 30.45}
+            {
+              "brand": "Zara",
+              "value": 10.99
+            },
+            {
+              "brand": "H&M",
+              "value": 20.45
+            },
+            {
+              "brand": "Uniqlo",
+              "value": 30.45
+            }
           ],
           "measurement": "\u20ac"
         },
         "newIns": {
           "currentPeriod": {
             "data": [
-              {"brand": "Zara", "value": 1},
-              {"brand": "H&M", "value": 2},
-              {"brand": "Uniqlo", "value": 3}
+              {
+                "brand": "Zara",
+                "value": 1
+              },
+              {
+                "brand": "H&M",
+                "value": 2
+              },
+              {
+                "brand": "Uniqlo",
+                "value": 3
+              }
             ],
             "measurement": null
           },
           "previousPeriod": {
             "data": [
-              {"brand": "Zara", "value": 4},
-              {"brand": "H&M", "value": 5},
-              {"brand": "Uniqlo", "value": 6}
+              {
+                "brand": "Zara",
+                "value": 4
+              },
+              {
+                "brand": "H&M",
+                "value": 5
+              },
+              {
+                "brand": "Uniqlo",
+                "value": 6
+              }
             ],
             "measurement": null
           }
@@ -774,12 +1376,33 @@
     },
     "Dresses": {
       "assortmentMix": {
-        "categoriesLabels": ["Dresses-1", "Dresses-2", "Dresses-3"],
-        "colors": ["#009689", "#225450", "#d8b75c", "#D67049"],
+        "categoriesLabels": [
+          "Dresses Midi",
+          "Dresses Long",
+          "Dresses Short"
+        ],
+        "colors": [
+          "#009689",
+          "#225450",
+          "#d8b75c",
+          "#D67049"
+        ],
         "values": {
-          "Zara": [85, 5, 10],
-          "H&M": [20, 30, 50],
-          "Uniqlo": [20, 60, 20]
+          "Zara": [
+            85,
+            5,
+            10
+          ],
+          "H&M": [
+            20,
+            30,
+            50
+          ],
+          "Uniqlo": [
+            20,
+            60,
+            20
+          ]
         }
       },
       "priceStructure": {
@@ -821,32 +1444,115 @@
             "H&M": 30
           }
         ],
-        "displayedColumns": ["Full price structure", "Zara", "Uniqlo", "H&M"],
+        "displayedColumns": [
+          "Full price structure",
+          "Zara",
+          "Uniqlo",
+          "H&M"
+        ],
         "measurement": "%"
       },
       "newIns": {
         "values": {
           "Zara": [
-            76, 87, 65, 34, 19,
-            21, 21, 72, 1, 24,
-            68, 70, 89, 47, 52,
-            4, 81, 73, 45, 81,
-            72, 100, 26, 76, 16,
-            77, 26, 5, 56, 37, 32],
+            76,
+            87,
+            65,
+            34,
+            19,
+            21,
+            21,
+            72,
+            1,
+            24,
+            68,
+            70,
+            89,
+            47,
+            52,
+            4,
+            81,
+            73,
+            45,
+            81,
+            72,
+            100,
+            26,
+            76,
+            16,
+            77,
+            26,
+            5,
+            56,
+            37,
+            32
+          ],
           "H&M": [
-            72, 17, 45, 16, 38,
-            54, 70, 35, 27, 91,
-            93, 86, 29, 82, 91,
-            26, 99, 75, 86, 25,
-            57, 57, 76, 88, 43,
-            6, 20, 47, 39, 43, 99],
+            72,
+            17,
+            45,
+            16,
+            38,
+            54,
+            70,
+            35,
+            27,
+            91,
+            93,
+            86,
+            29,
+            82,
+            91,
+            26,
+            99,
+            75,
+            86,
+            25,
+            57,
+            57,
+            76,
+            88,
+            43,
+            6,
+            20,
+            47,
+            39,
+            43,
+            99
+          ],
           "Uniqlo": [
-            80, 16, 1, 43, 98,
-            92, 32, 69, 13, 73,
-            73, 23, 70, 112, 7,
-            40, 18, 57, 42, 85,
-            16, 15, 47, 52, 59,
-            63, 23, 38, 9, 123, 1]
+            80,
+            16,
+            1,
+            43,
+            98,
+            92,
+            32,
+            69,
+            13,
+            73,
+            73,
+            23,
+            70,
+            112,
+            7,
+            40,
+            18,
+            57,
+            42,
+            85,
+            16,
+            15,
+            47,
+            52,
+            59,
+            63,
+            23,
+            38,
+            9,
+            123,
+            1
+          ]
         },
         "timestamps": [
           "25 Jul",
@@ -885,34 +1591,70 @@
       "statistic": {
         "avgDiscount": {
           "data": [
-            {"brand": "Zara", "value": 11.55},
-            {"brand": "H&M", "value": 22.77},
-            {"brand": "Uniqlo", "value": 33.11}
+            {
+              "brand": "Zara",
+              "value": 11.55
+            },
+            {
+              "brand": "H&M",
+              "value": 22.77
+            },
+            {
+              "brand": "Uniqlo",
+              "value": 33.11
+            }
           ],
           "measurement": "%"
         },
         "highestMfp": {
           "data": [
-            {"brand": "Zara", "value": 11.99},
-            {"brand": "H&M", "value": 22.45},
-            {"brand": "Uniqlo", "value": 33.45}
+            {
+              "brand": "Zara",
+              "value": 11.99
+            },
+            {
+              "brand": "H&M",
+              "value": 22.45
+            },
+            {
+              "brand": "Uniqlo",
+              "value": 33.45
+            }
           ],
           "measurement": "\u20ac"
         },
         "newIns": {
           "currentPeriod": {
             "data": [
-              {"brand": "Zara", "value": 1},
-              {"brand": "H&M", "value": 2},
-              {"brand": "Uniqlo", "value": 3}
+              {
+                "brand": "Zara",
+                "value": 1
+              },
+              {
+                "brand": "H&M",
+                "value": 2
+              },
+              {
+                "brand": "Uniqlo",
+                "value": 3
+              }
             ],
             "measurement": null
           },
           "previousPeriod": {
             "data": [
-              {"brand": "Zara", "value": 4},
-              {"brand": "H&M", "value": 5},
-              {"brand": "Uniqlo", "value": 6}
+              {
+                "brand": "Zara",
+                "value": 4
+              },
+              {
+                "brand": "H&M",
+                "value": 5
+              },
+              {
+                "brand": "Uniqlo",
+                "value": 6
+              }
             ],
             "measurement": null
           }
