@@ -1,7 +1,7 @@
 <div class="marketing-dashboard">
   <div class="marketing-dashboard__container">
     <div class="marketing-dashboard__row">
-      <img class="marketing-dashboard__logo" src="../../assets/img/logo.png" alt="Retviews">
+      <img class="marketing-dashboard__logo" src="../../../assets/img/logo.png" alt="Retviews">
     </div>
 
     <div class="marketing-dashboard__row">
@@ -14,7 +14,7 @@
       <div class="marketing-dashboard__column">
         <div class="marketing-dashboard__toolbar">
           <div class="marketing-dashboard__toolbar-title">
-            <img src="../../assets/img/icon-filter.svg" alt="icon-filter">
+            <img src="../../../assets/img/icon-filter.svg" alt="icon-filter">
             Set filters:
           </div>
 
@@ -29,7 +29,7 @@
                             (click)="_onControlOptionClick(brand.locked)"
                             class="marketing-dashboard__toolbar-select">
                   {{brand.value}}
-                  <img *ngIf="brand.locked" src="../../assets/img/locked-icon.svg" alt="locked-icon"
+                  <img *ngIf="brand.locked" src="../../../assets/img/locked-icon.svg" alt="locked-icon"
                        class="locked-icon">
                 </mat-option>
               </mat-select>
@@ -44,7 +44,7 @@
                             [value]="category"
                             (click)="_onControlOptionClick(category.locked)">
                   {{category.value}}
-                  <img *ngIf="category.locked" src="../../assets/img/locked-icon.svg" alt="locked-icon"
+                  <img *ngIf="category.locked" src="../../../assets/img/locked-icon.svg" alt="locked-icon"
                        class="locked-icon">
                 </mat-option>
               </mat-select>
@@ -59,7 +59,7 @@
                             [value]="timeFrame"
                             (click)="_onControlOptionClick(timeFrame.locked)">
                   {{timeFrame.value}}
-                  <img *ngIf="timeFrame.locked" src="../../assets/img/locked-icon.svg" alt="locked-icon"
+                  <img *ngIf="timeFrame.locked" src="../../../assets/img/locked-icon.svg" alt="locked-icon"
                        class="locked-icon">
                 </mat-option>
               </mat-select>

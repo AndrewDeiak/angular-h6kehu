@@ -12,10 +12,10 @@ import {BrowserModule} from "@angular/platform-browser";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ChartsModule} from "ng2-charts";
 import {AppComponent} from "./app.component";
-import {MarketingDashboardComponent} from "./components/marketing-dashboard.component";
-import {LoaderComponent} from "./loader/loader.component";
-import {MarketingDashboardPopoverComponent} from "./marketing-dashboard-popover/marketing-dashboard-popover.component";
-import {NoResultsFoundComponent} from "./no-results-found/no-results-found.component";
+import {LoaderComponent} from "./components/loader/loader.component";
+import {MarketingDashboardPopoverComponent} from "./components/marketing-dashboard-popover/marketing-dashboard-popover.component";
+import {MarketingDashboardComponent} from "./components/marketing-dashboard/marketing-dashboard.component";
+import {NoResultsFoundComponent} from "./components/no-results-found/no-results-found.component";
 
 @NgModule({
   declarations: [

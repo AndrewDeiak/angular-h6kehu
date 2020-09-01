@@ -7,9 +7,9 @@ import {ChartDataSets} from "chart.js";
 import * as pluginDataLabels from "chartjs-plugin-datalabels";
 import {Subject} from "rxjs";
 import {delay, finalize, takeUntil} from "rxjs/operators";
-import {MarketingDashboardPopoverComponent} from "../marketing-dashboard-popover/marketing-dashboard-popover.component";
 import {
   AssortmentMix,
+  AvailableCategoriesData,
   CalculatedNewInsStatistic,
   CalculatedStatisticData,
   DashboardData,
@@ -18,8 +18,9 @@ import {
   SelectItem,
   Statistic,
   StatisticData
-} from "../models/dashboard.model";
-import {Constants} from "../utils/constants";
+} from "../../models/dashboard.model";
+import {Constants} from "../../utils/constants";
+import {MarketingDashboardPopoverComponent} from "../marketing-dashboard-popover/marketing-dashboard-popover.component";
 
 Chart.defaults.global.plugins.datalabels.display = false;
 
@@ -171,6 +172,10 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
     return timeFrame ? timeFrame : null;
   }
 
+  public get availableCategoriesData(): AvailableCategoriesData {
+    return this.dashboardData[this.selectedTimeFrame.id][this.selectedCategory.value];
+  }
+
   public ngOnInit(): void {
     this._isLoading = true;
     // TODO: remove delay after connect to the real server
@@ -234,7 +239,7 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
   }
 
   private initPriceStructureTable(): void {
-    this._priceStructure = this.dashboardData[this.selectedTimeFrame.id][this.selectedCategory.value].priceStructure;
+    this._priceStructure = this.availableCategoriesData.priceStructure;
     if (this._priceStructure) {
       const priceRangeColumn = this._priceStructure.displayedColumns[0];
       const brandsColumns: string[] = this._filtersForm.controls.brands.value.map((item: SelectItem) => item.value);
@@ -245,7 +250,7 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
   private initNewInsChart(): void {
     this._newInsChart.dataSets = [];
     this._newInsChart.labels = [];
-    const newIns = this.dashboardData[this.selectedTimeFrame.id][this.selectedCategory.value].newIns;
+    const newIns = this.availableCategoriesData.newIns;
 
     if (newIns) {
       this._newInsChart.dataSets = this.selectedBrands.map((selectedBrand: SelectItem) => {
@@ -279,7 +284,7 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
   }
 
   private initStatisticBoxes(): void {
-    const statistic = this.dashboardData[this.selectedTimeFrame.id][this.selectedCategory.value].statistic;
+    const statistic = this.availableCategoriesData.statistic;
     this._highestMfpStatistic = this.getMaxValueStatistic(statistic.highestMfp);
     this._highestAvgDiscountStatistic = this.getMaxValueStatistic(statistic.avgDiscount);
     this._newInsStatistic = this.getNewInsStatistic(statistic.newIns);
@@ -327,7 +332,7 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
   private initAssortmentMixChart(): void {
     this._assortmentMixChart.dataSets = [];
     this._assortmentMixChart.labels = [];
-    const assortmentMix: AssortmentMix = this.dashboardData[this.selectedTimeFrame.id][this.selectedCategory.value].assortmentMix;
+    const assortmentMix: AssortmentMix = this.availableCategoriesData.assortmentMix;
 
     if (assortmentMix) {
       const categoriesLabels: string[] = assortmentMix.categoriesLabels;
