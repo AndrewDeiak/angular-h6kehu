@@ -76,24 +76,23 @@
         <div class="marketing-dashboard__statistic">
           <div class="marketing-dashboard__statistic-item">
             <p>New ins</p>
-            <div class="marketing-dashboard__statistic-item-value"
-                 *ngIf="_newInsStatistic && selectedBrands && selectedBrands.length && selectedCategory && selectedTimeFrame">
-              {{_newInsStatistic.sum}} <span>{{_newInsStatistic.profit}}</span>
+            <div class="marketing-dashboard__statistic-item-value" *ngIf="_newInsStatistic && allFiltersSelected">
+              {{_newInsStatistic.sum}}<span>{{_newInsStatistic.profit}}</span>
             </div>
           </div>
 
           <div class="marketing-dashboard__statistic-item">
             <p>Highest avg discount</p>
             <div class="marketing-dashboard__statistic-item-value"
-                 *ngIf="_highestAvgDiscountStatistic && selectedBrands && selectedBrands.length && selectedCategory && selectedTimeFrame">
+                 *ngIf="_highestAvgDiscountStatistic && allFiltersSelected">
               {{_highestAvgDiscountStatistic.value}}{{_highestAvgDiscountStatistic.measurement}}
-              <span>{{_highestAvgDiscountStatistic.brand}}</span></div>
+              <span>{{_highestAvgDiscountStatistic.brand}}</span>
+            </div>
           </div>
 
           <div class="marketing-dashboard__statistic-item">
             <p>Highest most frequent price</p>
-            <div class="marketing-dashboard__statistic-item-value"
-                 *ngIf="_highestMfpStatistic && selectedBrands && selectedBrands.length && selectedCategory && selectedTimeFrame">
+            <div class="marketing-dashboard__statistic-item-value" *ngIf="_highestMfpStatistic && allFiltersSelected">
               {{_highestMfpStatistic.value}}{{_highestMfpStatistic.measurement}}
               <span></span></div>
           </div>
@@ -102,15 +101,14 @@
         <div class="marketing-dashboard__widget marketing-dashboard__widget-price">
           <div class="marketing-dashboard__widget-title">
             Price structure
-            <span class="marketing-dashboard__widget-sub-title">
+            <span class="marketing-dashboard__widget-sub-title" *ngIf="_filtersForm">
               {{selectedCategory?.id === _constants.ALL_CATEGORIES_ID ? "Price points per brand" : selectedCategory?.value}}
             </span>
           </div>
 
           <ng-container *ngIf="_priceStructure?.data?.length && !_isLoading;">
-            <mat-table
-              *ngIf="_filtersForm && selectedBrands && selectedBrands.length && selectedCategory && selectedTimeFrame; else selectFiltersTml"
-              [dataSource]="_priceStructure.data">
+            <mat-table *ngIf="allFiltersSelected; else selectFiltersTml"
+                       [dataSource]="_priceStructure.data">
               <ng-container *ngFor="let displayedColumn of _priceStructure.displayedColumns"
                             [matColumnDef]="displayedColumn">
                 <ng-container *ngIf="displayedColumn === 'Full price structure'">
@@ -141,7 +139,9 @@
           </ng-container>
 
           <app-loader *ngIf="_isLoading"></app-loader>
-          <app-no-results-found text="No result found" *ngIf="!_priceStructure?.data && !_isLoading"></app-no-results-found>
+          <app-no-results-found text="No result found"
+                                *ngIf="!_priceStructure?.data && !_isLoading">
+          </app-no-results-found>
         </div>
       </div>
 
@@ -149,14 +149,14 @@
         <div class="marketing-dashboard__widget">
           <div class="marketing-dashboard__widget-title">
             Assortment Mix
-            <span class="marketing-dashboard__widget-sub-title">
+            <span class="marketing-dashboard__widget-sub-title" *ngIf="_filtersForm">
               {{selectedCategory?.id === _constants.ALL_CATEGORIES_ID ? "Categories split per brand" : selectedCategory?.value}}
             </span>
           </div>
           <div class="marketing-dashboard__widget-assortment">
             <ng-container *ngIf="_assortmentMixChart?.dataSets?.length && !_isLoading">
-              <canvas baseChart
-                      *ngIf="_filtersForm && selectedBrands && selectedBrands.length && selectedCategory && selectedTimeFrame; else selectFiltersTml"
+              <canvas *ngIf="allFiltersSelected; else selectFiltersTml"
+                      baseChart
                       chartType="horizontalBar"
                       [datasets]="_assortmentMixChart.dataSets"
                       [labels]="_assortmentMixChart.labels"
@@ -167,7 +167,8 @@
             </ng-container>
 
             <app-loader *ngIf="_isLoading"></app-loader>
-            <app-no-results-found text="No result found" *ngIf="!_assortmentMixChart?.dataSets?.length && !_isLoading"></app-no-results-found>
+            <app-no-results-found text="No result found"
+                                  *ngIf="!_assortmentMixChart?.dataSets?.length && !_isLoading"></app-no-results-found>
           </div>
         </div>
 
@@ -175,25 +176,26 @@
           <div class="marketing-dashboard__widget marketing-dashboard__new-ins">
             <div class="marketing-dashboard__widget-title">
               New ins
-              <span class="marketing-dashboard__widget-sub-title">
+              <span class="marketing-dashboard__widget-sub-title" *ngIf="_filtersForm">
                 {{selectedCategory?.id === _constants.ALL_CATEGORIES_ID ? "New arrivals per brand" : selectedCategory?.value}}
               </span>
             </div>
 
             <ng-container *ngIf="_newInsChart?.dataSets?.length && !_isLoading">
-              <canvas
-                *ngIf="_filtersForm && selectedBrands && selectedBrands.length && selectedCategory && selectedTimeFrame; else selectFiltersTml"
-                baseChart
-                chartType="bar"
-                [datasets]="_newInsChart.dataSets"
-                [labels]="_newInsChart.labels"
-                [options]="_newInsChart.options"
-                [legend]="true">
+              <canvas *ngIf="allFiltersSelected; else selectFiltersTml"
+                      baseChart
+                      chartType="bar"
+                      [datasets]="_newInsChart.dataSets"
+                      [labels]="_newInsChart.labels"
+                      [options]="_newInsChart.options"
+                      [legend]="true">
               </canvas>
             </ng-container>
 
             <app-loader *ngIf="_isLoading"></app-loader>
-            <app-no-results-found text="No result found" *ngIf="!_newInsChart?.dataSets?.length && !_isLoading"></app-no-results-found>
+            <app-no-results-found text="No result found"
+                                  *ngIf="!_newInsChart?.dataSets?.length && !_isLoading">
+            </app-no-results-found>
           </div>
         </div>
       </div>

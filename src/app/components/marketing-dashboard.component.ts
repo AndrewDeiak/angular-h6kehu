@@ -158,10 +158,12 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
   }
 
   public get selectedCategory(): SelectItem {
-    if (this._filtersForm) {
-      const categories = this._filtersForm.controls.categories.value;
-      return categories ? categories : null;
-    }
+    const categories = this._filtersForm.controls.categories.value;
+    return categories ? categories : null;
+  }
+
+  public get allFiltersSelected(): boolean {
+    return !!(this._filtersForm && this.selectedBrands && this.selectedBrands.length && this.selectedCategory && this.selectedTimeFrame);
   }
 
   public get selectedTimeFrame(): SelectItem {
