@@ -13,6 +13,7 @@
   &__row {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
     width: 100%;
   }
 
@@ -131,7 +132,7 @@
 
     &-price {
       overflow-x: auto;
-      height: 465px;
+      height: 467px;
       display: flex;
       flex-direction: column;
 
@@ -232,16 +233,11 @@
 
   .hidden-chart {
     position: relative;
-    height: 150px;
 
-    &-discount {
-      background: url("../../img/discount-evolution-hidden.jpg") no-repeat center center;
-      background-size: contain;
-    }
-
-    &-average {
-      background: url("../../img/average-price-hidden.jpg") no-repeat center center;
-      background-size: contain;
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
     }
 
     button {
@@ -249,7 +245,7 @@
       right: 0;
       left: 0;
       margin: 0 auto;
-      top: 50px;
+      top: 35%;
       font-family: $font-GothamLight;
       text-align: center;
       border: none;

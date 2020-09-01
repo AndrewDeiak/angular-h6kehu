@@ -13,6 +13,7 @@ import {
   CalculatedNewInsStatistic,
   CalculatedStatisticData,
   DashboardData,
+  HiddenCharts,
   NewInsStatistic,
   PriceStructure,
   SelectItem,
@@ -29,6 +30,8 @@ enum TimeFrames {
   LastMoth = "lastMonth",
   CustomPeriod = "customPeriod"
 }
+
+const ASSETS_PATH = "../../../";
 
 function onHoverChartElements(event, elements): void {
   event.target.style.cursor = elements[0] ? "pointer" : "default";
@@ -146,6 +149,38 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
   public _constants = Constants;
   public _filtersForm: FormGroup;
   public _isLoading: boolean;
+  public _hiddenCharts: HiddenCharts[] = [
+    {
+      img: `${ASSETS_PATH}assets/img/average-price-hidden.jpg`,
+      title: "Average price",
+      subTitle: "Average price per category"
+    },
+    {
+      img: `${ASSETS_PATH}assets/img/discount-evolution-hidden.jpg`,
+      title: "Discount evolution",
+      subTitle: "Discount structure per brand"
+    },
+    {
+      img: `${ASSETS_PATH}assets/img/colors-hidden.jpg`,
+      title: "Colors",
+      subTitle: "Colors structure per brand"
+    },
+    {
+      img: `${ASSETS_PATH}assets/img/sell-out-hidden.jpg`,
+      title: "Sell out",
+      subTitle: "Sell out structure per brand"
+    },
+    {
+      img: `${ASSETS_PATH}assets/img/stock-hidden.jpg`,
+      title: "Stock",
+      subTitle: "Stock structure per brand"
+    },
+    {
+      img: `${ASSETS_PATH}assets/img/fabrics-hidden.jpg`,
+      title: "Fabrics",
+      subTitle: "Fabrics structure per brand"
+    }
+  ];
   private unsubscribe$ = new Subject<void>();
 
   constructor(private cdr: ChangeDetectorRef,

@@ -202,27 +202,15 @@
     </div>
 
     <div class="marketing-dashboard__row">
-      <div class="marketing-dashboard__column">
+      <div class="marketing-dashboard__column" *ngFor="let chart of _hiddenCharts">
         <div class="marketing-dashboard__widget">
           <div class="marketing-dashboard__widget-title">
-            Average price
-            <span class="marketing-dashboard__widget-sub-title">Average price per category</span>
+            {{chart.title}}
+            <span class="marketing-dashboard__widget-sub-title">{{chart.subTitle}}</span>
           </div>
 
-          <div class="hidden-chart hidden-chart-average">
-            <button>Access full data</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="marketing-dashboard__column">
-        <div class="marketing-dashboard__widget">
-          <div class="marketing-dashboard__widget-title">
-            Discount evolution
-            <span class="marketing-dashboard__widget-sub-title">Discount structure per brand</span>
-          </div>
-
-          <div class="hidden-chart hidden-chart-discount">
+          <div class="hidden-chart">
+            <img [src]="chart.img" [alt]="chart.title">
             <button>Access full data</button>
           </div>
         </div>

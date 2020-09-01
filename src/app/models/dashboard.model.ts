@@ -71,3 +71,9 @@ export interface AssortmentMix {
   values: { [key: string]: number[] };
   colors: string[];
 }
+
+export interface HiddenCharts {
+  img: string;
+  title: string;
+  subTitle: string;
+}
