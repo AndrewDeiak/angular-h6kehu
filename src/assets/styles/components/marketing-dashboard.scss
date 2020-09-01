@@ -143,6 +143,7 @@
       .mat-header-cell {
         font-family: $font-GothamMedium;
         justify-content: center;
+        font-size: 13px;
 
         &:first-child {
           justify-content: flex-start;
@@ -163,7 +164,7 @@
 
         .percent {
           width: 50%;
-          font-size: 12px;
+          font-size: 13px;
         }
 
         .circle {

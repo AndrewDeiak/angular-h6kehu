@@ -75,6 +75,11 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
         yAxes: [{
           stacked: true,
           gridLines: {display: false},
+          ticks: {
+            fontFamily: "Gotham Medium",
+            fontSize: 13,
+            fontColor: "rgba(0,0,0,.54)"
+          }
         }],
         xAxes: [{
           display: false,
