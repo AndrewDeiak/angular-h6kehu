@@ -12,4 +12,6 @@ body {
   font-family: $font-GothamBook;
 }
 
-@import "components/marketing_dashboard";
+@import "components/marketing-dashboard";
+@import "components/loader";
+@import "components/no-results-found";

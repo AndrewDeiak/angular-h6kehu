@@ -1,3 +1,4 @@
+import {HttpClientModule} from "@angular/common/http";
 import {NgModule} from "@angular/core";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatButtonModule} from "@angular/material/button";
@@ -12,13 +13,17 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ChartsModule} from "ng2-charts";
 import {AppComponent} from "./app.component";
 import {MarketingDashboardComponent} from "./components/marketing-dashboard.component";
+import {LoaderComponent} from "./loader/loader.component";
 import {MarketingDashboardPopoverComponent} from "./marketing-dashboard-popover/marketing-dashboard-popover.component";
+import {NoResultsFoundComponent} from "./no-results-found/no-results-found.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     MarketingDashboardComponent,
-    MarketingDashboardPopoverComponent
+    MarketingDashboardPopoverComponent,
+    LoaderComponent,
+    NoResultsFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +37,8 @@ import {MarketingDashboardPopoverComponent} from "./marketing-dashboard-popover/
     MatCheckboxModule,
     MatTableModule,
     MatDialogModule,
-    MatButtonModule
+    MatButtonModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -31,6 +31,8 @@
   }
 
   &__toolbar {
+    text-align: center;
+
     &-title {
       display: flex;
       align-items: center;
@@ -179,7 +181,6 @@
       height: 200px;
       overflow-x: hidden;
       overflow-y: auto;
-      padding-right: 10px;
       display: flex;
       flex-direction: column;
     }
@@ -265,19 +266,6 @@
       }
     }
   }
-
-  .no-results-found {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    flex-grow: 1;
-    color: #a3a3a3;
-
-    .empty-label {
-      padding-top: 13px;
-    }
-  }
 }
 
 .marketing-dashboard__toolbar-select {
@@ -319,7 +307,6 @@
     height: 20px;
   }
 }
-
 
 @media (max-width: 1200px) {
   .marketing-dashboard {

@@ -12,17 +12,18 @@
       </div>
 
       <div class="marketing-dashboard__column">
-        <form class="marketing-dashboard__toolbar" [formGroup]="_filtersForm" novalidate>
+        <div class="marketing-dashboard__toolbar">
           <div class="marketing-dashboard__toolbar-title">
             <img src="../../assets/img/icon-filter.svg" alt="icon-filter">
             Set filters:
           </div>
 
-          <div class="marketing-dashboard__toolbar-controls">
+          <form *ngIf="_filtersForm;" [formGroup]="_filtersForm" class="marketing-dashboard__toolbar-controls"
+                novalidate>
             <mat-form-field appearance="fill">
               <mat-label>Retailers</mat-label>
               <mat-select formControlName="brands" multiple>
-                <mat-option *ngFor="let brand of RESPONSE_DATA.brands"
+                <mat-option *ngFor="let brand of dashboardData.brands"
                             [value]="brand"
                             [disabled]="brand.locked"
                             (click)="_onControlOptionClick(brand.locked)"
@@ -38,7 +39,7 @@
               <mat-label>Category</mat-label>
               <mat-select formControlName="categories">
                 <mat-option class="marketing-dashboard__toolbar-select"
-                            *ngFor="let category of RESPONSE_DATA.categories"
+                            *ngFor="let category of dashboardData.categories"
                             [disabled]="category.locked"
                             [value]="category"
                             (click)="_onControlOptionClick(category.locked)">
@@ -63,8 +64,10 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
-          </div>
-        </form>
+          </form>
+
+          <app-loader *ngIf="!_filtersForm && _isLoading"></app-loader>
+        </div>
       </div>
     </div>
 
@@ -75,7 +78,8 @@
             <p>New ins</p>
             <div class="marketing-dashboard__statistic-item-value"
                  *ngIf="_newInsStatistic && selectedBrands && selectedBrands.length && selectedCategory && selectedTimeFrame">
-              {{_newInsStatistic.sum}} <span>{{_newInsStatistic.profit}}</span></div>
+              {{_newInsStatistic.sum}} <span>{{_newInsStatistic.profit}}</span>
+            </div>
           </div>
 
           <div class="marketing-dashboard__statistic-item">
@@ -83,7 +87,7 @@
             <div class="marketing-dashboard__statistic-item-value"
                  *ngIf="_highestAvgDiscountStatistic && selectedBrands && selectedBrands.length && selectedCategory && selectedTimeFrame">
               {{_highestAvgDiscountStatistic.value}}{{_highestAvgDiscountStatistic.measurement}}
-              <span>{{_highestAvgDiscountStatistic?.brand}}</span></div>
+              <span>{{_highestAvgDiscountStatistic.brand}}</span></div>
           </div>
 
           <div class="marketing-dashboard__statistic-item">
@@ -99,13 +103,14 @@
           <div class="marketing-dashboard__widget-title">
             Price structure
             <span class="marketing-dashboard__widget-sub-title">
-              {{selectedCategory.id === _constants.ALL_CATEGORIES_ID ? "Price points per brand" : selectedCategory.value}}
+              {{selectedCategory?.id === _constants.ALL_CATEGORIES_ID ? "Price points per brand" : selectedCategory?.value}}
             </span>
           </div>
 
-          <ng-container
-            *ngIf="selectedBrands && selectedBrands.length && selectedCategory && selectedTimeFrame; else emptyTemplate">
-            <mat-table [dataSource]="_priceStructure?.data">
+          <ng-container *ngIf="_priceStructure?.data?.length && !_isLoading;">
+            <mat-table
+              *ngIf="_filtersForm && selectedBrands && selectedBrands.length && selectedCategory && selectedTimeFrame; else selectFiltersTml"
+              [dataSource]="_priceStructure.data">
               <ng-container *ngFor="let displayedColumn of _priceStructure.displayedColumns"
                             [matColumnDef]="displayedColumn">
                 <ng-container *ngIf="displayedColumn === 'Full price structure'">
@@ -119,7 +124,7 @@
                     <div class="percent-cell" (click)="_openPointDetails()">
                       <div class="circle-wrapper">
                         <div class="circle"
-                             [style.background-color]="RESPONSE_DATA.brandColors[displayedColumn]"
+                             [style.background-color]="dashboardData.brandColors[displayedColumn]"
                              [style.width.px]="element[displayedColumn] / 2.3"
                              [style.height.px]="element[displayedColumn] / 2.3">
                         </div>
@@ -134,6 +139,9 @@
               <mat-row *matRowDef="let row; columns: _priceStructure.displayedColumns;"></mat-row>
             </mat-table>
           </ng-container>
+
+          <app-loader *ngIf="_isLoading"></app-loader>
+          <app-no-results-found text="No result found" *ngIf="!_priceStructure?.data && !_isLoading"></app-no-results-found>
         </div>
       </div>
 
@@ -142,19 +150,24 @@
           <div class="marketing-dashboard__widget-title">
             Assortment Mix
             <span class="marketing-dashboard__widget-sub-title">
-              {{selectedCategory.id === _constants.ALL_CATEGORIES_ID ? "Categories split per brand" : selectedCategory.value}}
+              {{selectedCategory?.id === _constants.ALL_CATEGORIES_ID ? "Categories split per brand" : selectedCategory?.value}}
             </span>
           </div>
           <div class="marketing-dashboard__widget-assortment">
-            <canvas baseChart
-                    *ngIf="selectedBrands && selectedBrands.length && selectedTimeFrame ; else emptyTemplate"
-                    chartType="horizontalBar"
-                    [datasets]="_assortmentMixChart.dataSets"
-                    [labels]="_assortmentMixChart.labels"
-                    [options]="_assortmentMixChart.options"
-                    [plugins]="_chartsPlugins"
-                    [legend]="true">
-            </canvas>
+            <ng-container *ngIf="_assortmentMixChart?.dataSets?.length && !_isLoading">
+              <canvas baseChart
+                      *ngIf="_filtersForm && selectedBrands && selectedBrands.length && selectedCategory && selectedTimeFrame; else selectFiltersTml"
+                      chartType="horizontalBar"
+                      [datasets]="_assortmentMixChart.dataSets"
+                      [labels]="_assortmentMixChart.labels"
+                      [options]="_assortmentMixChart.options"
+                      [plugins]="_chartsPlugins"
+                      [legend]="true">
+              </canvas>
+            </ng-container>
+
+            <app-loader *ngIf="_isLoading"></app-loader>
+            <app-no-results-found text="No result found" *ngIf="!_assortmentMixChart?.dataSets?.length && !_isLoading"></app-no-results-found>
           </div>
         </div>
 
@@ -163,19 +176,24 @@
             <div class="marketing-dashboard__widget-title">
               New ins
               <span class="marketing-dashboard__widget-sub-title">
-                {{selectedCategory.id === _constants.ALL_CATEGORIES_ID ? "New arrivals per brand" : selectedCategory.value}}
+                {{selectedCategory?.id === _constants.ALL_CATEGORIES_ID ? "New arrivals per brand" : selectedCategory?.value}}
               </span>
             </div>
 
-            <canvas
-              *ngIf="selectedBrands && selectedBrands.length && selectedCategory && selectedTimeFrame; else emptyTemplate"
-              baseChart
-              chartType="bar"
-              [datasets]="_newInsChart.dataSets"
-              [labels]="_newInsChart.labels"
-              [options]="_newInsChart.options"
-              [legend]="true">
-            </canvas>
+            <ng-container *ngIf="_newInsChart?.dataSets?.length && !_isLoading">
+              <canvas
+                *ngIf="_filtersForm && selectedBrands && selectedBrands.length && selectedCategory && selectedTimeFrame; else selectFiltersTml"
+                baseChart
+                chartType="bar"
+                [datasets]="_newInsChart.dataSets"
+                [labels]="_newInsChart.labels"
+                [options]="_newInsChart.options"
+                [legend]="true">
+              </canvas>
+            </ng-container>
+
+            <app-loader *ngIf="_isLoading"></app-loader>
+            <app-no-results-found text="No result found" *ngIf="!_newInsChart?.dataSets?.length && !_isLoading"></app-no-results-found>
           </div>
         </div>
       </div>
@@ -211,9 +229,6 @@
   </div>
 </div>
 
-<ng-template #emptyTemplate>
-  <div class="no-results-found">
-    <img src="../../assets/img/no-results-found.svg" alt="no-results-found">
-    <div class="empty-label">Select filters</div>
-  </div>
+<ng-template #selectFiltersTml>
+  <app-no-results-found text="Select filters"></app-no-results-found>
 </ng-template>

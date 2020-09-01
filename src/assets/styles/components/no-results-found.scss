@@ -1,0 +1,17 @@
+.app-no-results-found {
+  height: 100%;
+
+  .no-results-found {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    color: #a3a3a3;
+    height: 100%;
+
+    .empty-label {
+      padding-top: 13px;
+    }
+  }
+}
