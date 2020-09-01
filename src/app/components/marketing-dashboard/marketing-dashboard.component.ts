@@ -216,7 +216,7 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
     // TODO: remove delay after connect to the real server
     this.http.get("../assets/data.json")
       .pipe(
-        delay(2000),
+        delay(1000),
         finalize(() => {
           this._isLoading = false;
           this.cdr.detectChanges();
