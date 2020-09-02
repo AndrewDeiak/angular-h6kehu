@@ -106,7 +106,7 @@
             </span>
           </div>
 
-          <ng-container *ngIf="_priceStructure?.data?.length && !_isLoading;">
+          <div class="marketing-dashboard__widget-price-wrapper" *ngIf="_priceStructure?.data?.length && !_isLoading;">
             <mat-table *ngIf="allFiltersSelected; else selectFiltersTml"
                        [dataSource]="_priceStructure.data">
               <ng-container *ngFor="let displayedColumn of _priceStructure.displayedColumns"
@@ -136,7 +136,7 @@
               <mat-header-row *matHeaderRowDef="_priceStructure.displayedColumns"></mat-header-row>
               <mat-row *matRowDef="let row; columns: _priceStructure.displayedColumns;"></mat-row>
             </mat-table>
-          </ng-container>
+          </div>
 
           <app-loader *ngIf="_isLoading"></app-loader>
           <app-no-results-found text="No result found"
@@ -146,57 +146,58 @@
       </div>
 
       <div class="marketing-dashboard__column">
-        <div class="marketing-dashboard__widget">
+        <div class="marketing-dashboard__widget marketing-dashboard__widget-assortment">
           <div class="marketing-dashboard__widget-title">
             Assortment Mix
             <span class="marketing-dashboard__widget-sub-title" *ngIf="_filtersForm">
               {{selectedCategory?.id === _constants.ALL_CATEGORIES_ID ? "Categories split per brand" : selectedCategory?.value}}
             </span>
           </div>
-          <div class="marketing-dashboard__widget-assortment">
+          <div class="marketing-dashboard__widget-assortment-wrapper">
             <ng-container *ngIf="_assortmentMixChart?.dataSets?.length && !_isLoading">
-              <canvas *ngIf="allFiltersSelected; else selectFiltersTml"
-                      baseChart
-                      chartType="horizontalBar"
-                      [datasets]="_assortmentMixChart.dataSets"
-                      [labels]="_assortmentMixChart.labels"
-                      [options]="_assortmentMixChart.options"
-                      [plugins]="_chartsPlugins"
-                      [legend]="true">
-              </canvas>
+              <div *ngIf="allFiltersSelected; else selectFiltersTml"
+                   class="marketing-dashboard__widget-assortment-wrapper-canvas">
+                <canvas baseChart
+                        chartType="horizontalBar"
+                        [datasets]="_assortmentMixChart.dataSets"
+                        [labels]="_assortmentMixChart.labels"
+                        [options]="_assortmentMixChart.options"
+                        [plugins]="_chartsPlugins"
+                        [legend]="true">
+                </canvas>
+              </div>
             </ng-container>
 
             <app-loader *ngIf="_isLoading"></app-loader>
             <app-no-results-found text="No result found"
-                                  *ngIf="!_assortmentMixChart?.dataSets?.length && !_isLoading"></app-no-results-found>
+                                  *ngIf="!_assortmentMixChart?.dataSets?.length && !_isLoading">
+            </app-no-results-found>
           </div>
         </div>
 
-        <div class="marketing-dashboard__widget-wrapper marketing-dashboard__new-ins-wrapper">
-          <div class="marketing-dashboard__widget marketing-dashboard__new-ins">
-            <div class="marketing-dashboard__widget-title">
-              New ins
-              <span class="marketing-dashboard__widget-sub-title" *ngIf="_filtersForm">
+        <div class="marketing-dashboard__widget marketing-dashboard__widget-new-ins">
+          <div class="marketing-dashboard__widget-title">
+            New ins
+            <span class="marketing-dashboard__widget-sub-title" *ngIf="_filtersForm">
                 {{selectedCategory?.id === _constants.ALL_CATEGORIES_ID ? "New arrivals per brand" : selectedCategory?.value}}
               </span>
-            </div>
-
-            <ng-container *ngIf="_newInsChart?.dataSets?.length && !_isLoading">
-              <canvas *ngIf="allFiltersSelected; else selectFiltersTml"
-                      baseChart
-                      chartType="bar"
-                      [datasets]="_newInsChart.dataSets"
-                      [labels]="_newInsChart.labels"
-                      [options]="_newInsChart.options"
-                      [legend]="true">
-              </canvas>
-            </ng-container>
-
-            <app-loader *ngIf="_isLoading"></app-loader>
-            <app-no-results-found text="No result found"
-                                  *ngIf="!_newInsChart?.dataSets?.length && !_isLoading">
-            </app-no-results-found>
           </div>
+
+          <ng-container *ngIf="_newInsChart?.dataSets?.length && !_isLoading">
+            <canvas *ngIf="allFiltersSelected; else selectFiltersTml"
+                    baseChart
+                    chartType="bar"
+                    [datasets]="_newInsChart.dataSets"
+                    [labels]="_newInsChart.labels"
+                    [options]="_newInsChart.options"
+                    [legend]="true">
+            </canvas>
+          </ng-container>
+
+          <app-loader *ngIf="_isLoading"></app-loader>
+          <app-no-results-found text="No result found"
+                                *ngIf="!_newInsChart?.dataSets?.length && !_isLoading">
+          </app-no-results-found>
         </div>
       </div>
     </div>

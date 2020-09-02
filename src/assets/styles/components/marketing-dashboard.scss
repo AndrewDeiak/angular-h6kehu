@@ -116,11 +116,6 @@
     padding: 15px;
     margin-bottom: 15px;
 
-    &-wrapper {
-      display: flex;
-      justify-content: space-between;
-    }
-
     &-title {
       margin-bottom: 15px;
     }
@@ -132,10 +127,14 @@
     }
 
     &-price {
-      overflow-x: auto;
       height: 467px;
       display: flex;
       flex-direction: column;
+
+      &-wrapper {
+        overflow-x: auto;
+        flex-grow: 1;
+      }
 
       .mat-table {
         min-width: 450px;
@@ -181,9 +180,24 @@
     }
 
     &-assortment {
-      height: 200px;
-      overflow-x: hidden;
-      overflow-y: auto;
+      height: 269px;
+      display: flex;
+      flex-direction: column;
+
+      &-wrapper {
+        height: 100%;
+        text-align: center;
+
+        &-canvas {
+          height: 200px;
+        }
+      }
+    }
+
+    &-new-ins {
+      width: 100%;
+      height: 261px;
+      padding-bottom: 50px;
       display: flex;
       flex-direction: column;
     }
@@ -203,7 +217,7 @@
 
       p {
         margin: 0;
-        font-size: 12px;
+        font-size: 11px;
       }
 
       &-value {
@@ -216,7 +230,7 @@
         span {
           margin-left: 10px;
           position: relative;
-          top: -5px;
+          top: -3px;
           font-family: $font-GothamLight;
           font-size: 14px;
           color: #a3a3a3;
@@ -225,13 +239,6 @@
     }
   }
 
-  &__new-ins {
-    width: 100%;
-    height: 261px;
-    padding-bottom: 50px;
-    display: flex;
-    flex-direction: column;
-  }
 
   .hidden-chart {
     position: relative;
@@ -327,6 +334,17 @@
       }
     }
 
+    &__widget {
+
+      &-price {
+        height: 425px;
+      }
+
+      &-new-ins {
+        height: 350px;
+      }
+    }
+
     &__statistic {
       justify-content: flex-start;
 
@@ -338,14 +356,6 @@
         &:last-child {
           margin-right: 0;
         }
-      }
-    }
-
-    &__new-ins {
-      height: 350px;
-
-      &-wrapper {
-        flex-direction: column;
       }
     }
   }
@@ -360,12 +370,6 @@
         min-width: auto;
         width: 31%;
         margin-right: 0;
-      }
-    }
-
-    &__widget {
-      &-assortment {
-        height: 350px;
       }
     }
   }
@@ -409,10 +413,28 @@
         flex-direction: column;
         text-align: center;
       }
-    }
 
-    &__new-ins {
-      padding-bottom: 90px;
+      &-price {
+        height: 467px;
+      }
+
+      &-new-ins {
+        padding-bottom: 80px;
+      }
+
+      &-assortment {
+        height: 350px;
+
+        &-wrapper {
+          overflow-x: auto;
+          overflow-y: hidden;
+
+          &-canvas {
+            width: 450px;
+            height: 235px;
+          }
+        }
+      }
     }
   }
 }
