@@ -184,14 +184,16 @@
           </div>
 
           <ng-container *ngIf="_newInsChart?.dataSets?.length && !_isLoading">
-            <canvas *ngIf="allFiltersSelected; else selectFiltersTml"
-                    baseChart
-                    chartType="bar"
-                    [datasets]="_newInsChart.dataSets"
-                    [labels]="_newInsChart.labels"
-                    [options]="_newInsChart.options"
-                    [legend]="true">
-            </canvas>
+            <div class="marketing-dashboard__widget-new-ins-wrapper-canvas">
+              <canvas *ngIf="allFiltersSelected; else selectFiltersTml"
+                      baseChart
+                      chartType="bar"
+                      [datasets]="_newInsChart.dataSets"
+                      [labels]="_newInsChart.labels"
+                      [options]="_newInsChart.options"
+                      [legend]="true">
+              </canvas>
+            </div>
           </ng-container>
 
           <app-loader *ngIf="_isLoading"></app-loader>
