@@ -438,3 +438,20 @@
     }
   }
 }
+
+@media (max-width: 480px) {
+  .marketing-dashboard {
+    .hidden-chart {
+      img {
+        display: none;
+      }
+
+      button {
+        display: block;
+        position: static;
+        transform: none;
+        margin: 0 auto;
+      }
+    }
+  }
+}
