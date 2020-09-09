@@ -111,12 +111,12 @@
                        [dataSource]="_priceStructure.data">
               <ng-container *ngFor="let displayedColumn of _priceStructure.displayedColumns"
                             [matColumnDef]="displayedColumn">
-                <ng-container *ngIf="displayedColumn === _constants.FULL_PRICE_STRUCTURE">
+                <ng-container *ngIf="displayedColumn === _constants.PRICE_STRUCTURE">
                   <mat-header-cell *matHeaderCellDef>Full Price Structure</mat-header-cell>
                   <mat-cell *matCellDef="let element">{{element.priceRange}}</mat-cell>
                 </ng-container>
 
-                <ng-container *ngIf="displayedColumn !== _constants.FULL_PRICE_STRUCTURE">
+                <ng-container *ngIf="displayedColumn !== _constants.PRICE_STRUCTURE">
                   <mat-header-cell *matHeaderCellDef>{{displayedColumn}}</mat-header-cell>
                   <mat-cell *matCellDef="let element">
                     <div class="percent-cell" (click)="_openPointDetails()">
@@ -127,7 +127,7 @@
                              [style.height.px]="element[displayedColumn] / 2.3">
                         </div>
                       </div>
-                      <div class="percent">{{element[displayedColumn]}} {{_priceStructure.measurement}}</div>
+                      <div class="percent">{{element[displayedColumn] | number:'1.0-1'}} {{_priceStructure.measurement}} </div>
                     </div>
                   </mat-cell>
                 </ng-container>

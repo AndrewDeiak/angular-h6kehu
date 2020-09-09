@@ -219,7 +219,7 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this._isLoading = true;
     // TODO: remove delay after connect to the real server
-    this.http.get("../assets/data.json")
+    this.http.get("https://dash.retviews.com/get_data")
       .pipe(
         delay(1000),
         finalize(() => {
@@ -270,7 +270,7 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
       this.initPriceStructureTable();
       this.initNewInsChart();
       this.initAssortmentMixChart();
-      this.initStatisticBoxes();
+      // this.initStatisticBoxes();
     }
   }
 
