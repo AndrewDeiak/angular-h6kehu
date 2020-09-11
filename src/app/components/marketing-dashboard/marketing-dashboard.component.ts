@@ -10,15 +10,11 @@ import {delay, finalize, takeUntil} from "rxjs/operators";
 import {
   AssortmentMix,
   AvailableCategoriesData,
-  CalculatedNewInsStatistic,
-  CalculatedStatisticData,
   DashboardData,
   HiddenCharts,
-  NewInsStatistic,
   PriceStructure,
   SelectItem,
   Statistic,
-  StatisticData
 } from "../../models/dashboard.model";
 import {Constants} from "../../utils/constants";
 import {MarketingDashboardPopoverComponent} from "../marketing-dashboard-popover/marketing-dashboard-popover.component";
@@ -147,9 +143,9 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
     dataSets: null,
     labels: null,
   };
-  public _highestAvgDiscountStatistic: CalculatedStatisticData;
-  public _highestMfpStatistic: CalculatedStatisticData;
-  public _newInsStatistic: CalculatedNewInsStatistic;
+  public _highestAvgDiscountStatistic: [string, number];
+  public _highestAvgPriceStatistic: [string, number];
+  public _newInsStatistic: number;
   public _priceStructure: PriceStructure;
   public _constants = Constants;
   public _filtersForm: FormGroup;
@@ -270,7 +266,7 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
       this.initPriceStructureTable();
       this.initNewInsChart();
       this.initAssortmentMixChart();
-      // this.initStatisticBoxes();
+      this.initStatisticBoxes();
     }
   }
 
@@ -324,48 +320,36 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
 
   private initStatisticBoxes(): void {
     const statistic = this.availableCategoriesData.statistic;
-    this._highestMfpStatistic = this.getMaxValueStatistic(statistic.highestMfp);
+    this._highestAvgPriceStatistic = this.getMaxValueStatistic(statistic.avgPrice);
     this._highestAvgDiscountStatistic = this.getMaxValueStatistic(statistic.avgDiscount);
     this._newInsStatistic = this.getNewInsStatistic(statistic.newIns);
   }
 
-  private getMaxValueStatistic(statisticData: Statistic): CalculatedStatisticData {
+  private getMaxValueStatistic(statisticData: Statistic): [string, number] {
     const selectedBrands = this.selectedBrands.map(item => item.value);
-    const selectedStatisticData: StatisticData[] = statisticData.data.filter((item: StatisticData) => selectedBrands.indexOf(item.brand) !== -1);
-    const statistic = selectedStatisticData.reduce((prev, current) => (prev.value > current.value) ? prev : current, {
-      brand: null,
-      value: null
-    });
-    return {
-      ...statistic,
-      measurement: statisticData.measurement
-    };
+    const filteredStatisticPerBrand = this.filterStatisticPerBrand(statisticData, selectedBrands);
+
+    const maxValue = Object.entries(filteredStatisticPerBrand)
+      .reduce((prev, current) => (prev[1] > current[1]) ? prev : current) as [string, number];
+    return maxValue;
   }
 
-  private getNewInsStatistic(statisticData: NewInsStatistic): CalculatedNewInsStatistic {
+  private getNewInsStatistic(statisticData: Statistic): number {
     const selectedBrands = this.selectedBrands.map(item => item.value);
-    const filterSelectedBrand = () => (item: StatisticData) => selectedBrands.indexOf(item.brand) !== -1;
-    const reducer = (accumulator: number, currentValue: StatisticData) => accumulator + currentValue.value;
+    const filteredStatisticPerBrand = this.filterStatisticPerBrand(statisticData, selectedBrands);
 
-    const currentPeriodData: StatisticData[] = statisticData.currentPeriod.data.filter(filterSelectedBrand());
-    const previousPeriodData: StatisticData[] = statisticData.previousPeriod.data.filter(filterSelectedBrand());
+    const newIns = Object.values(filteredStatisticPerBrand)
+      .reduce((accumulator: number, currentValue: number) => accumulator + currentValue, 0) as number;
+    return newIns;
+  }
 
-    const currentPeriodSum: number = currentPeriodData.reduce(reducer, 0);
-    const previousPeriodSum: number = previousPeriodData.reduce(reducer, 0);
-
-    let profit;
-    if (previousPeriodSum === 0) {
-      profit = currentPeriodSum;
-    } else if (currentPeriodSum === 0) {
-      profit = -previousPeriodSum;
-    } else {
-      profit = Math.round(((currentPeriodSum / previousPeriodSum) * 100) - 100);
-    }
-
-    return {
-      profit: profit > 0 ? `+${profit}%` : `${profit}%`,
-      sum: currentPeriodSum,
-    };
+  private filterStatisticPerBrand(statisticData, selectedBrands): Statistic {
+    return Object.keys(statisticData).reduce((filtered, key) => {
+      if (selectedBrands.includes(key)) {
+        filtered[key] = statisticData[key];
+      }
+      return filtered;
+    }, {});
   }
 
   private initAssortmentMixChart(): void {

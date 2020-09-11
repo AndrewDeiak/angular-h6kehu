@@ -77,7 +77,7 @@
           <div class="marketing-dashboard__statistic-item">
             <p>New ins</p>
             <div class="marketing-dashboard__statistic-item-value" *ngIf="_newInsStatistic && allFiltersSelected">
-              {{_newInsStatistic.sum}}<span>{{_newInsStatistic.profit}}</span>
+              {{_newInsStatistic}}
             </div>
           </div>
 
@@ -85,16 +85,14 @@
             <p>Highest avg discount</p>
             <div class="marketing-dashboard__statistic-item-value"
                  *ngIf="_highestAvgDiscountStatistic && allFiltersSelected">
-              {{_highestAvgDiscountStatistic.value}}{{_highestAvgDiscountStatistic.measurement}}
-              <span>{{_highestAvgDiscountStatistic.brand}}</span>
+              {{_highestAvgDiscountStatistic[1]}}% <span>{{_highestAvgDiscountStatistic[0]}}</span>
             </div>
           </div>
 
           <div class="marketing-dashboard__statistic-item">
             <p>Highest most frequent price</p>
-            <div class="marketing-dashboard__statistic-item-value" *ngIf="_highestMfpStatistic && allFiltersSelected">
-              {{_highestMfpStatistic.value}}{{_highestMfpStatistic.measurement}}
-              <span></span></div>
+            <div class="marketing-dashboard__statistic-item-value" *ngIf="_highestAvgPriceStatistic && allFiltersSelected">
+              {{_highestAvgPriceStatistic[1]}}€</div>
           </div>
         </div>
 
@@ -113,7 +111,7 @@
                             [matColumnDef]="displayedColumn">
                 <ng-container *ngIf="displayedColumn === _constants.PRICE_STRUCTURE">
                   <mat-header-cell *matHeaderCellDef>Full Price Structure</mat-header-cell>
-                  <mat-cell *matCellDef="let element">{{element.priceRange}}</mat-cell>
+                  <mat-cell *matCellDef="let element">{{element.priceRange}}{{_priceStructure.currency}}</mat-cell>
                 </ng-container>
 
                 <ng-container *ngIf="displayedColumn !== _constants.PRICE_STRUCTURE">

@@ -16,33 +16,13 @@ export interface AvailableCategoriesData {
   newIns: NewIns;
   statistic: {
     avgDiscount: Statistic;
-    highestMfp: Statistic;
-    newIns: NewInsStatistic;
+    avgPrice: Statistic;
+    newIns: Statistic;
   };
 }
 
-export interface NewInsStatistic {
-  currentPeriod: Statistic;
-  previousPeriod: Statistic;
-}
-
 export interface Statistic {
-  data: StatisticData[];
-  measurement: string;
-}
-
-export interface StatisticData {
-  brand: string;
-  value: number;
-}
-
-export interface CalculatedStatisticData extends StatisticData {
-  measurement: string;
-}
-
-export interface CalculatedNewInsStatistic {
-  sum: number;
-  profit: string;
+  [key: string]: number;
 }
 
 export interface SelectItem {
@@ -55,6 +35,7 @@ export interface PriceStructure {
   data: PriceStructureData[];
   displayedColumns: string[];
   measurement: string;
+  currency: string;
 }
 
 interface PriceStructureData {
