@@ -343,7 +343,7 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
     return newIns;
   }
 
-  private filterStatisticPerBrand(statisticData, selectedBrands): Statistic {
+  private filterStatisticPerBrand(statisticData: Statistic, selectedBrands: string[]): Statistic {
     return Object.keys(statisticData).reduce((filtered, key) => {
       if (selectedBrands.includes(key)) {
         filtered[key] = statisticData[key];
