@@ -243,7 +243,7 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
   }
 
   public _openPointDetails(): void {
-    const dialogRef = this.dialog.open(MarketingDashboardPopoverComponent);
+    const dialogRef = this.dialog.open(MarketingDashboardPopoverComponent, {backdropClass: "overlay-marketing-dashboard-popover"});
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
