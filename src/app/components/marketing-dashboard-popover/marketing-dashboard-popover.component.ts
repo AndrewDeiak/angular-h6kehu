@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component} from "@angular/core";
+import {ChangeDetectionStrategy, Component, HostBinding} from "@angular/core";
 
 @Component({
   selector: "app-marketing-dashboard-popover",
@@ -6,4 +6,5 @@ import {ChangeDetectionStrategy, Component} from "@angular/core";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MarketingDashboardPopoverComponent {
+  @HostBinding("class") public hostClass = "app-marketing-dashboard-popover";
 }

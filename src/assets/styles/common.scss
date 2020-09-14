@@ -1,0 +1,21 @@
+.access-button {
+  position: absolute;
+  left: 50%;
+  top: calc(50% - 20px);
+  transform: translateX(-50%);
+  font-family: $font-GothamLight;
+  text-align: center;
+  border: none;
+  font-size: 16px;
+  padding: 8px 70px;
+  background: #00968A;
+  color: #fff;
+  cursor: pointer;
+  outline: none;
+  transition: 0.3s ease;
+  box-shadow: 1px 1px 8px 3px rgb(255, 255, 255, 0.43);
+
+  &:hover {
+    background: #038076;
+  }
+}
