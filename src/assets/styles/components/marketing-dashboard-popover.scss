@@ -45,11 +45,13 @@
     }
   }
 }
+
 @media (max-width: 480px) {
   .app-marketing-dashboard-popover {
     .access-button {
-      padding-right: 35px;
-      padding-left: 35px;
+      padding-right: 0;
+      padding-left: 0;
+      width: 70%;
     }
   }
 }
