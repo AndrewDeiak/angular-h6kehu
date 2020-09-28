@@ -299,14 +299,6 @@
       user-select: auto;
       cursor: pointer;
     }
-
-    &-disabled {
-      color: rgba(0, 0, 0, .87);
-    }
-
-    .mat-pseudo-checkbox-disabled {
-      color: rgba(0, 0, 0, .54);
-    }
   }
 
   &:hover {

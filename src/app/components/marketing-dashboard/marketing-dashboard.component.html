@@ -100,7 +100,7 @@
           <div class="marketing-dashboard__widget-title">
             Price structure
             <span class="marketing-dashboard__widget-sub-title" *ngIf="_filtersForm">
-              {{selectedCategory?.id === _constants.ALL_CATEGORIES_ID ? "Price points per brand" : selectedCategory?.value}}
+              {{selectedCategory?.value}}
             </span>
           </div>
 
@@ -110,7 +110,7 @@
               <ng-container *ngFor="let displayedColumn of _priceStructure.displayedColumns"
                             [matColumnDef]="displayedColumn">
                 <ng-container *ngIf="displayedColumn === _constants.PRICE_STRUCTURE">
-                  <mat-header-cell *matHeaderCellDef>Full Price Structure</mat-header-cell>
+                  <mat-header-cell *matHeaderCellDef>Price ranges</mat-header-cell>
                   <mat-cell *matCellDef="let element">{{element.priceRange}}{{_priceStructure.currency}}</mat-cell>
                 </ng-container>
 
@@ -121,8 +121,8 @@
                       <div class="circle-wrapper">
                         <div class="circle"
                              [style.background-color]="dashboardData.brandColors[displayedColumn]"
-                             [style.width.px]="element[displayedColumn] / 2.3"
-                             [style.height.px]="element[displayedColumn] / 2.3">
+                             [style.width.px]="element[displayedColumn] / 2.15"
+                             [style.height.px]="element[displayedColumn] / 2.15">
                         </div>
                       </div>
                       <div class="percent">{{element[displayedColumn] | number:'1.0-1'}} {{_priceStructure.measurement}} </div>
@@ -148,7 +148,7 @@
           <div class="marketing-dashboard__widget-title">
             Assortment Mix
             <span class="marketing-dashboard__widget-sub-title" *ngIf="_filtersForm">
-              {{selectedCategory?.id === _constants.ALL_CATEGORIES_ID ? "Categories split per brand" : selectedCategory?.value}}
+              {{selectedCategory?.value}}
             </span>
           </div>
           <div class="marketing-dashboard__widget-assortment-wrapper">
@@ -177,7 +177,7 @@
           <div class="marketing-dashboard__widget-title">
             New ins
             <span class="marketing-dashboard__widget-sub-title" *ngIf="_filtersForm">
-                {{selectedCategory?.id === _constants.ALL_CATEGORIES_ID ? "New arrivals per brand" : selectedCategory?.value}}
+                {{selectedCategory?.value}}
               </span>
           </div>
 
