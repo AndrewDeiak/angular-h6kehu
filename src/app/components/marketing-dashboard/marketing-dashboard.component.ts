@@ -217,7 +217,6 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
     // TODO: remove delay after connect to the real server
     this.http.get("https://dash.retviews.com/get_data")
       .pipe(
-        delay(1000),
         finalize(() => {
           this._isLoading = false;
           this.cdr.detectChanges();
