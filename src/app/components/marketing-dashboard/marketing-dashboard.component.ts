@@ -6,7 +6,7 @@ import * as Chart from "chart.js";
 import {ChartDataSets} from "chart.js";
 import * as pluginDataLabels from "chartjs-plugin-datalabels";
 import {Subject} from "rxjs";
-import {delay, finalize, takeUntil} from "rxjs/operators";
+import {finalize, takeUntil} from "rxjs/operators";
 import {
   AssortmentMix,
   AvailableCategoriesData,
@@ -307,7 +307,7 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
 
         return {
           label: brandName,
-          data,
+          data: (data && data.length) ? data : [],
           backgroundColor: color,
           hoverBackgroundColor: color,
           hoverBorderColor: color,
@@ -366,7 +366,7 @@ export class MarketingDashboardComponent implements OnInit, OnDestroy {
 
         return {
           label: category,
-          data,
+          data: (data && data.length) ? data : [],
           backgroundColor: color,
           hoverBackgroundColor: color,
           hoverBorderColor: color,
